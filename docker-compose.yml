@@ -1,0 +1,167 @@
+services:
+  # Database
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=D1n02025!
+      - POSTGRES_DB=postgres
+    volumes:
+      # - ./.containers/postgres-data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - target: 5432
+        published: 5432
+    restart: unless-stopped
+    networks:
+      - seagull-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  # mongodb:
+  #   image: mongo:7
+  #   environment:
+  #     - MONGO_INITDB_ROOT_USERNAME=admin
+  #     - MONGO_INITDB_ROOT_PASSWORD=D1n02025!
+  #   volumes:
+  #     - ./.containers/mongo-data:/data/db
+  #   ports:
+  #     - target: 27017
+  #       published: 17017
+  #   networks:
+  #     - seagull-network
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+      # - ./.containers/redis-data:/data
+    ports:
+      - target: 6379
+        published: 6379
+    networks:
+      - seagull-network
+
+  # Message Broker
+  rabbitmq:
+    image: rabbitmq:management
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=D1n02025!
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+      # - ./.containers/rabbitmq-data:/var/lib/rabbitmq
+      - ./docker/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+      - ./docker/rabbitmq/definitions.json:/etc/rabbitmq/definitions.json
+    ports:
+      - target: 5672
+        published: 5672
+      - target: 15672
+        published: 15672
+    networks:
+      - seagull-network
+
+  # Identity Provider
+  keycloak:
+    build:
+      context: ./docker/keycloak
+      dockerfile: Dockerfile
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=D1n02025!
+      - KC_DB=postgres
+      - KC_DB_URL_HOST=postgres
+      - KC_DB_URL_DATABASE=keycloak
+      #- KC_DB_URL_PROPERTIES=?currentSchema=keycloak
+      - KC_DB_URL_SCHEMA=postgres
+      - KC_DB_URL_SCHEMA=keycloak
+      - KC_DB_USERNAME=postgres
+      - KC_DB_PASSWORD=D1n02025!
+      - KC_HOSTNAME_STRICT=false
+      - KC_HTTP_ENABLED=true
+      - KC_PROXY=edge
+    volumes:
+      - keycloak-data:/opt/keycloak/data
+      # - ./.containers/keycloak-data:/opt/keycloak/data
+    ports:
+      # 18080:8080
+      - target: 8080
+        published: 8080
+    command: [ "start-dev" ]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - seagull-network
+
+  # Observabilidad
+  seq:
+    image: datalust/seq:2023.4
+    environment:
+      - ACCEPT_EULA=Y
+      - SEQ_FIRSTRUN_ADMINPASSWORD=D1n02025!
+    volumes:
+      - ./.containers/seq-data:/data
+    ports:
+      - target: 5341
+        published: 8081
+    networks:
+      - seagull-network
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+      # - ./.containers/prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    ports:
+      - target: 9090
+        published: 9090
+    networks:
+      - seagull-network
+
+  grafana:
+    image: grafana/grafana:10.2.2
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=D1n02025!
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      # - ./.containers/grafana-data:/var/lib/grafana
+      - grafana-data:/var/lib/grafana
+      - ./docker/grafana/provisioning:/etc/grafana/provisioning
+      - ./docker/grafana/dashboards:/var/lib/grafana/dashboards
+    ports:
+      - target: 3000
+        published: 3000
+    depends_on:
+      - prometheus
+    networks:
+      - seagull-network
+
+volumes:
+  postgres-data:
+  mongo-data:
+  redis-data:
+  rabbitmq-data:
+  keycloak-data:
+  seq-data:
+  prometheus-data:
+  grafana-data:
+
+
+networks:
+  seagull-network:
+    driver: bridge
