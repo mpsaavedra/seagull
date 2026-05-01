@@ -1,0 +1,25 @@
+<Solution>
+  <Folder Name="/BuildingBlocks/">
+    <Project Path="src/BuildingBlocks/Core/Seagull.csproj" />
+    <Project Path="src/BuildingBlocks/Data.EntityFrameworkCore/Seagull.Data.EntityFrameworkCore.csproj" />
+    <Project Path="src/BuildingBlocks/Data/Seagull.Data.csproj" />
+    <Project Path="src/BuildingBlocks/Messaging.Wolverine/Seagull.Messaging.Wolverine.csproj" />
+    <Project Path="src/BuildingBlocks/Plugins/Seagull.Plugins.csproj" />
+  </Folder>
+  <Folder Name="/Modules/" />
+  <Folder Name="/Modules/Pos/">
+    <File Path="src/Modules/Pos/README.md" />
+    <Project Path="src/Modules/Pos/Api/Pos.Api.csproj" />
+    <Project Path="src/Modules/Pos/Contracts/Pos.Contracts.csproj" />
+    <Project Path="src/Modules/Pos/Domain/Pos.Domain.csproj" />
+    <Project Path="src/Modules/Pos/Infrastructure/Pos.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/Orchestration/">
+    <Project Path="src/Orchestration/Seagull.AppHost/Seagull.AppHost.csproj" />
+    <Project Path="src/Orchestration/Seagull.ServiceDefaults/Seagull.ServiceDefaults.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Seagull/Seagull.Tests.csproj" />
+    <Project Path="tests/Shared/Tests.Shared.csproj" />
+  </Folder>
+</Solution>

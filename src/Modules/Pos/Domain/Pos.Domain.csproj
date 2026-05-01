@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <NoWarn>CS8619;CS8618</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../../BuildingBlocks/Core/Seagull.csproj" />
+    <ProjectReference Include="../../../BuildingBlocks/Data/Seagull.Data.csproj" />
+    <ProjectReference Include="../Contracts/Pos.Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Addresses/" />
+    <Folder Include="Moneys/" />
+    <Folder Include="Purchases/" />
+    <Folder Include="Shippings/" />
+  </ItemGroup>
+
+</Project>
