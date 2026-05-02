@@ -17,7 +17,7 @@ namespace Seagull.Extensions;
 /// </summary>
 public static class ServiceCollectionExtensions
 {
-    public static WebApplicationBuilder AddSeagullServices(this WebApplicationBuilder builder, IConfiguration config)
+    public static WebApplicationBuilder AddSeagullServices(this WebApplicationBuilder builder)
     {
         builder.AddServiceDefaults();
         builder.Services.AddAuthorization();
@@ -41,10 +41,9 @@ public static class ServiceCollectionExtensions
         return builder;
     }
 
-    public static WebApplication UseSeagullServices(this WebApplication app, IConfiguration config)
+    public static WebApplication UseSeagullServices(this WebApplication app)
     {
         // app.UseHttpsRedirection();
-        
         app.UseSwagger();
         app.UseSwaggerUI();
         // app.UseCors(cfg =>

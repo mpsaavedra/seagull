@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../../Modules/Octupus/Api/Octupus.Api.csproj" />
     <ProjectReference Include="../../Modules/Pos/Api/Pos.Api.csproj" />
   </ItemGroup>
 

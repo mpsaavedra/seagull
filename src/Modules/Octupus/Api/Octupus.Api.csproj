@@ -8,6 +8,36 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.2" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../../BuildingBlocks/Core/Seagull.csproj" />
+    <ProjectReference Include="../../../BuildingBlocks/Data.EntityFrameworkCore/Seagull.Data.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="../../../BuildingBlocks/Data/Seagull.Data.csproj" />
+    <ProjectReference Include="../../../BuildingBlocks/Messaging.Wolverine/Seagull.Messaging.Wolverine.csproj" />
+    <ProjectReference Include="../../../Orchestration/Seagull.ServiceDefaults/Seagull.ServiceDefaults.csproj" />
+    <ProjectReference Include="../Contracts/Octupus.Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data/" />
+    <Folder Include="Data/Configurations/" />
+    <Folder Include="Features/Addresses/" />
+    <Folder Include="Features/Categories/" />
+    <Folder Include="Features/Customers/" />
+    <Folder Include="Features/Invoices/" />
+    <Folder Include="Features/MeasureUnits/" />
+    <Folder Include="Features/Moneys/" />
+    <Folder Include="Features/Payments/" />
+    <Folder Include="Features/Phones/" />
+    <Folder Include="Features/Products/" />
+    <Folder Include="Features/Purchases/" />
+    <Folder Include="Features/Sales/" />
+    <Folder Include="Features/Shippings/" />
+    <Folder Include="Features/Stands/" />
+    <Folder Include="Features/Suppliers/" />
+    <Folder Include="Features/Warehouses/" />
   </ItemGroup>
 
 </Project>

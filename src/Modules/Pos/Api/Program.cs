@@ -7,7 +7,7 @@ using Seagull.Messaging.Wolverine;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddSeagullServices(builder.Configuration);
+builder.AddSeagullServices();
 builder.Services.AddDbContext<ApplicationDbContext>(opts =>
     opts
         .EnableDetailedErrors(builder.Environment.IsDevelopment())
@@ -30,6 +30,6 @@ app.MapGet("/users/me", (ClaimsPrincipal claimsPrincipal) =>
     return claimsPrincipal.Claims.ToDictionary(c => c.Type, c => c.Value);
 }).RequireAuthorization();
 
-app.UseSeagullServices(app.Configuration);
+app.UseSeagullServices();
 
 app.Run();

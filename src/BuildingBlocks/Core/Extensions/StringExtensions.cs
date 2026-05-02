@@ -12,7 +12,7 @@ public static class StringExtensions
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>
-    public static bool IsNullEmptyOrWhiteSpace(this string value) =>
+    public static bool IsNullEmptyOrWhiteSpace(this string? value) =>
         string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value);
 
     /// <summary>

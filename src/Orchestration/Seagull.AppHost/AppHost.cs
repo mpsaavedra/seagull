@@ -15,6 +15,7 @@ var postgres = builder
 
 // required databases
 var posDb = postgres.AddDatabase("pos");
+var octupusDb = postgres.AddDatabase("octupus");
 var keycloakDb = postgres.AddDatabase("keycloakDb");
 
 // 2 - Keycloak
@@ -47,7 +48,16 @@ var keycloack = builder
 
 // 4 - Stand Api
 var pos = builder.AddProject<Projects.Pos_Api>("pos-api")
-    .WithReference(postgres).WaitFor(postgres)
+    .WithReference(postgres)
+    .WaitFor(postgres)
+    .WaitFor(keycloack)
     .WithExternalHttpEndpoints();
+
+// 5 - Octupus Api
+var octupus = builder.AddProject<Projects.Octupus_Api>("octupus-api")
+    .WithReference(postgres)
+    .WaitFor(postgres)
+    .WaitFor(keycloack)
+    .WithExternalHttpEndpoints();    
 
 builder.Build().Run();
