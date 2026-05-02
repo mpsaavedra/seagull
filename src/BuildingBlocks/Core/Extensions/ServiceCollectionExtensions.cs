@@ -20,7 +20,7 @@ public static class ServiceCollectionExtensions
     public static WebApplicationBuilder AddSeagullServices(this WebApplicationBuilder builder, IConfiguration config)
     {
         builder.AddServiceDefaults();
-        // builder.Services.AddAuthorization();
+        builder.Services.AddAuthorization();
         // builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         //     .AddJwtBearer(opts =>
         //     {

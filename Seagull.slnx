@@ -5,8 +5,13 @@
     <Project Path="src/BuildingBlocks/Data/Seagull.Data.csproj" />
     <Project Path="src/BuildingBlocks/Messaging.Wolverine/Seagull.Messaging.Wolverine.csproj" />
     <Project Path="src/BuildingBlocks/Plugins/Seagull.Plugins.csproj" />
+    <Project Path="src/BuildingBlocks/SourceGenerators/Seagull.SourceGenerators.csproj" />
   </Folder>
   <Folder Name="/Modules/" />
+  <Folder Name="/Modules/Octupus/">
+    <Project Path="src/Modules/Octupus/Api/Octupus.Api.csproj" />
+    <Project Path="src/Modules/Octupus/Contracts/Octupus.Contracts.csproj" />
+  </Folder>
   <Folder Name="/Modules/Pos/">
     <File Path="src/Modules/Pos/README.md" />
     <Project Path="src/Modules/Pos/Api/Pos.Api.csproj" />

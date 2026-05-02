@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aspire.RabbitMQ.Client" Version="13.1.0" />
     <PackageReference Include="WolverineFx" Version="5.30.0" />
     <PackageReference Include="WolverineFx.Dashboard" Version="1.0.3" />
     <PackageReference Include="WolverineFx.EntityFrameworkCore" Version="5.30.0" />

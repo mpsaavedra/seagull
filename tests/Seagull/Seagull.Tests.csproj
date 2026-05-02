@@ -22,6 +22,9 @@
     <ProjectReference Include="../../src/BuildingBlocks/Data/Seagull.Data.csproj" />
     <ProjectReference Include="../../src/BuildingBlocks/Messaging.Wolverine/Seagull.Messaging.Wolverine.csproj" />
     <ProjectReference Include="../../src/BuildingBlocks/Plugins/Seagull.Plugins.csproj" />
+    <ProjectReference Include="../../src/BuildingBlocks/SourceGenerators/Seagull.SourceGenerators.csproj"
+                      OutputItemType="Analyzer"
+                      ReferenceOutputAssembly="true" />
     <ProjectReference Include="../Shared/Tests.Shared.csproj" />
   </ItemGroup>
 
@@ -31,6 +34,7 @@
 
   <ItemGroup>
     <Folder Include="Core/" />
+    <Folder Include="SourceGenerators/" />
   </ItemGroup>
 
 </Project>
