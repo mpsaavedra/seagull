@@ -45,15 +45,15 @@ public static class ServiceCollectionExtensions
 
     public static WebApplication UseSeagullServices(this WebApplication app)
     {
-        if(app.Environment.IsDevelopment())
-        {
+        // if(app.Environment.IsDevelopment())
+        // {
             app.UseSwagger();
             app.UseSwaggerUI();
-        }
-        else
-        {
-            app.UseHttpsRedirection();       
-        }
+        // }
+        // else
+        // {
+        //     app.UseHttpsRedirection();       
+        // }
 
         // app.UseCors(cfg =>
         // cfg

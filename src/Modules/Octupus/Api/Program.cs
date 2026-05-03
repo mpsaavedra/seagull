@@ -16,7 +16,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(opts =>
             cfg
                 .MigrationsAssembly("Octupus.Api")
                 .EnableRetryOnFailure(10, TimeSpan.FromSeconds(10), null)));
-
+builder.Services.AddOpenApi();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
