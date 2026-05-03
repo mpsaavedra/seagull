@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/BuildingBlocks/">
+    <Project Path="src/BuildingBlocks/Abstractions/Seagull.Abstractions.csproj" />
     <Project Path="src/BuildingBlocks/Core/Seagull.csproj" />
     <Project Path="src/BuildingBlocks/Data.EntityFrameworkCore/Seagull.Data.EntityFrameworkCore.csproj" />
     <Project Path="src/BuildingBlocks/Data/Seagull.Data.csproj" />
