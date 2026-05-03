@@ -4,7 +4,7 @@ using Octupus.Api.Features.Sales;
 using Octupus.Contracts.Enums;
 using Seagull.Data;
 
-namespace Octupus.Api.Features.Purchases;
+namespace Octupus.Api.Features.Payments;
 
 public partial class SalePayment : AuditableEntity
 {

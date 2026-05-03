@@ -1,8 +1,9 @@
 using System;
+using Octupus.Api.Features.Purchases;
 using Octupus.Contracts.Enums;
 using Seagull.Data;
 
-namespace Octupus.Api.Features.Purchases;
+namespace Octupus.Api.Features.Payments;
 
 public partial class PurchasePayment : AuditableEntity
 {

@@ -35,7 +35,6 @@
     <Folder Include="Features/Invoices/" />
     <Folder Include="Features/MeasureUnits/" />
     <Folder Include="Features/Moneys/" />
-    <Folder Include="Features/Payments/" />
     <Folder Include="Features/Phones/" />
     <Folder Include="Features/Products/" />
     <Folder Include="Features/Purchases/" />
