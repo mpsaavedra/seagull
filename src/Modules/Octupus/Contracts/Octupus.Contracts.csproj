@@ -8,6 +8,11 @@
 
   <ItemGroup>
     <Folder Include="Enums/" />
+    <Folder Include="Queries/" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../../BuildingBlocks/Abstractions/Seagull.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

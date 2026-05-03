@@ -1,10 +1,13 @@
 using Microsoft.EntityFrameworkCore;
+using Octupus.Api;
 using Octupus.Api.Data;
 using Seagull.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddSeagullServices();
+// install all general services required by API
+builder.InstallOctupusServices();
+
 builder.Services.AddDbContext<ApplicationDbContext>(opts =>
     opts
         .EnableDetailedErrors(builder.Environment.IsDevelopment())
@@ -13,16 +16,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(opts =>
             cfg
                 .MigrationsAssembly("Octupus.Api")
                 .EnableRetryOnFailure(10, TimeSpan.FromSeconds(10), null)));
-builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
 }
 
-app.UseSeagullServices();
+// include in the pipeline all general services required by API
+app.UseOctupusServices();
 
 app.Run();

@@ -17,5 +17,7 @@ public sealed class WolverineMessagingInstaller : IServiceInstaller
             // opts.PersistMessagesWithPostgresql(builder.Configuration.GetConnectionString("MessagingDb")!);
             // opts.UsePostgresqlOutbox();
         });
+
+        builder.Services.AddScoped<IMessageBus, WolverineMessageBus>();
     }
 }

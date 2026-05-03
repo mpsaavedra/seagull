@@ -24,6 +24,9 @@
     <Project Path="src/Orchestration/Seagull.AppHost/Seagull.AppHost.csproj" />
     <Project Path="src/Orchestration/Seagull.ServiceDefaults/Seagull.ServiceDefaults.csproj" />
   </Folder>
+  <Folder Name="/SolutionItems/">
+    <File Path="README.md" />
+  </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Seagull/Seagull.Tests.csproj" />
     <Project Path="tests/Shared/Tests.Shared.csproj" />

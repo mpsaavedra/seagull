@@ -19,33 +19,42 @@ public static class ServiceCollectionExtensions
 {
     public static WebApplicationBuilder AddSeagullServices(this WebApplicationBuilder builder)
     {
-        builder.AddServiceDefaults();
-        builder.Services.AddAuthorization();
-        // builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        //     .AddJwtBearer(opts =>
-        //     {
-        //         opts.RequireHttpsMetadata = false;
-        //         opts.Audience = config["Authorization:Audience"];
-        //         opts.MetadataAddress = config["Authorization:MetadataAddress"]!;
-        //         opts.TokenValidationParameters = new TokenValidationParameters
-        //         {
-        //             ValidIssuer =  config["Authorization:ValidIssuer"],
-        //             ClockSkew = TimeSpan.Zero
-        //         };
-        //     });
+        var config = builder.Configuration;
 
-        builder.Services.AddSwaggerGen();
+        builder.AddServiceDefaults();
+
+        builder.Services.AddAuthorization();
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(opts =>
+            {
+                opts.RequireHttpsMetadata = false;
+                opts.Audience = config["Authorization:Audience"];
+                opts.MetadataAddress = config["Authorization:MetadataAddress"]!;
+                opts.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer =  config["Authorization:ValidIssuer"],
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
         // builder.Services.AddCors();
 
-        
+        builder.Services.AddSwaggerGen();
+
         return builder;
     }
 
     public static WebApplication UseSeagullServices(this WebApplication app)
     {
-        // app.UseHttpsRedirection();
-        app.UseSwagger();
-        app.UseSwaggerUI();
+        if(app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+        else
+        {
+            app.UseHttpsRedirection();       
+        }
+
         // app.UseCors(cfg =>
         // cfg
         //     .AllowAnyOrigin()
@@ -53,7 +62,7 @@ public static class ServiceCollectionExtensions
         //     .AllowAnyMethod()
         //     .WithOrigins(config["CorsOrigins"]));
         app.MapDefaultEndpoints();
-        // app.UseAuthentication();
+        app.UseAuthentication();
         app.UseAuthorization();
 
 
