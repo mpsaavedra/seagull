@@ -7,13 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddSeagullServices();
 builder.Services.AddDbContext<ApplicationDbContext>(opts =>
     opts
-        .EnableDetailedErrors()
-        .EnableSensitiveDataLogging()
-        .UseNpgsql("DefaultConnection", cfg => 
+        .EnableDetailedErrors(builder.Environment.IsDevelopment())
+        .EnableSensitiveDataLogging(builder.Environment.IsDevelopment())
+        .UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"), cfg =>
             cfg
                 .MigrationsAssembly("Octupus.Api")
-                .EnableRetryOnFailure(19, TimeSpan.FromSeconds(10), null)));
-
+                .EnableRetryOnFailure(10, TimeSpan.FromSeconds(10), null)));
 builder.Services.AddOpenApi();
 
 var app = builder.Build();

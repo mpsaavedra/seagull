@@ -19,9 +19,9 @@ using Seagull.Messaging;
 
 namespace Octupus.Api.Data;
 
-public class ApplicationDbContext : BaseDbContext
+public class ApplicationDbContext : DbContext
 {
-    public ApplicationDbContext(DbContextOptions options, IMessageBus messageBus) : base(options, messageBus)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
     }
 

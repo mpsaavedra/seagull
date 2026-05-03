@@ -5,29 +5,29 @@ namespace Seagull.Data;
 
 public interface IAuditableEntity
 {
-    DateTime CreatedAt { get; }
-    string? CreatedBy { get; }
-    DateTime? DeletedAt { get; }
-    string? DeletedBy { get; }
-    DateTime? ModifiedAt { get; }
-    string? ModifiedBy { get;  }
-    Ulid RowVersion { get; }
+    DateTime CreatedAt { get; set; }
+    string? CreatedBy { get; set; }
+    DateTime? DeletedAt { get; set; }
+    string? DeletedBy { get; set; }
+    DateTime? ModifiedAt { get; set; }
+    string? ModifiedBy { get;  set; }
+    string RowVersion { get; }
 }
 
 public abstract class AuditableEntity : Entity, IAuditableEntity
 {
     [SwaggerIgnore]
-    public DateTime CreatedAt { get; protected set; } = DateTime.UtcNow;
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     [SwaggerIgnore]
-    public string? CreatedBy { get; protected set; }
+    public string? CreatedBy { get; set; }
     [SwaggerIgnore]
-    public DateTime? DeletedAt { get; protected set; }
+    public DateTime? DeletedAt { get; set; }
     [SwaggerIgnore]
-    public string? DeletedBy { get; protected set; }
+    public string? DeletedBy { get; set; }
     [SwaggerIgnore]
-    public DateTime? ModifiedAt { get; protected set; }
+    public DateTime? ModifiedAt { get; set; }
     [SwaggerIgnore]
-    public string? ModifiedBy { get;  protected set; }
+    public string? ModifiedBy { get;  set; }
     [SwaggerIgnore]
-    public Ulid RowVersion { get; protected set; } = Ulid.NewUlid();
+    public string RowVersion { get; protected set; } = Ulid.NewUlid().ToString();
 }
