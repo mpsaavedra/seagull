@@ -1,0 +1,16 @@
+using Seagull.Data;
+using Seagul.Messaging;
+
+namespace {{ entity.namespace }};
+
+public partial interface I{{ entity.name }}Repository : IRepository<{{ entity.name }}>
+{
+}
+
+public partial class {{ entity.name }}Repository :
+    Repository<>
+{
+    public {{ entity.name }}Repository({{ entity.dbcontext }} ctx, IMessagBus bus) : base(ctx, bus)
+    {
+    }
+}

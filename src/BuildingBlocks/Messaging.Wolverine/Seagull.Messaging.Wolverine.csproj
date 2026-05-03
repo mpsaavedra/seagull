@@ -21,6 +21,8 @@
     <PackageReference Include="WolverineFx.Postgresql" Version="5.30.0" />
     <PackageReference Include="WolverineFx.RabbitMQ" Version="5.30.0" />
     <PackageReference Include="WolverineFx.SignalR" Version="5.30.0" />
+    <PackageReference Include="WolverineFx.Marten" Version="5.30.0" />
+    <PackageReference Include="WolverineFx.Http.Marten" Version="5.30.0" /> 
   </ItemGroup>
 
 </Project>
