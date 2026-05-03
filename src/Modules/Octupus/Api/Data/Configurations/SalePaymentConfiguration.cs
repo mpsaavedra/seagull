@@ -13,11 +13,11 @@ public class SalePaymentConfiguration : IEntityTypeConfiguration<SalePayment>
         builder.HasOne(x => x.Sale).WithMany(x => x.SalePayments).HasForeignKey(x => x.SaleId);
         builder.Property(x => x.Tax).IsRequired(false);
         builder.Property(x => x.Discount).IsRequired(false);
-        builder.Property(x => x.TotalPrice).IsRequired(false);
-        builder.Property(x => x.SubTotal).IsRequired(false);
+        builder.Property(x => x.TotalPrice).IsRequired();
+        builder.Property(x => x.SubTotal).IsRequired();
         builder.HasOne(x => x.Price).WithMany(x => x.SalePayments).HasForeignKey(x => x.PriceId);
         builder.Property(x => x.Date).IsRequired();
         builder.Property(x => x.DueDate).IsRequired(false);
-        builder.Property(x => x.PaymentType).IsRequired(false);
+        builder.Property(x => x.PaymentType).IsRequired();
     }
 }

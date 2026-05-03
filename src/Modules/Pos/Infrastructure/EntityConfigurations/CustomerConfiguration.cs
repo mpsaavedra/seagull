@@ -15,7 +15,7 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
         builder.Property(x => x.ContactName).HasMaxLength(300).IsRequired(false);
         builder.Property(x => x.Email).HasMaxLength(200).IsRequired(false);
         builder.HasMany(x => x.ContactPhones).WithOne(x => x.Customer).HasForeignKey(x => x.CustomerId);
-        builder.OwnsOne(x => x.Address);
+        builder.HasOne(x => x.Address).WithMany(x => x.Customers).HasForeignKey(x => x.AddressId);
         builder.Property(x => x.Website).HasMaxLength(300).IsRequired(false);
         builder.Property(x => x.Notes).IsRequired(false);
         builder.Property(x => x.CommercialNumber).HasMaxLength(50).IsRequired(false);

@@ -16,8 +16,8 @@ public class StandSaleConfiguration : IEntityTypeConfiguration<StandSale>
         builder.Property(x => x.DueDate).IsRequired(false);
         builder.Property(x => x.Tax).IsRequired(false);
         builder.Property(x => x.Discount).IsRequired(false);
-        builder.Property(x => x.TotalPrice).IsRequired(false);
-        builder.Property(x => x.SubTotal).IsRequired(false);
+        builder.Property(x => x.TotalPrice).IsRequired();
+        builder.Property(x => x.SubTotal).IsRequired();
         builder.HasMany(x => x.SaleProducts).WithOne(x => x.StandSale).HasForeignKey(x => x.StandSaleId);
         builder.HasMany(x => x.SalePayments).WithOne(x => x.StandSale).HasForeignKey(x => x.StandSaleId);
         builder.Property(x => x.ShippingCost).IsRequired(false);

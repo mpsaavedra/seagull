@@ -14,8 +14,8 @@ public class PurchaseConfiguration : IEntityTypeConfiguration<Purchase>
         builder.Property(x => x.DueDate).IsRequired(false);
         builder.Property(x => x.Tax).IsRequired(false);
         builder.Property(x => x.Discount).IsRequired(false);
-        builder.Property(x => x.TotalPrice).IsRequired(false);
-        builder.Property(x => x.SubTotal).IsRequired(false);
+        builder.Property(x => x.TotalPrice).IsRequired();
+        builder.Property(x => x.SubTotal).IsRequired();
         builder.HasMany(x => x.PurchaseProducts).WithOne(x => x.Purchase).HasForeignKey(x => x.PurchaseId);
         builder.HasMany(x => x.PurchasePayments).WithOne(x => x.Purchase).HasForeignKey(x => x.PurchaseId);
         builder.HasOne(x => x.Warehouse).WithMany(x => x.Purchases).HasForeignKey(x => x.WarehouseId);

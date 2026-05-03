@@ -15,7 +15,7 @@ public class StandConfiguration : IEntityTypeConfiguration<Stand>
         builder.Property(x => x.Capacity).IsRequired(false);
         builder.Property(x => x.IsAvailable).IsRequired();
         builder.Property(x => x.StandType).IsRequired();
-        builder.OwnsOne(x => x.Address);
+        builder.HasOne(x => x.Address).WithMany(x => x.Stands).HasForeignKey(x => x.AddressId);
         builder.HasMany(x => x.ContactPhones).WithOne(x => x.Stand).HasForeignKey(x => x.StandId);
         builder.HasMany(x => x.Products).WithOne(x => x.Stand).HasForeignKey(x => x.StandId);
         builder.HasMany(x => x.Sales).WithOne(x => x.Stand).HasForeignKey(x => x.StandId);

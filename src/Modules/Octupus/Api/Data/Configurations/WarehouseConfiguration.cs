@@ -11,7 +11,7 @@ public class WarehouseConfiguration : IEntityTypeConfiguration<Warehouse>
     {
         builder.ConfigureAuditableEntity();
         builder.Property(x => x.Name).HasMaxLength(120).IsRequired();
-        builder.OwnsOne(x => x.Address);
+        builder.HasOne(x => x.Address).WithMany(x => x.Warehouses).HasForeignKey(x => x.AddressId);
         builder.HasMany(x => x.ContactPhones).WithOne(x => x.Warehouse).HasForeignKey(x => x.WarehouseId);
         builder.Property(x => x.IsAvailable).IsRequired();
         builder.HasMany(x => x.Purchases).WithOne(x => x.Warehouse).HasForeignKey(x => x.WarehouseId);

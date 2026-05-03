@@ -12,7 +12,7 @@ public class AddressConfiguration : IEntityTypeConfiguration<Address>
         builder.ConfigureAuditableEntity();
         builder.Property(x => x.Street).IsRequired();
         builder.Property(x => x.InnerAddress).IsRequired(false);
-        builder.Property(x => x.ZipCode).IsRequired(false);
+        builder.HasOne(x => x.City).WithMany(x => x.Addresses).HasForeignKey(x => x.CityId);
         builder.Property(x => x.Street).IsRequired();
         builder.HasMany(x => x.Customers).WithOne(x => x.Address).HasForeignKey(x => x.AddressId);
         builder.HasMany(x => x.Stands).WithOne(x => x.Address).HasForeignKey(x => x.AddressId);

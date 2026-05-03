@@ -11,7 +11,7 @@ public class SupplierConfiguration : IEntityTypeConfiguration<Supplier>
     {
         builder.ConfigureAuditableEntity();
         builder.Property(x => x.Name).HasMaxLength(120).IsRequired();
-        builder.OwnsOne(x => x.Address);
+        builder.HasOne(x => x.Address).WithMany(x => x.Suppliers).HasForeignKey(x => x.AddressId);
         builder.HasMany(x => x.ContactPhones).WithOne(x => x.Supplier).HasForeignKey(x => x.SupplierId);
         builder.HasMany(x => x.PurchaseProducts).WithOne(x => x.Supplier).HasForeignKey(x => x.SupplierId);
         // builder.HasMany(x => x.Invoices).WithOne(x => x.)
