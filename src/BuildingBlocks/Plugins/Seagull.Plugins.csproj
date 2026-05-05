@@ -6,8 +6,15 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+
   <ItemGroup>
     <ProjectReference Include="../Core/Seagull.csproj" />
+    <ProjectReference Include="../Data/Seagull.Data.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="NLua" Version="1.7.9" />
   </ItemGroup>
 
 </Project>
