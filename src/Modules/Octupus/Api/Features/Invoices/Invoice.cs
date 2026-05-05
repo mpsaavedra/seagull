@@ -38,7 +38,7 @@ public partial class Invoice : AuditableEntity
                     continue;
                 }
                 var idx = result.IndexOf(rEntry);
-                result[idx] = Money.Create(rEntry.Amount + entry.Cost.Amount, rEntry.CurrentyId);
+                result[idx] = Money.Create(rEntry.Amount + entry.Cost.Amount, rEntry.CurrentyId).Value;
 
             }
             return result;

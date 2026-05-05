@@ -11,6 +11,6 @@ public partial class PurchaseInvoice : AuditableEntity
   public virtual Purchase Purchase { get; set; }
 
   public string Number { get; set; }
-  public DateTime Date { get; set; }
+  public DateTime Date { get; set; } = DateTime.UtcNow;
   public ICollection<PurchaseInvoiceProduct> Products { get; set; } = [];
 }

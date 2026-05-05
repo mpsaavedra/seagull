@@ -8,6 +8,7 @@ using Octupus.Api.Features.Customers;
 using Octupus.Api.Features.Invoices;
 using Octupus.Api.Features.MeasureUnits;
 using Octupus.Api.Features.Moneys;
+using Octupus.Api.Features.Payments;
 using Octupus.Api.Features.Phones;
 using Octupus.Api.Features.Products;
 using Octupus.Api.Features.Purchases;

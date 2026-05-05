@@ -65,7 +65,38 @@ public class Result
     public static Result<TValue> Create<TValue>(TValue? value, Error? error = null)
         where TValue : class
         => value is null ? Failure<TValue>(error)! : Success(value);
-    
+
+    /// <summary>
+    /// executes some kind of action over provider TValue
+    /// </summary>
+    /// <typeparam name="TValue"></typeparam>
+    /// <param name="value"></param>
+    /// <param name="predicate"></param>
+    /// <param name="error"></param>
+    /// <returns></returns>
+    public static Result Check<TValue>(TValue? value, Func<TValue, bool> predicate, Error? error = null)
+        where TValue: class
+        => value is null && !predicate(value) ? Failure(error) : Success(value); 
+
+
+    // public static Result Ensure<TValue>(TValue? value, bool check, Action<TValue> operation, Error? error = null)
+    //     where TValue: class
+    // {
+    //     if(value is null || !check)
+    //         return Result.Failure(error);
+    //     operation(value);
+    //     return Result.Success(value);
+    // }
+
+
+    public static Result Assign<TValue>(TValue? value, bool check, Action<TValue> operation, Error? error = null)
+        where TValue: class
+    {
+        if(value is null || check)
+            operation(value);        
+        return Result.Success(value);
+    }
+
     public static Result Create(Error error) =>
         Failure(error);
 
@@ -108,4 +139,5 @@ public class Result
 
         return Success();
     }
+
 }

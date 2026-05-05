@@ -4,6 +4,7 @@
     <Project Path="src/BuildingBlocks/Core/Seagull.csproj" />
     <Project Path="src/BuildingBlocks/Data.EntityFrameworkCore/Seagull.Data.EntityFrameworkCore.csproj" />
     <Project Path="src/BuildingBlocks/Data/Seagull.Data.csproj" />
+    <Project Path="src/BuildingBlocks/Infrastructure/Seagull.Infrastructure.csproj" />
     <Project Path="src/BuildingBlocks/Messaging.Wolverine/Seagull.Messaging.Wolverine.csproj" />
     <Project Path="src/BuildingBlocks/Plugins/Seagull.Plugins.csproj" />
     <Project Path="src/BuildingBlocks/SourceGenerators/Seagull.SourceGenerators.csproj" />

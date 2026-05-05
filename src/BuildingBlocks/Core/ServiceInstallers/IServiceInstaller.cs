@@ -13,5 +13,11 @@ namespace Seagull.ServiceInstallers;
         /// Installs the required services using the specified WebApplicationBuilder.
         /// </summary>
         /// <param name="builder">The service collection.</param>
-        void InstallServices(WebApplicationBuilder builder);
+        void InstallServices(WebApplicationBuilder builder, params Type[] types);
+
+        /// <summary>
+        /// include the required services in the WebApplication middleware
+        /// </summary>
+        /// <param name="app"></param>
+        void UseServices(WebApplication app);
     }

@@ -62,6 +62,6 @@ public partial class PurchaseProduct : AuditableEntity
     /// real cost of the product purchase
     /// </summary>
     [NotMapped] 
-    public Money Cost => Money.Create(Quantity * PurchasePrice.Amount, PurchasePrice.Currency.Name);
+    public Money Cost => Money.Create(Quantity * PurchasePrice.Amount, PurchasePrice.Currency.Id).Value;
 }
 

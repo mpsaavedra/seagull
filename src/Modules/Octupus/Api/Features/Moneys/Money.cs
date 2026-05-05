@@ -1,5 +1,6 @@
 using System;
 using Octupus.Api.Features.Invoices;
+using Octupus.Api.Features.Payments;
 using Octupus.Api.Features.Products;
 using Octupus.Api.Features.Purchases;
 using Seagull.Data;
@@ -8,13 +9,6 @@ namespace Octupus.Api.Features.Moneys;
 
 public partial class Money : AuditableEntity
 {
-    public static Money Create(decimal amount, string currencyId) =>
-        new()
-        {
-            Amount = amount,
-            CurrentyId = currencyId
-        };
-
     public decimal Amount { get; set; }
     public string CurrentyId { get; set; }
     public Currency Currency { get; set; }

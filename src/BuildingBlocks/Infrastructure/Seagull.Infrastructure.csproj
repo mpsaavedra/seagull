@@ -7,13 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Enums/" />
-    <Folder Include="Queries/" />
-    <Folder Include="Responses/" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="../../../BuildingBlocks/Abstractions/Seagull.Abstractions.csproj" />
+    <ProjectReference Include="../Abstractions/Seagull.Abstractions.csproj" />
+    <ProjectReference Include="../Core/Seagull.csproj" />
+    <ProjectReference Include="../Data/Seagull.Data.csproj" />
   </ItemGroup>
 
 </Project>

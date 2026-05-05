@@ -1,8 +1,9 @@
+using System;
 using System.Linq.Expressions;
 
 namespace Seagull.Data;
 
-public interface IRepository<TEntity> where TEntity : IEntity
+public interface IService<TEntity> where TEntity: class, IEntity
 {
     Task<Maybe<TEntity>> FindByIdAsync(string id, CancellationToken cancellationToken = default);
     Task<Maybe<TEntity>> FirstOrDefaultAsync(Expression<Func<TEntity, bool>>? expression = null,

@@ -1,5 +1,6 @@
 using System;
 using Octupus.Api.Features.Invoices;
+using Octupus.Api.Features.Payments;
 using Octupus.Api.Features.Products;
 using Octupus.Api.Features.Shippings;
 using Octupus.Api.Features.Warehouses;

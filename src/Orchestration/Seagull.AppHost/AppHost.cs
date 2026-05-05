@@ -46,14 +46,23 @@ var keycloack = builder
 //     .AddContainer("jaeger", "jaegertracing/all-in-one", "latest")
 //     .WithExternalHttpEndpoints();
 
-// 4 - Stand Api
+// 4 - RabbitMq
+var rQUser = builder.AddParameter("rabbitMq-user", "postgres", publishValueAsDefault: true);
+var rQPass = builder.AddParameter("rabbitMq-password", "Dino2025!", publishValueAsDefault: true);
+
+var rabbitMq = builder
+    .AddRabbitMQ("seagull-rabbitmq", userName: rQUser, password: rQPass)
+    // .AddContainer("seagull-rabbitmq", "rabbitmq","management-alpine")
+    .WithExternalHttpEndpoints();
+
+// 5 - Stand Api
 var pos = builder.AddProject<Projects.Pos_Api>("pos-api")
     .WithReference(postgres)
     .WaitFor(postgres)
     .WaitFor(keycloack)
     .WithExternalHttpEndpoints();
 
-// 5 - Octupus Api
+// 6 - Octupus Api
 var octupus = builder.AddProject<Projects.Octupus_Api>("octupus-api")
     .WithReference(postgres)
     .WaitFor(postgres)

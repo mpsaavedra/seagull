@@ -43,37 +43,4 @@ public partial class Category : AuditableEntity
     /// products in this category
     /// </summary>
     public virtual ICollection<Product> Products { get; set; } = [];
-
-    /// <summary>
-    /// returns a new <see cref="Category"/> instance
-    /// </summary>
-    /// <param name="name"></param>
-    /// <param name="description"></param>
-    /// <param name="parentCategoryId"></param>
-    /// <param name="type"></param>
-    /// <returns></returns>
-    public static Category Create(string name, string code, string? description = null, string? parentCategoryId = null, string? type = null) =>
-        new (){
-            Name = name, 
-            Code = code, 
-            Description = description, 
-            ParentCategoryId = parentCategoryId, 
-            Type = type
-        };
-
-    /// <summary>
-    /// updates current category instance
-    /// </summary>
-    /// <param name="name"></param>
-    /// <param name="description"></param>
-    /// <param name="parentCategoryId"></param>
-    /// <param name="type"></param>
-    public void UpdateCategory(string? name = null, string? code = null, string? description = null, string? parentCategoryId = null, string? type = null)
-    {
-        Name = name.UpdateIfDifferent(Name);
-        Code = code.UpdateIfDifferent(Code);
-        Description = description.UpdateIfDifferent(Description!);
-        ParentCategoryId = parentCategoryId.UpdateIfDifferent(ParentCategoryId!);
-        Type = type.UpdateIfDifferent(type!);
-    }
 }

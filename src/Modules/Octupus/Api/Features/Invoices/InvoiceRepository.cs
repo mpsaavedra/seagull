@@ -6,7 +6,7 @@ using Seagull.Interfaces;
 
 namespace Octupus.Api.Features.Invoices;
 
-public interface IInvoiceRepository : IRepository<Invoice>
+public interface IInvoiceRepository: IRepository<Invoice>
 {
     
 }

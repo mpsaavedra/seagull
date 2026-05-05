@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Octupus.Api.Features.Payments;
 using Octupus.Api.Features.Purchases;
 using Seagull.Extensions;
 

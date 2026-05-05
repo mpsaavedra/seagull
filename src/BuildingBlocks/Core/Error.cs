@@ -16,6 +16,21 @@ public sealed class Error : IEquatable<Error>
     }
 
     /// <summary>
+    /// returns a new <see cref="Error"/> instance
+    /// </summary>
+    /// <param name="code"></param>
+    /// <param name="message"></param>
+    /// <returns></returns>
+    public static Error Create(string code, string message) => new(code, message);
+
+    /// <summary>
+    /// returns a new <see cref="Error"/> instance
+    /// </summary>
+    /// <param name="code"></param>
+    /// <returns></returns>
+    public static Error Create(string code) => new(code, code);
+
+    /// <summary>
     /// Gets the empty error instance.
     /// </summary>
     public static Error None => new(string.Empty, string.Empty);

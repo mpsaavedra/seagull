@@ -8,18 +8,18 @@ namespace Octupus.Api.Features.Customers;
 
 public partial class Customer : AuditableEntity
 {
-    public string Name { get; protected set; }
-    public string? ContactName { get; protected set; }
-    public string? Email { get; protected set; }
-    public ICollection<CustomerPhone> ContactPhones { get; protected set; } = [];
+    public string Name { get; set; }
+    public string? ContactName { get; set; }
+    public string? Email { get; set; }
     public string? AddressId { get; set; }
-    public Address? Address { get; protected set; }
-    public string? Website { get; protected set; }
-    public string? Notes { get; protected set; }
-    public string? CommercialNumber { get; protected set; }
+    public Address? Address { get; set; }
+    public string? Website { get; set; }
+    public string? Notes { get; set; }
+    public string? CommercialNumber { get; set; }
     /// <summary>
     /// balance could be used to check for debts
     /// </summary>
-    public decimal? PreviousBalance { get; protected set;}
-    public ICollection<Sale> Sales { get; protected set; } = [];
+    public decimal? PreviousBalance { get; set;} = 0.0m;
+    public ICollection<CustomerPhone> ContactPhones { get; set; } = [];
+    public ICollection<Sale> Sales { get; set; } = [];
 }

@@ -1,6 +1,7 @@
 using System.Security.Cryptography.Xml;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -45,15 +46,15 @@ public static class ServiceCollectionExtensions
 
     public static WebApplication UseSeagullServices(this WebApplication app)
     {
-        // if(app.Environment.IsDevelopment())
-        // {
+        if(app.Environment.IsDevelopment())
+        {
             app.UseSwagger();
             app.UseSwaggerUI();
-        // }
-        // else
-        // {
-        //     app.UseHttpsRedirection();       
-        // }
+        }
+        else
+        {
+            app.UseHttpsRedirection();       
+        }
 
         // app.UseCors(cfg =>
         // cfg
@@ -65,6 +66,11 @@ public static class ServiceCollectionExtensions
         app.UseAuthentication();
         app.UseAuthorization();
 
+        if(app.Environment.IsDevelopment())
+        {
+            // redirect to swagger
+            app.MapGet("/", async _ => Results.Redirect("/swagger"));
+        }
 
         return app;
     }

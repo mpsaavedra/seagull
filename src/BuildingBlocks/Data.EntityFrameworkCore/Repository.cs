@@ -33,6 +33,7 @@ public class Repository<TEntity, TDbContext>(TDbContext dbContext) : IRepository
 
     public virtual async Task<Maybe<IQueryable<TEntity>>> GetAllAsync(
         Expression<Func<TEntity, bool>>? predicate = null,
+        int pageIndex = 1, int pageSize = 50,
         bool includeSoftDeleted = false,
         CancellationToken cancellationToken = default)
     {
@@ -40,6 +41,13 @@ public class Repository<TEntity, TDbContext>(TDbContext dbContext) : IRepository
         if (predicate != null)
         {
             query = query.Where(predicate);
+        }
+
+        if(pageIndex > 0)
+        {
+            pageSize = pageSize > 0 ? pageSize : 50;
+            pageIndex = (pageIndex - 1) * pageSize;
+            query = query.Skip(pageIndex).Take(pageSize);
         }
 
         return await Task.FromResult(Maybe<IQueryable<TEntity>>.From(query));

@@ -6,7 +6,7 @@ using Seagull.Interfaces;
 
 namespace Octupus.Api.Features.Categories;
 
-public interface ICategoryRepository : IRepository<Category>
+public interface ICategoryRepository: IRepository<Category>
 {
     
 }

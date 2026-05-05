@@ -11,31 +11,35 @@ namespace Seagull.Extensions;
 
 public static class ServiceInstallerServiceCollectionExtensions
 {
-/// <summary>
+    /// <summary>
     /// Install all of the services from the specified assembly.
     /// </summary>
     /// <param name="builder">The Web Application builder.</param>
     /// <param name="assembly">The assembly to install services from.</param>
-    public static void InstallServicesFromAssembly(this WebApplicationBuilder builder, Assembly assembly)
+    public static void InstallServicesFromAssembly(this WebApplicationBuilder builder, Assembly assembly, params Type[] types)
     {
         var serviceInstallers = ServiceInstallerFactory.GetServiceInstallersFromAssembly(assembly).ToList();
 
-        serviceInstallers.ForEach(x => x.InstallServices(builder));
+        serviceInstallers.ForEach(x => x.InstallServices(builder, types));
     }
 
     /// <summary>
-    /// Install services from assemblies loaded in current context.<br/>
-    /// This command should be used with care, because it could load undecired services, use it 
-    /// only when you are sure that services to be load are only the ones required, on each assembly
-    /// we recommand to use <see cref="InstallServices.Assembly(WebApplicationBuilder, Assembly)"/>
-    /// instead
+    /// Include all services in the specified assembly into the application pipeline
     /// </summary>
-    /// <param name="builder"></param>
-    public static void InstallServicesFromAssembly(this WebApplicationBuilder builder)
+    /// <param name="app"></param>
+    /// <param name="assembly"></param>
+    public static void UseServicesFromAsembly(this WebApplication app, Assembly assembly)
     {
-        // all referenced assemblies
-        var assemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
-        assemblies.ForEach(builder.InstallServicesFromAssembly);
+        var serviceInstallers = ServiceInstallerFactory.GetServiceInstallersFromAssembly(assembly).ToList();
+
+        serviceInstallers.ForEach(x => x.UseServices(app));
+    }
+
+    public static void MapEndpointFromAssembly(this WebApplication app, Assembly assembly)
+    {
+        var mappers = EndpointInstallerFactory.GetEndpointMappersFromAssembly(assembly).ToList();
+
+        mappers.ForEach(x => x.MapEndpoints(app));
     }
 
     /// <summary>
