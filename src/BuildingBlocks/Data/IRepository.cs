@@ -7,7 +7,7 @@ public interface IRepository<TEntity> where TEntity : IEntity
     Task<Maybe<TEntity>> FindByIdAsync(string id, CancellationToken cancellationToken = default);
     Task<Maybe<TEntity>> FirstOrDefaultAsync(Expression<Func<TEntity, bool>>? expression = null,
         CancellationToken cancellationToken = default);
-    Task<Maybe<IQueryable<TEntity>>> GetAllAsync(
+    Task<Maybe<(IQueryable<TEntity> data, bool hasPreviousPage, bool hasNextPage)>> GetAllAsync(
         Expression<Func<TEntity, bool>>? predicate = null,
         int pageIndex = 1, int pageSize = 50,
         bool includeSoftDeleted = false,

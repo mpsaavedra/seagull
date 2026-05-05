@@ -31,12 +31,14 @@ public class Repository<TEntity, TDbContext>(TDbContext dbContext) : IRepository
         return entity != null ? Maybe<TEntity>.From(entity) : Maybe<TEntity>.None!;
     }
 
-    public virtual async Task<Maybe<IQueryable<TEntity>>> GetAllAsync(
+    public virtual async Task<Maybe<(IQueryable<TEntity> data, bool hasPreviousPage, bool hasNextPage)>> GetAllAsync(
         Expression<Func<TEntity, bool>>? predicate = null,
         int pageIndex = 1, int pageSize = 50,
         bool includeSoftDeleted = false,
         CancellationToken cancellationToken = default)
     {
+        bool hasPreviousPage = false;
+        bool hasNextPage = false;
         var query = DbSet.AsQueryable();
         if (predicate != null)
         {
@@ -50,7 +52,8 @@ public class Repository<TEntity, TDbContext>(TDbContext dbContext) : IRepository
             query = query.Skip(pageIndex).Take(pageSize);
         }
 
-        return await Task.FromResult(Maybe<IQueryable<TEntity>>.From(query));
+        return await Task.FromResult(Maybe<(IQueryable<TEntity>, bool hasPreviousPage, bool hasNExtPage)>.From(
+            (query, hasPreviousPage, hasNextPage)));
     }
 
     public virtual async Task<Maybe<string>> AddAsync(TEntity entity, CancellationToken cancellationToken = default)

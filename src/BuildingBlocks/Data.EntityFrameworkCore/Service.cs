@@ -12,12 +12,14 @@ public class Service<TEntity, TDbContext> : IService<TEntity>
     protected readonly TDbContext DbContext;
     protected readonly DbSet<TEntity> DbSet;
     protected readonly IRepository<TEntity> Repository;
+    protected readonly IUnitOfWork UoW;
 
-    public Service(TDbContext dbContext)
+    public Service(TDbContext dbContext, IRepository<TEntity> repo, IUnitOfWork uow)
     {
         DbContext = dbContext;
         DbSet = dbContext.Set<TEntity>();
-        Repository = new Repository<TEntity, TDbContext>(dbContext);
+        Repository = repo;
+        UoW = uow;
     }
 
 
@@ -39,7 +41,7 @@ public class Service<TEntity, TDbContext> : IService<TEntity>
         CancellationToken cancellationToken = default) =>
         FirstOrDefaultAsync(expression, cancellationToken);
 
-    public virtual Task<Maybe<IQueryable<TEntity>>> GetAllAsync(Expression<Func<TEntity, bool>>? predicate = null, 
+    public virtual Task<Maybe<(IQueryable<TEntity> data, bool hasPreviousPage, bool hasNextPage)>> GetAllAsync(Expression<Func<TEntity, bool>>? predicate = null, 
         int pageIndex = 1, int pageSize = 50, bool includeSoftDeleted = false, 
         CancellationToken cancellationToken = default) =>
         Repository.GetAllAsync(predicate, pageIndex, pageSize, includeSoftDeleted, cancellationToken);

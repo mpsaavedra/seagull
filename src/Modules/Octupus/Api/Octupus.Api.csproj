@@ -21,6 +21,7 @@
     <ProjectReference Include="../../../BuildingBlocks/Data.EntityFrameworkCore/Seagull.Data.EntityFrameworkCore.csproj" />
     <ProjectReference Include="../../../BuildingBlocks/Data/Seagull.Data.csproj" />
     <ProjectReference Include="../../../BuildingBlocks/Messaging.Wolverine/Seagull.Messaging.Wolverine.csproj" />
+    <ProjectReference Include="../../../BuildingBlocks/Plugins/Seagull.Plugins.csproj" />
     <ProjectReference Include="../../../Orchestration/Seagull.ServiceDefaults/Seagull.ServiceDefaults.csproj" />
     <ProjectReference Include="../Contracts/Octupus.Contracts.csproj" />
   </ItemGroup>

@@ -56,5 +56,6 @@ public class ErrorCodes: Seagull.ErrorCodes
         public static readonly Error MoneyStandSaleProductDoesNotExists             = new ("SG-OCT-00047", "Money already contains specified invoice product");
         public static readonly Error MoneyStandProductAlreadyExists                 = new ("SG-OCT-00048", "Money already contains specified invoice product");
         public static readonly Error MoneyStandProductDoesNotExists                 = new ("SG-OCT-00049", "Money already contains specified invoice product"); 
+        public static readonly Error AddressNotFound                                = new ("SG-OCT-00050", $"Address {0} not foind");
     }
 }
