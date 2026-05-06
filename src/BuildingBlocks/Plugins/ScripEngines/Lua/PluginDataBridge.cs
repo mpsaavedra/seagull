@@ -6,7 +6,12 @@ using Seagull.Data;
 
 namespace Seagull.Plugins.ScripEngines.Lua;
 
-public class PluginDataBridge
+public interface IPLuginDataBridge
+{
+    void LogInfo(string msg);
+}
+
+public class PluginDataBridge : IPLuginDataBridge
 {
     private readonly IServiceProvider _serviceProvider;
     private readonly ILogger<PluginDataBridge> _logger;
@@ -38,11 +43,14 @@ public class PluginDataBridge
     //     }
     // }
 
-    public IRepository<TEntity> GetRespositorGetUoW<TEntity>()
-        where TEntity: Entity
+    public dynamic GetProduct(string id)
     {
-        using var scope = _serviceProvider.CreateScope();
-        var uow = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-        return uow.Repository<TEntity>();
+        return $"This is suppoused to return the address with id '{id}'.";
+    }
+
+    public void LogInfo(string msg)
+    {
+        _logger.LogInformation($"[LUA_HOST]: {msg}");
+        Console.WriteLine($"[LUA_HOST]: {msg}");
     }
 }

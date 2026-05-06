@@ -10,9 +10,9 @@ public class PluginsServiceInstaller : IServiceInstaller
 {
     public void InstallServices(WebApplicationBuilder builder, params Type[] types)
     {
-        builder.Services.AddScoped<PluginDataBridge>();
-        builder.Services.AddSingleton<LuaPluginProvider>(); // Singleton is fine for path management
-        builder.Services.AddScoped<ILuaEngineService, LuaEngineService>();
+        // builder.Services.AddScoped<PluginDataBridge>();
+        // builder.Services.AddSingleton<LuaPluginProvider>(); // Singleton is fine for path management
+        // builder.Services.AddScoped<ILuaEngineService, LuaEngineService>();
     }
 
     public void UseServices(WebApplication app)
