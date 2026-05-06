@@ -1,4 +1,5 @@
 using System;
+using Octupus.Contracts.Dtos;
 using Seagull.Data;
 using Seagull.Data.AutoMapping;
 

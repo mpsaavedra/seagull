@@ -10,12 +10,9 @@ public sealed record ProductDto : DtoBase
     public ICollection<ProductImageDto> Images { get; set; } = [];
     public CategoryDto? Category { get; set; }
     public ICollection<InvoiceProductDto> InvoiceProducts { get; set; } = [];
-    /// </summary>
     public DateTime? ExpirationDate { get; set; }
     public MoneyDto Cost { get; set; }
     public MeasureUnitDto MeasureUnit { get; set; }
-
-    #region Fields related with the status of the product
     public ICollection<PurchaseProductDto> PurchaseProducts { get; set; } = [];
     public ICollection<PurchaseInvoiceProductDto> PurchaseInvoiceProducts { get; set; } = [];
     public ICollection<WarehouseProductDto> WarehouseProducts { get; set; } = [];
