@@ -4,11 +4,13 @@ using Octupus.Api.Features.Products;
 using Octupus.Api.Features.Purchases;
 using Octupus.Api.Features.Shippings;
 using Octupus.Api.Features.Stands;
+using Octupus.Contracts.Dtos;
 using Seagull.Data;
+using Seagull.Data.AutoMapping;
 
 namespace Octupus.Api.Features.Sales;
 
-public partial class StandSale : AuditableEntity
+public partial class StandSale : AuditableEntity, IMap<StandSaleDto>
 {
 
     public string StandId { get; set; }

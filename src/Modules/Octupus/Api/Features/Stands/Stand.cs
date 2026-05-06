@@ -3,8 +3,10 @@ using Octupus.Api.Features.Addresses;
 using Octupus.Api.Features.Phones;
 using Octupus.Api.Features.Products;
 using Octupus.Api.Features.Sales;
+using Octupus.Contracts.Dtos;
 using Octupus.Contracts.Enums;
 using Seagull.Data;
+using Seagull.Data.AutoMapping;
 using Seagull.Extensions;
 
 namespace Octupus.Api.Features.Stands;
@@ -12,14 +14,14 @@ namespace Octupus.Api.Features.Stands;
 /// <summary>
 /// Stand refers to a give sale post where the Stand will be installed
 /// </summary>
-public partial class Stand : AuditableEntity
+public partial class Stand : AuditableEntity, IMap<StandDto>
 {
     private bool _isAvailable = true;
 
     public static Stand Create(string name, bool isAvailable, string? description, int? capacity) =>
         new()
         {
-            Name = name, 
+            Name = name,
             IsAvailable = isAvailable,
             Description = description,
             Capacity = capacity
@@ -84,7 +86,7 @@ public partial class Stand : AuditableEntity
     /// <param name="description"></param>
     /// <param name="capacity"></param>
     /// <param name="isAvailable"></param>
-    public void UpdateStand(string? name = null, string? description = null, int? capacity = null, 
+    public void UpdateStand(string? name = null, string? description = null, int? capacity = null,
         bool? isAvailable = null, StandType? standType = null)
     {
         Name = name.UpdateIfDifferent(Name);

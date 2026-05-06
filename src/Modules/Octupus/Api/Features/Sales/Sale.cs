@@ -5,11 +5,13 @@ using Octupus.Api.Features.Products;
 using Octupus.Api.Features.Purchases;
 using Octupus.Api.Features.Shippings;
 using Octupus.Api.Features.Warehouses;
+using Octupus.Contracts.Dtos;
 using Seagull.Data;
+using Seagull.Data.AutoMapping;
 
 namespace Octupus.Api.Features.Sales;
 
-public partial class Sale  : AuditableEntity
+public partial class Sale : AuditableEntity, IMap<SaleDto>
 {
     public string WarehouseId { get; set; }
     /// <summary>

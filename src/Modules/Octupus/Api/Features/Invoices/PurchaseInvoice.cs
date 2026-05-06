@@ -1,11 +1,13 @@
 using System;
 using Octupus.Api.Features.Products;
 using Octupus.Api.Features.Purchases;
+using Octupus.Contracts.Dtos;
 using Seagull.Data;
+using Seagull.Data.AutoMapping;
 
 namespace Octupus.Api.Features.Invoices;
 
-public partial class PurchaseInvoice : AuditableEntity 
+public partial class PurchaseInvoice : AuditableEntity, IMap<PurchaseInvoiceDto>
 {
   public string PurchaseId { get; set; }
   public virtual Purchase Purchase { get; set; }

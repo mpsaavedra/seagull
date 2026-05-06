@@ -1,14 +1,15 @@
 using System;
 using Seagull.Data;
+using Seagull.Data.AutoMapping;
 
 namespace Octupus.Api.Features.Products;
 
-public partial class ProductImage : AuditableEntity
+public partial class ProductImage : AuditableEntity, IMap<ProductImageDto>
 {
 
     public string ImageUrl { get; set; }
     public int? Order { get; set; } = -1;
-    public string ProductId{ get; set; }
+    public string ProductId { get; set; }
     public virtual Product Product { get; set; }
     public string? Alt { get; set; }
 

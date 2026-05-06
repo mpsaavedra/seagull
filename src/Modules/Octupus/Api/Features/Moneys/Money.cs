@@ -3,11 +3,13 @@ using Octupus.Api.Features.Invoices;
 using Octupus.Api.Features.Payments;
 using Octupus.Api.Features.Products;
 using Octupus.Api.Features.Purchases;
+using Octupus.Contracts.Dtos;
 using Seagull.Data;
+using Seagull.Data.AutoMapping;
 
 namespace Octupus.Api.Features.Moneys;
 
-public partial class Money : AuditableEntity
+public partial class Money : AuditableEntity, IMap<MoneyDto>
 {
     public decimal Amount { get; set; }
     public string CurrentyId { get; set; }

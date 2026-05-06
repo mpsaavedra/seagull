@@ -1,12 +1,14 @@
 using System;
 using Octupus.Api.Features.Moneys;
 using Octupus.Api.Features.Sales;
+using Octupus.Contracts.Dtos;
 using Octupus.Contracts.Enums;
 using Seagull.Data;
+using Seagull.Data.AutoMapping;
 
 namespace Octupus.Api.Features.Payments;
 
-public partial class StandSalePayment : AuditableEntity
+public partial class StandSalePayment : AuditableEntity, IMap<StandSalePaymentDto>
 {
 
     public string StandSaleId { get; set; }
@@ -47,5 +49,5 @@ public partial class StandSalePayment : AuditableEntity
     /// gets/sets the purchase payment method used
     /// </summary>
     public PaymentType PaymentType { get; set; }
-    
+
 }

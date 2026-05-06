@@ -1,6 +1,8 @@
 using System;
 using Octupus.Api.Features.Products;
+using Octupus.Contracts.Dtos;
 using Seagull.Data;
+using Seagull.Data.AutoMapping;
 using Seagull.Extensions;
 
 namespace Octupus.Api.Features.Categories;
@@ -9,7 +11,7 @@ namespace Octupus.Api.Features.Categories;
 /// Category in which a product could be group by, this entity allows to create a relation between
 /// parent and child categories.
 /// </summary>
-public partial class Category : AuditableEntity
+public partial class Category : AuditableEntity, IMap<CategoryDto>
 {
     /// <summary>
     /// name
@@ -38,7 +40,7 @@ public partial class Category : AuditableEntity
     /// <summary>
     /// gets/set the child categories if any for this category
     /// </summary>
-    public virtual ICollection<Category> ChildCategories {  get; set; } = [];
+    public virtual ICollection<Category> ChildCategories { get; set; } = [];
     /// <summary>
     /// products in this category
     /// </summary>

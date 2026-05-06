@@ -1,12 +1,14 @@
 using System;
 using Octupus.Api.Features.Purchases;
 using Octupus.Api.Features.Sales;
+using Octupus.Contracts.Dtos;
 using Octupus.Contracts.Enums;
 using Seagull.Data;
+using Seagull.Data.AutoMapping;
 
 namespace Octupus.Api.Features.Shippings;
 
-public partial class Shipping : AuditableEntity
+public partial class Shipping : AuditableEntity, IMap<ShippingDto>
 {
     /// <summary>
     /// the type of shipping

@@ -4,15 +4,16 @@ using Octupus.Api.Features.Moneys;
 using Octupus.Api.Features.Stands;
 using Octupus.Api.Features.Warehouses;
 using Seagull.Data;
+using Seagull.Data.AutoMapping;
 
 namespace Octupus.Api.Features.Products;
 
-public partial class StandProduct : AuditableEntity
+public partial class StandProduct : AuditableEntity, IMap<StandProduct>
 {
     public string StandId { get; set; }
     public virtual Stand Stand { get; set; }
     public string ProductId { get; set; }
-    public virtual Product Product{ get; set; }
+    public virtual Product Product { get; set; }
     /// <summary>
     /// quantity on stock
     /// </summary>

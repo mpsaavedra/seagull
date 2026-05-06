@@ -4,14 +4,16 @@ using Octupus.Api.Features.Payments;
 using Octupus.Api.Features.Products;
 using Octupus.Api.Features.Shippings;
 using Octupus.Api.Features.Warehouses;
+using Octupus.Contracts.Dtos;
 using Seagull.Data;
+using Seagull.Data.AutoMapping;
 
 namespace Octupus.Api.Features.Purchases;
 
 /// <summary>
 /// A purchase that is done to an external supplier or retailer
 /// </summary>
-public partial class Purchase : AuditableEntity
+public partial class Purchase : AuditableEntity, IMap<PurchaseDto>
 {
     /// <summary>
     /// purchase number could also refer to a sequential number or something

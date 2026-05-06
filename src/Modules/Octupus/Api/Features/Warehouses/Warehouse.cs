@@ -4,7 +4,9 @@ using Octupus.Api.Features.Phones;
 using Octupus.Api.Features.Products;
 using Octupus.Api.Features.Purchases;
 using Octupus.Api.Features.Sales;
+using Octupus.Contracts.Dtos;
 using Seagull.Data;
+using Seagull.Data.AutoMapping;
 using Seagull.Extensions;
 
 namespace Octupus.Api.Features.Warehouses;
@@ -12,15 +14,15 @@ namespace Octupus.Api.Features.Warehouses;
 /// <summary>
 /// 
 /// </summary>
-public partial class Warehouse : AuditableEntity
+public partial class Warehouse : AuditableEntity, IMap<WarehouseDto>
 {
     private bool _isAvailable;
     public string Name { get; set; }
     public string? AddressId { get; set; }
     public Address? Address { get; set; }
     public ICollection<WarehousePhone> ContactPhones { get; set; } = [];
-    public bool IsAvailable 
-    { 
+    public bool IsAvailable
+    {
         get
         {
             // TODO: a normal form could be a combination but this has to be consider in a future version
@@ -34,13 +36,13 @@ public partial class Warehouse : AuditableEntity
         set
         {
             _isAvailable = value;
-        } 
+        }
     }
     /// <summary>
     /// list of purchases done by the Warehouse this is the entry point of products
     /// into the system.
     /// </summary>
-    public ICollection<Purchase> Purchases { get; set;} = [];
+    public ICollection<Purchase> Purchases { get; set; } = [];
     /// <summary>
     /// gests the list of sales done in this warehouse
     /// </summary>
@@ -62,6 +64,6 @@ public partial class Warehouse : AuditableEntity
     {
         Name = name.UpdateIfDifferent(Name);
         Address = address is not null ? address : Address;
-        IsAvailable = isAvailable ?? IsAvailable; 
+        IsAvailable = isAvailable ?? IsAvailable;
     }
 }

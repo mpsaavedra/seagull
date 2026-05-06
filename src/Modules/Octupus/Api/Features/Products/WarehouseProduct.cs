@@ -1,11 +1,13 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using Octupus.Api.Features.Warehouses;
+using Octupus.Contracts.Dtos;
 using Seagull.Data;
+using Seagull.Data.AutoMapping;
 
 namespace Octupus.Api.Features.Products;
 
-public partial class WarehouseProduct : AuditableEntity
+public partial class WarehouseProduct : AuditableEntity, IMap<WarehouseProductDto>
 {
     public string ProductId { get; set; }
     public virtual Product Product { get; set; }

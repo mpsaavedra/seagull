@@ -3,18 +3,20 @@ using Octupus.Api.Features.Categories;
 using Octupus.Api.Features.Invoices;
 using Octupus.Api.Features.MeasureUnits;
 using Octupus.Api.Features.Moneys;
+using Octupus.Contracts.Dtos;
 using Seagull.Data;
+using Seagull.Data.AutoMapping;
 using Seagull.Exceptions;
 using Seagull.Extensions;
 
 namespace Octupus.Api.Features.Products;
 
-public partial class Product : AuditableEntity
+public partial class Product : AuditableEntity, IMap<ProductDto>
 {
     public string Name { get; set; }
     public string? Description { get; set; }
     public string SKU { get; set; }
-    public virtual ICollection<ProductImage> Images { get; set; }  = [];
+    public virtual ICollection<ProductImage> Images { get; set; } = [];
     public string? CategoryId { get; set; }
     public virtual Category? Category { get; set; }
     public virtual ICollection<InvoiceProduct> InvoiceProducts { get; set; } = [];
@@ -26,7 +28,7 @@ public partial class Product : AuditableEntity
     /// <summary>
     /// Purchase cost of this product
     /// </summary>
-    public Money Cost { get; set;}
+    public Money Cost { get; set; }
     public string MeasureUnitId { get; set; }
     public virtual MeasureUnit MeasureUnit { get; set; }
 
@@ -56,9 +58,9 @@ public partial class Product : AuditableEntity
 
     #endregion
 
-    public static Product Create(string name, string? sku = null, string? description = null, string? categoryId = null, 
+    public static Product Create(string name, string? sku = null, string? description = null, string? categoryId = null,
         DateTime? expirationDate = null) =>
-        new ()
+        new()
         {
             Name = name,
             SKU = sku.IsNullEmptyOrWhiteSpace() ? Product.GenerateSKU(name) : sku!,
@@ -67,33 +69,33 @@ public partial class Product : AuditableEntity
             ExpirationDate = expirationDate
         };
 
-    public void UpdateProduct(string name, string? sku = null, string? description = null, string? categoryId = null, 
+    public void UpdateProduct(string name, string? sku = null, string? description = null, string? categoryId = null,
         DateTime? expirationDate = null)
     {
-        if(!string.IsNullOrEmpty(name))
+        if (!string.IsNullOrEmpty(name))
         {
             Name = name;
         }
 
-        if(!string.IsNullOrEmpty(sku))
+        if (!string.IsNullOrEmpty(sku))
         {
             SKU = sku;
         }
-        if(!string.IsNullOrEmpty(description))
+        if (!string.IsNullOrEmpty(description))
         {
             Description = description;
         }
-        if(!string.IsNullOrEmpty(categoryId))
+        if (!string.IsNullOrEmpty(categoryId))
         {
             CategoryId = categoryId;
         }
-        if(expirationDate is not null)
+        if (expirationDate is not null)
             ExpirationDate = expirationDate;
     }
 
     public void AddImage(ProductImage productImage)
     {
-        if(!Images.Contains(productImage))
+        if (!Images.Contains(productImage))
         {
             throw new SeagullException($"Product {Name} already has an image {productImage.ImageUrl}");
         }
@@ -103,7 +105,7 @@ public partial class Product : AuditableEntity
 
     public void RemoveImage(ProductImage productImage)
     {
-        if(!Images.Contains(productImage))
+        if (!Images.Contains(productImage))
         {
             throw new SeagullException($"Product {Name} doesn't has an image {productImage.ImageUrl}");
         }

@@ -3,14 +3,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Octupus.Api.Features.Moneys;
 using Octupus.Api.Features.Purchases;
 using Octupus.Api.Features.Suppliers;
+using Octupus.Contracts.Dtos;
 using Seagull.Data;
+using Seagull.Data.AutoMapping;
 
 namespace Octupus.Api.Features.Products;
 
 /// <summary>
 /// relation of product and purchase
 /// </summary>
-public partial class PurchaseProduct : AuditableEntity
+public partial class PurchaseProduct : AuditableEntity, IMap<PurchaseProductDto>
 {
     /// <summary>
     /// id of purchased product
@@ -61,7 +63,7 @@ public partial class PurchaseProduct : AuditableEntity
     /// <summary>
     /// real cost of the product purchase
     /// </summary>
-    [NotMapped] 
+    [NotMapped]
     public Money Cost => Money.Create(Quantity * PurchasePrice.Amount, PurchasePrice.Currency.Id).Value;
 }
 

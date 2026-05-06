@@ -2,11 +2,13 @@ using System;
 using Octupus.Api.Features.Addresses;
 using Octupus.Api.Features.Phones;
 using Octupus.Api.Features.Sales;
+using Octupus.Contracts.Dtos;
 using Seagull.Data;
+using Seagull.Data.AutoMapping;
 
 namespace Octupus.Api.Features.Customers;
 
-public partial class Customer : AuditableEntity
+public partial class Customer : AuditableEntity, IMap<CustomerDto>
 {
     public string Name { get; set; }
     public string? ContactName { get; set; }
@@ -19,7 +21,7 @@ public partial class Customer : AuditableEntity
     /// <summary>
     /// balance could be used to check for debts
     /// </summary>
-    public decimal? PreviousBalance { get; set;} = 0.0m;
+    public decimal? PreviousBalance { get; set; } = 0.0m;
     public ICollection<CustomerPhone> ContactPhones { get; set; } = [];
     public ICollection<Sale> Sales { get; set; } = [];
 }

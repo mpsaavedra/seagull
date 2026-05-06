@@ -2,11 +2,13 @@ using System;
 using Octupus.Api.Features.Moneys;
 using Octupus.Api.Features.Sales;
 using Octupus.Api.Features.Warehouses;
+using Octupus.Contracts.Dtos;
 using Seagull.Data;
+using Seagull.Data.AutoMapping;
 
 namespace Octupus.Api.Features.Products;
 
-public partial class SaleProduct : AuditableEntity
+public partial class SaleProduct : AuditableEntity, IMap<SaleProductDto>
 {
     public string ProductId { get; set; }
     public virtual Product Product { get; set; }

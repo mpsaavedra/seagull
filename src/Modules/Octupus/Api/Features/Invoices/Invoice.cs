@@ -1,7 +1,9 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using Octupus.Api.Features.Moneys;
+using Octupus.Contracts.Dtos;
 using Seagull.Data;
+using Seagull.Data.AutoMapping;
 
 namespace Octupus.Api.Features.Invoices;
 
@@ -10,7 +12,7 @@ namespace Octupus.Api.Features.Invoices;
 /// entity all products will be enter, it uses a separate lists of products because a 
 /// product  cost could change among providers and time period.
 /// </summary>
-public partial class Invoice : AuditableEntity
+public partial class Invoice : AuditableEntity, IMap<InvoiceDto>
 {
     public string Number { get; protected set; }
     public DateTime Date { get; set; } = DateTime.UtcNow;
@@ -29,10 +31,10 @@ public partial class Invoice : AuditableEntity
         get
         {
             var result = new List<Money>();
-            foreach(var entry in Entries)
+            foreach (var entry in Entries)
             {
                 var rEntry = result.FirstOrDefault(x => x.Currency == entry.Cost.Currency);
-                if(rEntry is null)
+                if (rEntry is null)
                 {
                     result.Add(entry.Cost);
                     continue;

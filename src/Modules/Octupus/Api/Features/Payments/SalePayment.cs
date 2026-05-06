@@ -1,12 +1,14 @@
 using System;
 using Octupus.Api.Features.Moneys;
 using Octupus.Api.Features.Sales;
+using Octupus.Contracts.Dtos;
 using Octupus.Contracts.Enums;
 using Seagull.Data;
+using Seagull.Data.AutoMapping;
 
 namespace Octupus.Api.Features.Payments;
 
-public partial class SalePayment : AuditableEntity
+public partial class SalePayment : AuditableEntity, IMap<SalePaymentDto>
 {
     public string SaleId { get; set; }
     public virtual Sale Sale { get; set; }
