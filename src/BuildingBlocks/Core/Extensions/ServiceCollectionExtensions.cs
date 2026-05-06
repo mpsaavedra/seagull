@@ -46,12 +46,10 @@ public static class ServiceCollectionExtensions
 
     public static WebApplication UseSeagullServices(this WebApplication app)
     {
-        if(app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
-        else
+        app.UseSwagger();
+        app.UseSwaggerUI();
+        
+        if(!app.Environment.IsDevelopment())
         {
             app.UseHttpsRedirection();       
         }
@@ -62,15 +60,12 @@ public static class ServiceCollectionExtensions
         //     .AllowAnyHeader()
         //     .AllowAnyMethod()
         //     .WithOrigins(config["CorsOrigins"]));
+
         app.MapDefaultEndpoints();
         app.UseAuthentication();
         app.UseAuthorization();
 
-        if(app.Environment.IsDevelopment())
-        {
-            // redirect to swagger
-            app.MapGet("/", async _ => Results.Redirect("/swagger"));
-        }
+        app.MapGet("/", () => Results.Redirect("/swagger"));
 
         return app;
     }

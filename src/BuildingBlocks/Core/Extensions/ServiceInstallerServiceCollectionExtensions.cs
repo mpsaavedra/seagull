@@ -67,4 +67,17 @@ public static class ServiceInstallerServiceCollectionExtensions
                 .UsingRegistrationStrategy(RegistrationStrategy.Throw)
                 .AsMatchingInterface()
                 .WithTransientLifetime());
+
+    /// <summary>
+    /// Registers the singleton services from the specified assembly as matching interface.
+    /// </summary>
+    /// <param name="services">The services.</param>
+    /// <param name="assembly">The assembly to scan for singleton services.</param>
+    public static void AddSingletonMatchingInterface(this IServiceCollection services, Assembly assembly) =>
+        services.Scan(scan =>
+            scan.FromAssemblies(assembly)
+                .AddClasses(filter => filter.AssignableTo<ISingletonLifescope>(), false)
+                .UsingRegistrationStrategy(RegistrationStrategy.Throw)
+                .AsMatchingInterface()
+                .WithSingletonLifetime());
 }

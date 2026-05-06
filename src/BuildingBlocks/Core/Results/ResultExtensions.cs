@@ -195,7 +195,7 @@ public static class ResultExtensions
     /// <param name="result"></param>
     /// <param name="action"></param>
     /// <returns></returns>
-    public static Result<TIn> Tap<TIn>(this Result<TIn> result, Action<TIn> action)
+    public static async Task<Result<TIn>> Tap<TIn>(this Result<TIn> result, Action<TIn> action)
     {
         if(result.IsSuccess)
         {
@@ -203,5 +203,10 @@ public static class ResultExtensions
         }
         return result;
     }
+
+    // public static async Task<Result<T>> Ensure<T>(
+    //     this Result<T> result, 
+    //     Func<T, Task<bool>> predicate, 
+    //     Error error)
 }
 

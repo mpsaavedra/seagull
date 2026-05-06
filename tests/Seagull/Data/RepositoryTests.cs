@@ -77,7 +77,7 @@ public class RepositoryTests
         entities.HasValue.ShouldBeTrue();
         entities.HasNoValue.ShouldBeFalse();
 
-        entities.Value.Count().ShouldBe(amount);
+        entities.Value.data.Count().ShouldBe(amount);
     }
 
     [Theory]

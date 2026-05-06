@@ -1,0 +1,12 @@
+{
+  "Lua.runtime.version": "Lua 5.4",
+  "Lua.workspace.library": [
+    "${workspaceFolder}/Plugins"
+  ],
+  "Lua.diagnostics.globals": [
+    "Host",    // Registra tu bridge de C# como global
+    "Plugins", // Tu registro de plugins
+    "core"     // Tu módulo base
+  ],
+  "Lua.workspace.checkThirdParty": false
+}

@@ -16,30 +16,27 @@ namespace Octupus.Api.Features.Addresses;
 
 public interface IAddressService: IService<Address>
 {
-    Task<GetAddressResponse> GetAddresses(GetAddressRequest request, CancellationToken cancellationToken = default);
-    Task<AddressDto> GetAddressById(GetAddressRequest request, CancellationToken cancellationToken = default);
+    Task<GetAddressesResponse> GetAddresses(GetAddressRequest request, CancellationToken cancellationToken = default);
+    Task<AddressDto> GetAddressById(GetAddressById request, CancellationToken cancellationToken = default);
 }
 
 public class AddressService : Service<Address, ApplicationDbContext>, IAddressService, ITransientLifescope
 {
     private readonly ILogger<AddressService> _logger;
 
-    public AddressService(ApplicationDbContext dbContext, IAddressRepository repo, IUnitOfWork uow,
-        ILogger<AddressService> logger) : 
-        base(dbContext, repo, uow)
+    public AddressService(IUnitOfWork uow, ILogger<AddressService> logger): base(uow)
     {
         _logger = logger;
     }
 
-    public Task<AddressDto> GetAddressById(GetAddressRequest request, CancellationToken cancellationToken = default)
+    public Task<AddressDto> GetAddressById(GetAddressById request, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
 
-    public Task<GetAddressResponse> GetAddresses(GetAddressRequest request, CancellationToken cancellationToken = default)
+    public async Task<GetAddressesResponse> GetAddresses(GetAddressRequest request, CancellationToken cancellationToken = default)
     {
-        
-        throw new NotImplementedException();
+        return new GetAddressesResponse(new List<AddressDto>().AsQueryable());
     }
 }

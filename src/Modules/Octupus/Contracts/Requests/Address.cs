@@ -9,4 +9,5 @@ public sealed record UpdateAddressRequest(string AddressId, string? Street = nul
     string? CityId = null); 
 
 public sealed record DeleteAddressRequest(string AddressId, bool SoftDelete = true);
-public sealed record GetAddressRequest(int PageIndex = 1, int PageSize = 50, bool SoftDeleted = false): PaginatedQueryBase(PageIndex, PageSize, SoftDeleted);
+public sealed record GetAddressRequest(int PageIndex = 1, int PageSize = 50): PaginatedQueryBase(PageIndex, PageSize);
+public sealed record GetAddressById(string addressId);

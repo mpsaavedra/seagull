@@ -35,7 +35,11 @@ public class ErrorTests
         var error3 = Error.None;
 
         Assert.True(error1 == error2);
+#pragma warning disable CS1718 // Comparison made to same variable
+
         Assert.False(error1 != error1);
+#pragma warning restore CS1718 // Comparison made to same variable
+
         Assert.False(error1 == error3);
         error1.ShouldBeEquivalentTo(error2);
         error1.ShouldNotBe(error3);

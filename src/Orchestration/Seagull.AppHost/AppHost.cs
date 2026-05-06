@@ -47,13 +47,9 @@ var keycloack = builder
 //     .WithExternalHttpEndpoints();
 
 // 4 - RabbitMq
-var rQUser = builder.AddParameter("rabbitMq-user", "postgres", publishValueAsDefault: true);
-var rQPass = builder.AddParameter("rabbitMq-password", "Dino2025!", publishValueAsDefault: true);
-
 var rabbitMq = builder
-    .AddRabbitMQ("seagull-rabbitmq", userName: rQUser, password: rQPass)
-    // .AddContainer("seagull-rabbitmq", "rabbitmq","management-alpine")
-    .WithExternalHttpEndpoints();
+    .AddContainer("seagull-rabbitmq", "rabbitmq","management-alpine")
+    .WithHttpEndpoint(15672, 15672, "management");
 
 // 5 - Stand Api
 var pos = builder.AddProject<Projects.Pos_Api>("pos-api")

@@ -1,3 +1,4 @@
+using Azure;
 using Marten.Linq.MatchesSql;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -19,13 +20,14 @@ public class AddressEndpoints: IEndpointInstaller
         app.MapPost("/api/address", (CreateAddressRequest request, IMessageBus bus, CancellationToken ct = default) =>
             Result
                 .Create(request, ErrorCodes.ApiErrors.UnProcessableRequest)
-                .Map(_ => new CreateAddressCommand(request.Street, request.InnerAddress, request.CityId))
+                .Map(_ => new CreateAddress(request.Street, request.InnerAddress, request.CityId))
                 .Ensure(x => x is not null)! // place error
-                .Bind<CreateAddressCommand, CreateAddressResponse>(async command =>
+                .Bind<CreateAddress, CreatedAddressResponse>(async command =>
                 {
-                    var response = await bus.InvokeAsync<CreateAddressResponse>(command, ct);
+                    var response = await bus.InvokeAsync<CreatedAddressResponse>(command, ct);
                     return Result.Success(response);
                 })
+                // .Tap<CreatedAddress>(async data => await bus.SendAsync(data))
                 .Match(
                     onSuccess: value => Results.Ok(value),
                     onFailure: error => Results.BadRequest(error)
@@ -43,11 +45,11 @@ public class AddressEndpoints: IEndpointInstaller
             CancellationToken cancellationToken = default) =>
             Result
                 .Create(new GetAddressQuery(
-                    pageIndex, pageSize, false
+                    pageIndex, pageSize
                 ))
                 .Ensure(x => x is not null)!
-                .Bind<GetAddressQuery, GetAddressResponse>(async query =>
-                    await bus.InvokeAsync<GetAddressResponse>(query, cancellationToken))
+                .Bind<GetAddressQuery, GetAddressesResponse>(async query =>
+                    await bus.InvokeAsync<GetAddressesResponse>(query, cancellationToken))
                 .Match(
                     onSuccess: value => Results.Ok(value),
                     onFailure: error => Results.BadRequest(error)
@@ -56,7 +58,7 @@ public class AddressEndpoints: IEndpointInstaller
         app.MapGet("/api/address/{id}", ([FromServices] IMessageBus bus,
             [FromQuery] string id, CancellationToken cancellationToken = default) =>
             Result
-                .Create(new GetByIdAddressQuery(id, false))
+                .Create(new GetByIdAddressQuery(id))
                 .Ensure(x => x is not null)
                 .Bind<GetByIdAddressQuery, AddressDto?>(async query =>
                     await bus.InvokeAsync<AddressDto?>(query, cancellationToken))
