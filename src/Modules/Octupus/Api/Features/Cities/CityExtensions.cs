@@ -6,16 +6,15 @@ namespace Octupus.Api.Features.Cities;
 
 public partial class City
 {
-    public static Result<City> Create(string name, string town, string state,
+    public static City Create(string name, string town, string state,
         string? zipCode = null) =>
-        Result
-            .Create(new City()
+            new City()
             {
                 Name = name,
                 ZipCode = zipCode,
                 Town = town,
                 State = state
-            });
+            };
 
     public Result Update(string? name = null, string? town = null,
         string? zipCode = null, string? state = null) =>

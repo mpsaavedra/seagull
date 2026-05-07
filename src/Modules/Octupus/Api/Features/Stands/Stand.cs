@@ -18,15 +18,6 @@ public partial class Stand : AuditableEntity, IMap<StandDto>
 {
     private bool _isAvailable = true;
 
-    public static Stand Create(string name, bool isAvailable, string? description, int? capacity) =>
-        new()
-        {
-            Name = name,
-            IsAvailable = isAvailable,
-            Description = description,
-            Capacity = capacity
-        };
-
     /// <summary>
     ///  a name to call or refer to the Stand
     /// </summary>

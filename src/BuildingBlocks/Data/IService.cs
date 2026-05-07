@@ -3,21 +3,20 @@ using System.Linq.Expressions;
 
 namespace Seagull.Data;
 
-public interface IService<TEntity> where TEntity: class, IEntity
+public interface IService<TEntity> where TEntity : class, IEntity
 {
-    Task<Maybe<TEntity>> FindByIdAsync(string id, CancellationToken cancellationToken = default);
+    Task<Maybe<TEntity>> FindByIdAsync(string id, bool softDeleted = false, CancellationToken cancellationToken = default);
     Task<Maybe<TEntity>> FirstOrDefaultAsync(Expression<Func<TEntity, bool>>? expression = null,
-        CancellationToken cancellationToken = default);
-    Task<Maybe<(IQueryable<TEntity> data, bool hasPreviousPage, bool hasNextPage)>> GetAllAsync(
+        bool softDeleted = false, CancellationToken cancellationToken = default);
+    Task<Maybe<(IQueryable<TEntity> Data, bool HasPreviousPage, bool HasNextPage)>> GetAllAsync(
         Expression<Func<TEntity, bool>>? predicate = null,
         int pageIndex = 1, int pageSize = 50,
-        bool includeSoftDeleted = false,
-        CancellationToken cancellationToken = default);
+        bool includeSoftDeleted = false, CancellationToken cancellationToken = default);
     Task<Maybe<string>> AddAsync(TEntity entity, CancellationToken cancellationToken = default);
     Task<Maybe<bool>> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default);
-    Task<Maybe<bool>> DeleteAsync(TEntity entity, bool softdelete = true, CancellationToken cancellationToken = default);
-    Task<Maybe<long>> LongCountAsync(Expression<Func<TEntity, bool>>? expression = null,  bool softdelete = true, 
+    Task<Maybe<bool>> DeleteAsync(TEntity entity, bool softDelete = true, CancellationToken cancellationToken = default);
+    Task<Maybe<long>> LongCountAsync(Expression<Func<TEntity, bool>>? expression = null, bool softDeleted = false,
         CancellationToken cancellationToken = default);
-    Task<Maybe<bool>> AnyAsync(Expression<Func<TEntity, bool>>? expression = null,  bool softdelete = true, 
+    Task<Maybe<bool>> AnyAsync(Expression<Func<TEntity, bool>>? expression = null, bool softDeleted = false,
         CancellationToken cancellationToken = default);
 }

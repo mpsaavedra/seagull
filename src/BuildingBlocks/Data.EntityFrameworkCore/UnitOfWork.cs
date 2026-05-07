@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Seagull.Data;
 using Seagull.Messaging;
 using Seagull.Data.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Seagull.Data;
 
@@ -9,14 +10,13 @@ namespace Seagull.Data;
 /// Unit of Work implementation that uses IMessageBus to ensure
 /// domain events are published as part of the transaction.
 /// </summary>
-public class UnitOfWork<TDbContext>(TDbContext dbContext, IMessageBus messageBus) : IUnitOfWork
+public class UnitOfWork<TDbContext>(TDbContext dbContext, IMessageBus messageBus, IServiceProvider provider) : IUnitOfWork
     where TDbContext : DbContext
 {
     private readonly TDbContext _dbContext = dbContext;
     private readonly IMessageBus _messageBus = messageBus;
-    private readonly Dictionary<Type, object> _repositories = new();
 
-    public async Task<Maybe<TResult>> ExecuteAsync<TResult>(Func<Task<TResult>> operation, 
+    public async Task<Maybe<TResult>> ExecuteAsync<TResult>(Func<Task<TResult>> operation,
         CancellationToken cancellationToken = default)
     {
         var strategy = _dbContext.Database.CreateExecutionStrategy();
@@ -81,20 +81,12 @@ public class UnitOfWork<TDbContext>(TDbContext dbContext, IMessageBus messageBus
     }
 
     public IRepository<TEntity> Repository<TEntity>()
-        where TEntity : class, IEntity
-    {
-        var type = typeof(TEntity);
+        where TEntity : class, IEntity =>
+        provider.GetRequiredService<IRepository<TEntity>>();
 
-        if (_repositories.TryGetValue(type, out var repository))
-        {
-            return (IRepository<TEntity>)repository;
-        }
-
-        var repositoryInstance = new Repository<TEntity, TDbContext>(_dbContext);
-        _repositories.Add(type, repositoryInstance);
-
-        return repositoryInstance;
-    }
+    public IService<TEntity> Service<TEntity>()
+        where TEntity : class, IEntity =>
+        provider.GetRequiredService<IService<TEntity>>();
 
     public void Dispose()
     {

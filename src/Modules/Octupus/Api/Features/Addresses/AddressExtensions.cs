@@ -11,24 +11,20 @@ namespace Octupus.Api.Features.Addresses;
 
 public partial class Address
 {
-    public static Result<Address> Create(string street, string innerAddress, string cityId) =>
-        Result
-            .Create(new Address()
-            {
-                Street = street,
-                InnerAddress = innerAddress,
-                CityId = cityId
-            })
-            .Ensure(x => !string.IsNullOrEmpty(x.Street), ErrorCodes.OctupusApi.AddressStreetCouldNotBeNull)
-            .Ensure(x => !string.IsNullOrEmpty(x.InnerAddress), ErrorCodes.OctupusApi.AddressInnerAddressCouldNotBeNull)
-            .Ensure(x => !string.IsNullOrEmpty(x.CityId), ErrorCodes.OctupusApi.AddressCityIdCouldNotBeNull);
+    public static Address Create(string street, string innerAddress, string cityId) =>
+        new Address()
+        {
+            Street = street,
+            InnerAddress = innerAddress,
+            CityId = cityId
+        };
 
     public Result UpdateAddress(string street, string innerAddress, string cityId) =>
         Result
             .Assign(this, !string.IsNullOrEmpty(street), x => x.Street = street)
             .Assign(this, !string.IsNullOrEmpty(innerAddress), x => x.InnerAddress = innerAddress)
             .Assign(this, !string.IsNullOrEmpty(CityId), x => x.CityId = cityId);
-            
+
     public Result AddCustomer(Customer customer) =>
         Result
             .Check(this, x => x.Customers.Contains(customer), ErrorCodes.OctupusApi.AddressCustomerAlreadyExists)
@@ -69,5 +65,5 @@ public partial class Address
             .Check(this, x => !x.Warehouses.Contains(warehouse), ErrorCodes.OctupusApi.AddressWarehouseDoesNotExists)
             .Bind(this, x => x.Warehouses.Remove(warehouse));
 
-        
+
 }

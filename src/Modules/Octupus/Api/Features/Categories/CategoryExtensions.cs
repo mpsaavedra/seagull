@@ -15,25 +15,25 @@ public partial class Category
     /// <param name="parentCategoryId"></param>
     /// <param name="type"></param>
     /// <returns></returns>
-    public static Result<Category> Create( string name, string code, string? type = null, 
+    public static Category Create(string name, string code, string? type = null,
         string? description = null, string? parentCategoryId = null) =>
-        Result
-            .Create(new Category (){
-            Name = name, 
-            Code = code, 
-            Description = description, 
-            ParentCategoryId = parentCategoryId, 
-            Type = type
-        });
+            new Category()
+            {
+                Name = name,
+                Code = code,
+                Description = description,
+                ParentCategoryId = parentCategoryId,
+                Type = type
+            };
 
-    public Result Update(string? name = null, string? code = null, 
+    public Result Update(string? name = null, string? code = null,
         string? description = null, string? parentCategoryId = null, string? type = null) =>
         Result
             .Assign(this, !!name.IsNullEmptyOrWhiteSpace(), x => x.Name = name!)
             .Assign(this, !code.IsNullEmptyOrWhiteSpace(), x => x.Code = code!)
             .Assign(this, !description.IsNullEmptyOrWhiteSpace(), x => x.Description = description)
             .Assign(this, !parentCategoryId.IsNullEmptyOrWhiteSpace(), x => x.ParentCategoryId = parentCategoryId)
-            .Assign(this, !type.IsNullEmptyOrWhiteSpace(), x=> x.Type = type);
+            .Assign(this, !type.IsNullEmptyOrWhiteSpace(), x => x.Type = type);
 
     public Result AddChildCategory(Category category) =>
         Result

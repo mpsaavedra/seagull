@@ -28,14 +28,14 @@ public class ApplicationDbContext : DbContext
     {
     }
 
-    public DbSet<Address> addresses => Set<Address>();
+    public DbSet<Address> Addresses => Set<Address>();
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<City> Cities => Set<City>();
     public DbSet<Customer> Customers => Set<Customer>();
     public DbSet<Invoice> Invoices => Set<Invoice>();
     public DbSet<InvoiceProduct> invoiceProducts => Set<InvoiceProduct>();
     public DbSet<PurchaseInvoice> PurchaseInvoices => Set<PurchaseInvoice>();
-    public DbSet<MeasureUnit>  MeasureUnits => Set<MeasureUnit>();
+    public DbSet<MeasureUnit> MeasureUnits => Set<MeasureUnit>();
     public DbSet<Currency> Currencies => Set<Currency>();
     public DbSet<Money> Moneys => Set<Money>();
     public DbSet<PurchasePayment> PurchasePayments => Set<PurchasePayment>();

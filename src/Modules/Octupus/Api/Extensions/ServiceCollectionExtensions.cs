@@ -13,13 +13,16 @@ namespace Octupus.Api;
 
 public static class ServiceCollectionExtensions
 {
-    public static void InstallOctupusServices<TContext>(this WebApplicationBuilder builder,  
+    public static void InstallOctupusServices<TContext>(this WebApplicationBuilder builder,
         Action<DbContextOptionsBuilder>? optionsAction = null, params Type[] types)
-        where TContext: DbContext
+        where TContext : DbContext
     {
+        // configure the DbContext and DbContextFactory
         builder.Services.AddDbContext<TContext>(optionsAction);
+        builder.Services.AddDbContextFactory<TContext>(optionsAction);
+
         builder.Services.AddScoped<IUnitOfWork, UnitOfWork<TContext>>();
-        
+
         // types.ForEach(x => builder.InstallServicesFromAssembly(x.Assembly, types));
         builder.InstallServicesFromAssembly(OctupusApiAssembly.Assembly, types);
         builder.InstallServicesFromAssembly(WolverineMessagingAssembly.Assembly, new List<Type>()
@@ -27,7 +30,7 @@ public static class ServiceCollectionExtensions
             typeof(ServiceCollectionExtensions)
         }.ToArray());
         builder.AddSeagullServices();
-        
+
     }
 
     public static void UseOctupusServices(this WebApplication app)
