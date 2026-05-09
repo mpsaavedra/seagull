@@ -40,7 +40,6 @@
     <Folder Include="Features/Purchases/" />
     <Folder Include="Features/Sales/" />
     <Folder Include="Features/Shippings/" />
-    <Folder Include="Features/Stands/" />
     <Folder Include="Features/Suppliers/" />
     <Folder Include="Features/Warehouses/" />
   </ItemGroup>
