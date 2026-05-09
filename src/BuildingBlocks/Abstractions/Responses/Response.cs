@@ -94,7 +94,7 @@ public record PaginatedResponse<T> : Response
     /// <summary>
     /// gets the returned data of response
     /// </summary>
-    public IQueryable<T>? Data { get; private set; } = new List<T>().AsQueryable();
+    public List<T>? Data { get; private set; }
 
     /// <summary>
     /// returns a new <see cref="PaginatedResponse"/> instance
@@ -104,7 +104,7 @@ public record PaginatedResponse<T> : Response
     /// <param name="message"></param>
     /// <param name="errors"></param>
     /// <returns></returns>
-    public static PaginatedResponse<T> CreatePaginated(IQueryable<T>? data,
+    public static PaginatedResponse<T> CreatePaginated(List<T>? data,
         bool hasPreviousPage = false, bool hasNextPage = false,
         bool success = true,
         string? message = null,

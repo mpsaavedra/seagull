@@ -11,8 +11,9 @@ public class OctupusApiServiceInstaller : IServiceInstaller
 {
     public void InstallServices(WebApplicationBuilder builder, params Type[] types)
     {
-        builder.Services.AddTransientAsMatchingInterface(Assembly.GetExecutingAssembly());
-        builder.Services.AddScopedAsMatchingInterface(Assembly.GetExecutingAssembly());
+        builder.Services.AddSingletonMatchingInterface(OctupusApiAssembly.Assembly);
+        builder.Services.AddScopedAsMatchingInterface(OctupusApiAssembly.Assembly);
+        builder.Services.AddTransientAsMatchingInterface(OctupusApiAssembly.Assembly);
         builder.Services.AddAutoMapper(GetType().Assembly);
     }
 

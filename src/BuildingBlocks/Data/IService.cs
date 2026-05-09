@@ -8,7 +8,7 @@ public interface IService<TEntity> where TEntity : class, IEntity
     Task<Maybe<TEntity>> FindByIdAsync(string id, bool softDeleted = false, CancellationToken cancellationToken = default);
     Task<Maybe<TEntity>> FirstOrDefaultAsync(Expression<Func<TEntity, bool>>? expression = null,
         bool softDeleted = false, CancellationToken cancellationToken = default);
-    Task<Maybe<(IQueryable<TEntity> Data, bool HasPreviousPage, bool HasNextPage)>> GetAllAsync(
+    Task<Maybe<(List<TEntity> Data, bool HasPreviousPage, bool HasNextPage)>> GetAllAsync(
         Expression<Func<TEntity, bool>>? predicate = null,
         int pageIndex = 1, int pageSize = 50,
         bool includeSoftDeleted = false, CancellationToken cancellationToken = default);

@@ -16,7 +16,7 @@ public interface IAddressService : IService<Address>
 {
 }
 
-public class AddressService : Service<Address, ApplicationDbContext>, IAddressService, ITransientLifescope
+public class AddressService : Service<Address, ApplicationDbContext>, IAddressService, IScopedLifescope
 {
     private readonly ILogger<AddressService> _logger;
 

@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Octupus.Contracts.Dtos;
 using Octupus.Contracts.Events;
-using Octupus.Contracts.Queries;
 using Seagull;
 using Seagull.Abstractions.Responses;
 using Seagull.Extensions;
@@ -89,15 +88,15 @@ public class AddressEndpoints : IEndpointInstaller
                     PageSize = pageSize,
                     SoftDeleted = false
                 })
-                .Bind<GetAddress?, PaginatedResponse<Address>>(async cmd =>
+                .Bind<GetAddress?, PaginatedResponse<Address>>(async qry =>
                 {
-                    if (cmd is null)
+                    if (qry is null)
                     {
                         return Result.Failure<PaginatedResponse<Address>>(
                             ErrorCodes.ApiErrors.RequestDataCouldNotBeNull
                         )!;
                     }
-                    var response = await bus.InvokeAsync<(IQueryable<Address> Data, bool HasPreviousPage, bool HasNextPage)>(cmd!, ct);
+                    var response = await bus.InvokeAsync<(List<Address> Data, bool HasPreviousPage, bool HasNextPage)>(qry!, ct);
                     return Result.Success(PaginatedResponse<Address>.CreatePaginated(
                         response.Data,
                         response.HasPreviousPage,

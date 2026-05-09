@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using Octupus.Api.Data;
 using Octupus.Contracts.Dtos;
 using Octupus.Contracts.Events;
-using Octupus.Contracts.Queries;
 using Seagull.Data;
 using Seagull.Messaging;
 
@@ -87,7 +86,7 @@ public class AddressHandler(ILogger<AddressHandler> logger)
         return result.Value;
     }
 
-    public async Task<(IQueryable<Address> Data, bool HasPreviousPage, bool HasNextPage)?> Handle(
+    public async Task<(List<Address> Data, bool HasPreviousPage, bool HasNextPage)?> Handle(
         GetAddress command,
         [FromServices] IAddressService service,
         CancellationToken cancellationToken = default)

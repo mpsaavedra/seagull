@@ -1,6 +1,7 @@
 using System;
 using System.Linq.Expressions;
 using AutoMapper;
+using ImTools;
 using JasperFx.Core.IoC;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -54,7 +55,7 @@ public class Service<TEntity, TDbContext>
         return entity != null ? Maybe<TEntity>.From(entity) : Maybe<TEntity>.None!;
     }
 
-    public async Task<Maybe<(IQueryable<TEntity> Data, bool HasPreviousPage, bool HasNextPage)>> GetAllAsync(
+    public async Task<Maybe<(List<TEntity> Data, bool HasPreviousPage, bool HasNextPage)>> GetAllAsync(
         Expression<Func<TEntity, bool>>? predicate = null,
         int pageIndex = 1, int pageSize = 50,
         bool includeSoftDeleted = false, CancellationToken cancellationToken = default)
@@ -80,10 +81,11 @@ public class Service<TEntity, TDbContext>
             pageIndex = (pageIndex - 1) * pageSize;
             query = query.Skip(pageIndex).Take(pageSize);
         }
+        var list = query.ToList();
 
         return await Task.FromResult(
-            Maybe<(IQueryable<TEntity> Data, bool HasPreviousPage, bool HasNextPage)>.From(
-            (query, hasPreviousPage, hasNextPage)));
+            Maybe<(List<TEntity> Data, bool HasPreviousPage, bool HasNextPage)>
+                .From((list, hasPreviousPage, hasNextPage)));
     }
 
     public async Task<Maybe<string>> AddAsync(TEntity entity, CancellationToken cancellationToken = default)

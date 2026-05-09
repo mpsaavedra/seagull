@@ -1,6 +1,6 @@
 using Seagull.Abstractions.Requests;
 
-namespace Octupus.Contracts.Queries;
+namespace Octupus.Api.Features.Addresses;
 
 public sealed record GetAddress : PaginatedQueryBase;
 
