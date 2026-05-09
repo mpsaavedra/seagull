@@ -104,10 +104,16 @@ public record PaginatedResponse<T> : Response
     /// <param name="message"></param>
     /// <param name="errors"></param>
     /// <returns></returns>
-    public static PaginatedResponse<T> Create(IQueryable<T>? data, bool success = true, string? message = null, List<string>? errors = null) =>
-        new PaginatedResponse<T>
+    public static PaginatedResponse<T> CreatePaginated(IQueryable<T>? data,
+        bool hasPreviousPage = false, bool hasNextPage = false,
+        bool success = true,
+        string? message = null,
+        List<string>? errors = null) =>
+        new()
         {
             Data = data,
+            HasPreviousPage = hasPreviousPage,
+            HasNextPage = hasNextPage,
             Success = success,
             Message = message,
             Errors = errors is not null ? errors : []

@@ -90,10 +90,6 @@ public class Service<TEntity, TDbContext>
     {
         try
         {
-            if (DbContext.Database.CurrentTransaction is null)
-            {
-                await DbContext.Database.BeginTransactionAsync(cancellationToken);
-            }
 
             var entityEntry = await DbContext.Set<TEntity>().AddAsync(entity, cancellationToken);
 
@@ -103,7 +99,6 @@ public class Service<TEntity, TDbContext>
         }
         catch (Exception)
         {
-            await DbContext.Database.RollbackTransactionAsync(cancellationToken);
             throw;
         }
     }

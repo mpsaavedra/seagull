@@ -14,8 +14,6 @@ namespace Octupus.Api.Features.Addresses;
 
 public interface IAddressService : IService<Address>
 {
-    // Task<GetAddressesResponse> GetAddresses(GetAddressRequest request, CancellationToken cancellationToken = default);
-    // Task<AddressDto> GetAddressById(GetAddressById request, CancellationToken cancellationToken = default);
 }
 
 public class AddressService : Service<Address, ApplicationDbContext>, IAddressService, ITransientLifescope
@@ -26,15 +24,4 @@ public class AddressService : Service<Address, ApplicationDbContext>, IAddressSe
     {
         _logger = logger;
     }
-
-    // public Task<AddressDto> GetAddressById(GetAddressById request, CancellationToken cancellationToken = default)
-    // {
-    //     throw new NotImplementedException();
-    // }
-
-
-    // public async Task<GetAddressesResponse> GetAddresses(GetAddressRequest request, CancellationToken cancellationToken = default)
-    // {
-    //     return new GetAddressesResponse(new List<AddressDto>().AsQueryable());
-    // }
 }
