@@ -21,7 +21,7 @@ public class WarehouseEndpoints : IEndpointInstaller
                 })
                 .Bind(async qry =>
                 {
-                    var response = await bus.InvokeAsync<(List<Warehouse> Data, bool HasPreviousPage, bool HasNextPage)>(qry, ct);
+                    var response = await bus.InvokeAsync<(List<Warehouse> Data, bool HasPreviousPage, bool HasNextPage)>(qry!, ct);
                     return Result.Success(PaginatedResponse<Warehouse>.CreatePaginated(
                         response.Data, response.HasPreviousPage, response.HasNextPage
                     ));
