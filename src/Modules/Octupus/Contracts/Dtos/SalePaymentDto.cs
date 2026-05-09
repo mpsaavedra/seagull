@@ -17,14 +17,14 @@ public sealed record SalePaymentDto : DtoBase
 }
 
 
-public sealed record SalePaymentListDto : DtoBase
+public sealed record SalePaymentDetailsDto : DtoBase
 {
-    public SaleListDto Sale { get; set; }
+    public SaleDetailsDto Sale { get; set; }
     public decimal? Tax { get; set; } = 0.0m;
     public decimal? Discount { get; set; } = 0.0m;
     public decimal TotalPrice { get; set; } = 0.0m;
     public decimal SubTotal { get; set; } = 0.0m;
-    public MoneyListDto Price { get; set; }
+    public MoneyDetailsDto Price { get; set; }
     public DateTime Date { get; set; }
     public DateTime? DueDate { get; set; }
     public PaymentType PaymentType { get; set; }

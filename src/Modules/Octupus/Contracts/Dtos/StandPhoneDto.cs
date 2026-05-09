@@ -11,9 +11,9 @@ public sealed record StandPhoneDto : DtoBase
 }
 
 
-public sealed record StandPhoneListDto : DtoBase
+public sealed record StandPhoneDetailsDto : DtoBase
 {
-    public StandListDto Stand { get; set; }
+    public StandDetailsDto Stand { get; set; }
     public string Number { get; set; }
     public PhoneType PhoneType { get; set; }
 }

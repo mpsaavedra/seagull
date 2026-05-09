@@ -13,11 +13,11 @@ public sealed record ShippingDto : DtoBase
 }
 
 
-public sealed record ShippingListDto : DtoBase
+public sealed record ShippingDetailsDto : DtoBase
 {
     public ShippingType ShippingType { get; set; }
     public string? DriverDetails { get; set; }
-    public ICollection<PurchaseListDto> Purchases { get; set; } = [];
-    public ICollection<SaleListDto> Sales { get; set; } = [];
-    public ICollection<StandSaleListDto> StandSales { get; set; } = [];
+    public ICollection<PurchaseDetailsDto> Purchases { get; set; } = [];
+    public ICollection<SaleDetailsDto> Sales { get; set; } = [];
+    public ICollection<StandSaleDetailsDto> StandSales { get; set; } = [];
 }

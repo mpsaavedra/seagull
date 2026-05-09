@@ -19,9 +19,9 @@ public sealed record StandSaleDto : DtoBase
 }
 
 
-public sealed record StandSaleListDto : DtoBase
+public sealed record StandSaleDetailsDto : DtoBase
 {
-    public StandListDto Stand { get; set; }
+    public StandDetailsDto Stand { get; set; }
     public string Number { get; set; }
     public DateTime Date { get; set; } = DateTime.UtcNow;
     public DateTime? DueDate { get; set; }
@@ -29,8 +29,8 @@ public sealed record StandSaleListDto : DtoBase
     public decimal? Discount { get; set; } = 0.0m;
     public decimal TotalPrice { get; set; } = 0.0m;
     public decimal SubTotal { get; set; } = 0.0m;
-    public ICollection<StandSaleProductListDto> SaleProducts { get; set; } = [];
-    public ICollection<StandSalePaymentListDto> SalePayments { get; set; } = [];
+    public ICollection<StandSaleProductDetailsDto> SaleProducts { get; set; } = [];
+    public ICollection<StandSalePaymentDetailsDto> SalePayments { get; set; } = [];
     public decimal? ShippingCost { get; set; }
-    public ShippingListDto? Shipping { get; set; }
+    public ShippingDetailsDto? Shipping { get; set; }
 }

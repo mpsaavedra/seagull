@@ -15,15 +15,15 @@ public sealed record SaleDto : DtoBase
     public ICollection<SalePaymentDto> SalePayments { get; set; } = [];
 }
 
-public sealed record SaleListDto : DtoBase
+public sealed record SaleDetailsDto : DtoBase
 {
-    public WarehouseListDto Warehouse { get; set; }
-    public CustomerListDto? Customer { get; set; }
+    public WarehouseDetailsDto Warehouse { get; set; }
+    public CustomerDetailsDto? Customer { get; set; }
     public string Number { get; set; }
     public DateTime Date { get; set; } = DateTime.UtcNow;
     public DateTime? DueDate { get; set; }
     public decimal? ShippingCost { get; set; }
-    public ShippingListDto? Shipping { get; set; }
-    public ICollection<SaleProductListDto> SaleProducts { get; set; } = [];
-    public ICollection<SalePaymentListDto> SalePayments { get; set; } = [];
+    public ShippingDetailsDto? Shipping { get; set; }
+    public ICollection<SaleProductDetailsDto> SaleProducts { get; set; } = [];
+    public ICollection<SalePaymentDetailsDto> SalePayments { get; set; } = [];
 }

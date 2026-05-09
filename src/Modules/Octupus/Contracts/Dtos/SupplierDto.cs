@@ -12,11 +12,11 @@ public sealed record SupplierDto : DtoBase
 }
 
 
-public sealed record SupplierListDto : DtoBase
+public sealed record SupplierDetailsDto : DtoBase
 {
     public string Name { get; set; }
-    public AddressListDto? Address { get; set; }
-    public ICollection<SupplierPhoneListDto> ContactPhones { get; set; } = [];
-    public ICollection<PurchaseProductListDto> PurchaseProducts { get; set; } = [];
-    public ICollection<InvoiceListDto> Invoices { get; set; } = [];
+    public AddressDetailsDto? Address { get; set; }
+    public ICollection<SupplierPhoneDetailsDto> ContactPhones { get; set; } = [];
+    public ICollection<PurchaseProductDetailsDto> PurchaseProducts { get; set; } = [];
+    public ICollection<InvoiceDetailsDto> Invoices { get; set; } = [];
 }

@@ -6,14 +6,14 @@ public sealed record MeasureUnitDto : DtoBase
 {
     public string Name { get; set; }
     public string? Symbol { get; set; }
-    public ICollection<ProductDto> Products { get; set; } = [];
-    public ICollection<InvoiceProductDto> InvoiceProducts { get; set; } = [];
-    public ICollection<PurchaseInvoiceProductDto> PurchaseInvoiceProducts { get; set; } = [];
 }
 
 
-public sealed record MeasureUnitListDto : DtoBase
+public sealed record MeasureUnitDetailsDto : DtoBase
 {
     public string Name { get; set; }
     public string? Symbol { get; set; }
+    public ICollection<ProductDto> Products { get; set; } = [];
+    public ICollection<InvoiceProductDto> InvoiceProducts { get; set; } = [];
+    public ICollection<PurchaseInvoiceProductDto> PurchaseInvoiceProducts { get; set; } = [];
 }

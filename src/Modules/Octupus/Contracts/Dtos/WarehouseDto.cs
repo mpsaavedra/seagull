@@ -16,15 +16,15 @@ public sealed record WarehouseDto : DtoBase
 }
 
 
-public sealed record WarehouseListDto : DtoBase
+public sealed record WarehouseDetailsDto : DtoBase
 {
     public string Name { get; set; }
-    public AddressListDto? Address { get; set; }
-    public ICollection<WarehousePhoneListDto> ContactPhones { get; set; } = [];
+    public AddressDetailsDto? Address { get; set; }
+    public ICollection<WarehousePhoneDetailsDto> ContactPhones { get; set; } = [];
     public bool IsAvailable { get; set; }
-    public ICollection<PurchaseListDto> Purchases { get; set; } = [];
-    public ICollection<SaleListDto> Sales { get; set; } = [];
-    public ICollection<WarehouseProductListDto> Products { get; set; } = [];
-    public ICollection<StandProductListDto> StandProducts { get; set; } = [];
-    public ICollection<SaleProductListDto> SaleProducts { get; set; } = [];
+    public ICollection<PurchaseDetailsDto> Purchases { get; set; } = [];
+    public ICollection<SaleDetailsDto> Sales { get; set; } = [];
+    public ICollection<WarehouseProductDetailsDto> Products { get; set; } = [];
+    public ICollection<StandProductDetailsDto> StandProducts { get; set; } = [];
+    public ICollection<SaleProductDetailsDto> SaleProducts { get; set; } = [];
 }

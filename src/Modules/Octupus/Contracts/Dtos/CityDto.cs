@@ -8,15 +8,14 @@ public sealed record CityDto : DtoBase
     public string? ZipCode { get; set; }
     public string Town { get; set; }
     public string State { get; set; }
-    public ICollection<AddressDto> Addresses { get; set; } = [];
 }
 
 
-public sealed record CityListDto : DtoBase
+public sealed record CityDetailsDto : DtoBase
 {
     public string Name { get; set; }
     public string? ZipCode { get; set; }
     public string Town { get; set; }
     public string State { get; set; }
-    public ICollection<AddressListDto> Addresses { get; set; } = [];
+    public ICollection<AddressDto> Addresses { get; set; } = [];
 }

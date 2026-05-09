@@ -6,6 +6,12 @@ public sealed record MoneyDto : DtoBase
 {
     public decimal Amount { get; set; }
     public CurrencyDto Currency { get; set; }
+}
+
+public sealed record MoneyDetailsDto : DtoBase
+{
+    public decimal Amount { get; set; }
+    public CurrencyDto Currency { get; set; }
     public ICollection<InvoiceProductDto> InvoiceProducts { get; set; } = [];
     public ICollection<PurchaseInvoiceProductDto> PurchaseInvoiceProducts { get; set; } = [];
     public ICollection<ProductDto> Products { get; set; } = [];
@@ -15,10 +21,4 @@ public sealed record MoneyDto : DtoBase
     public ICollection<StandSaleProductDto> StandSaleProducts { get; set; } = [];
     public ICollection<StandProductDto> StandProducts { get; set; } = [];
     public ICollection<SaleProductDto> SaleProducts { get; set; } = [];
-}
-
-public sealed record MoneyListDto : DtoBase
-{
-    public decimal Amount { get; set; }
-    public CurrencyDto Currency { get; set; }
 }

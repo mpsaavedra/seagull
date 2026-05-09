@@ -15,14 +15,14 @@ public sealed record StandProductDto : DtoBase
 }
 
 
-public sealed record StandProductListDto : DtoBase
+public sealed record StandProductDetailsDto : DtoBase
 {
-    public StandListDto Stand { get; set; }
-    public ProductListDto Product { get; set; }
+    public StandDetailsDto Stand { get; set; }
+    public ProductDetailsDto Product { get; set; }
     public decimal Quantity { get; set; } = 0.0m;
     public decimal Price { get; set; } = 0.0m;
-    public MoneyListDto Cost { get; set; }
+    public MoneyDetailsDto Cost { get; set; }
     public decimal? ReOrderLevel { get; set; } = -1;
-    public ICollection<StandSaleProductListDto> StandSaleProducts { get; set; } = [];
-    public WarehouseListDto Warehouse { get; set; }
+    public ICollection<StandSaleProductDetailsDto> StandSaleProducts { get; set; } = [];
+    public WarehouseDetailsDto Warehouse { get; set; }
 }

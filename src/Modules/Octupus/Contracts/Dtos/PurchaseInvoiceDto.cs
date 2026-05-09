@@ -12,11 +12,11 @@ public sealed record PurchaseInvoiceDto : DtoBase
 }
 
 
-public sealed record PurchaseInvoiceLIstDto : DtoBase
+public sealed record PurchaseInvoiceDetailsDto : DtoBase
 {
-    public PurchaseListDto Purchase { get; set; }
+    public PurchaseDto Purchase { get; set; }
 
     public string Number { get; set; }
     public DateTime Date { get; set; } = DateTime.UtcNow;
-    public ICollection<PurchaseInvoiceProductListDto> Products { get; set; } = [];
+    public ICollection<PurchaseInvoiceProductDto> Products { get; set; } = [];
 }

@@ -13,9 +13,9 @@ public sealed record PurchasePaymentDto : DtoBase
 }
 
 
-public sealed record PurchasePaymentListDto : DtoBase
+public sealed record PurchasePaymentDetailsDto : DtoBase
 {
-    public PurchaseListDto Purchase { get; set; }
+    public PurchaseDto Purchase { get; set; }
     public decimal Amount { get; set; }
     public DateTime Date { get; set; }
     public DateTime? DueDate { get; set; }

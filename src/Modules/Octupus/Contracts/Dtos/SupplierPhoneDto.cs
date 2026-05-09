@@ -11,9 +11,9 @@ public sealed record SupplierPhoneDto : DtoBase
 }
 
 
-public sealed record SupplierPhoneListDto : DtoBase
+public sealed record SupplierPhoneDetailsDto : DtoBase
 {
     public string Number { get; set; }
     public PhoneType PhoneType { get; set; }
-    public SupplierListDto Supplier { get; set; }
+    public SupplierDetailsDto Supplier { get; set; }
 }

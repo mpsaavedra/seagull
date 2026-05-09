@@ -11,9 +11,9 @@ public sealed record WarehousePhoneDto : DtoBase
 }
 
 
-public sealed record WarehousePhoneListDto : DtoBase
+public sealed record WarehousePhoneDetailsDto : DtoBase
 {
-    public WarehouseListDto Warehouse { get; set; }
+    public WarehouseDetailsDto Warehouse { get; set; }
     public string Number { get; set; }
     public PhoneType PhoneType { get; set; }
 }

@@ -15,7 +15,7 @@ public sealed record PurchaseProductDto : DtoBase
     public SupplierDto? Supplier { get; set; }
 }
 
-public sealed record PurchaseProductListDto : DtoBase
+public sealed record PurchaseProductDetailsDto : DtoBase
 {
     public ProductList Dto Product { get; set; }
     public DateTime? Date { get; set; }

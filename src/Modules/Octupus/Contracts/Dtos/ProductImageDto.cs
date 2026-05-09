@@ -12,10 +12,10 @@ public sealed record ProductImageDto : DtoBase
 }
 
 
-public sealed record ProductImageListDto : DtoBase
+public sealed record ProductImageDetailsDto : DtoBase
 {
     public string ImageUrl { get; set; }
     public int? Order { get; set; } = -1;
-    public ProductListDto Product { get; set; }
+    public ProductDto Product { get; set; }
     public string? Alt { get; set; }
 }

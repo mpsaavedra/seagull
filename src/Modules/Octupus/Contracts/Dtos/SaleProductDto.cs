@@ -14,13 +14,13 @@ public sealed record SaleProductDto : DtoBase
 }
 
 
-public sealed record SaleProductListDto : DtoBase
+public sealed record SaleProductDetailsDto : DtoBase
 {
-    public ProductListDto Product { get; set; }
+    public ProductDetailsDto Product { get; set; }
     public SaleDto Sale { get; set; }
-    public WarehouseLIstDto Warehouse { get; set; }
+    public WarehouseDetailsDto Warehouse { get; set; }
     public decimal Quantity { get; set; } = 0.0m;
     public decimal SalePrice { get; set; } = 0.0m;
-    public MoneyListDto SaleCost { get; set; }
+    public MoneyDetailsDto SaleCost { get; set; }
     public string? Details { get; set; }
 }

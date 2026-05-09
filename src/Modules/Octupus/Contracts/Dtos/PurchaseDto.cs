@@ -20,7 +20,7 @@ public sealed record PurchaseDto : DtoBase
 }
 
 
-public sealed record PurchaseListDto : DtoBase
+public sealed record PurchaseDetailsDto : DtoBase
 {
     public string Number { get; set; }
     public DateTime Date { get; set; } = DateTime.UtcNow;
@@ -29,10 +29,10 @@ public sealed record PurchaseListDto : DtoBase
     public decimal? Discount { get; set; } = 0.0m;
     public decimal TotalPrice { get; set; } = 0.0m;
     public decimal SubTotal { get; set; } = 0.0m;
-    public ICollection<PurchaseProductListDto> PurchaseProducts { get; set; } = [];
-    public ICollection<PurchasePaymentListDto> PurchasePayments { get; set; } = [];
-    public PurchaseInvoiceListDto? PurchaseInvoice { get; set; }
-    public WarehouseListDto Warehouse { get; set; }
+    public ICollection<PurchaseProductDto> PurchaseProducts { get; set; } = [];
+    public ICollection<PurchasePaymentDto> PurchasePayments { get; set; } = [];
+    public PurchaseInvoiceDto? PurchaseInvoice { get; set; }
+    public WarehouseDto Warehouse { get; set; }
     public decimal? ShippingCost { get; set; }
-    public ShippingListDto? Shipping { get; set; }
+    public ShippingDto? Shipping { get; set; }
 }

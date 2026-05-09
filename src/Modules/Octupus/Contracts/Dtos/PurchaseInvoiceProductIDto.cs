@@ -15,14 +15,14 @@ public sealed record PurchaseInvoiceProductDto : DtoBase
 }
 
 
-public sealed record PurchaseInvoiceProductListDto : DtoBase
+public sealed record PurchaseInvoiceProductDetailsDto : DtoBase
 {
-    public PurchaseInvoiceListDto PurchaseInvoice { get; set; }
-    public ProductListDto Product { get; set; }
+    public PurchaseInvoiceDto PurchaseInvoice { get; set; }
+    public ProductDetailsDto Product { get; set; }
     public decimal Quantity { get; set; }
     public decimal SalePrice { get; set; }
     public string SaleCostId { get; set; }
-    public MoneyListDto SaleCost { get; set; }
+    public MoneyDto SaleCost { get; set; }
     public string? Details { get; set; }
-    public MeasureUnitListDto? MeasureUnit { get; set; }
+    public MeasureUnitDto? MeasureUnit { get; set; }
 }

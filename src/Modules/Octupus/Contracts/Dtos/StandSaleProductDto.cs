@@ -12,11 +12,11 @@ public sealed record StandSaleProductDto : DtoBase
 }
 
 
-public sealed record StandSaleProductListDto : DtoBase
+public sealed record StandSaleProductDetailsDto : DtoBase
 {
-    public StandSaleListDto StandSale { get; set; }
-    public StandProductListDto StandProduct { get; set; }
+    public StandSaleDetailsDto StandSale { get; set; }
+    public StandProductDetailsDto StandProduct { get; set; }
     public decimal Quantity { get; set; } = 0.0m;
-    public MoneyListDto Cost { get; set; }
+    public MoneyDetailsDto Cost { get; set; }
     public decimal Price { get; set; } = 0.0m;
 }

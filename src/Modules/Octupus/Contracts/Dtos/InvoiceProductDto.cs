@@ -13,12 +13,12 @@ public sealed record InvoiceProductDto : DtoBase
 }
 
 
-public sealed record InvoiceProductListDto : DtoBase
+public sealed record InvoiceProductDetailsDto : DtoBase
 {
-    public ProductListDto Product { get; set; }
-    public InvoiceListDto Invoice { get; set; }
-    public MoneyListDto Cost { get; set; }
-    public MeasureUnitListDto MeasureUnit { get; set; }
+    public ProductDto Product { get; set; }
+    public InvoiceDto Invoice { get; set; }
+    public MoneyDto Cost { get; set; }
+    public MeasureUnitDto MeasureUnit { get; set; }
     public decimal Quantity { get; set; }
     public string? Description { get; set; }
 }

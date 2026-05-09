@@ -9,15 +9,15 @@ public sealed record CategoryDto : DtoBase
     public string? Type { get; set; }
     public string? Description { get; set; }
     public CategoryDto? ParentCategory { get; set; }
-    public ICollection<CategoryDto> ChildCategories { get; set; } = [];
-    public ICollection<ProductDto> Products { get; set; } = [];
 }
 
-public sealed record CategoryListDto : DtoBase
+public sealed record CategoryDetailsDto : DtoBase
 {
     public string Name { get; set; }
     public string Code { get; set; }
     public string? Type { get; set; }
     public string? Description { get; set; }
-    public CategoryListDto? ParentCategory { get; set; }
+    public CategoryDto? ParentCategory { get; set; }
+    public ICollection<CategoryDto> ChildCategories { get; set; } = [];
+    public ICollection<ProductDto> Products { get; set; } = [];
 }

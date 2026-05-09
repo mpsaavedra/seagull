@@ -17,15 +17,15 @@ public sealed record StandDto : DtoBase
 }
 
 
-public sealed record StandListDto : DtoBase
+public sealed record StandDetailsDto : DtoBase
 {
     public string Name { get; set; }
     public string? Description { get; set; }
     public int? Capacity { get; set; }
     public bool IsAvailable { get; set; }
     public StandType StandType { get; set; }
-    public AddressListDto? Address { get; set; }
-    public ICollection<StandPhoneListDto> ContactPhones { get; set; } = [];
-    public ICollection<StandProductListDto> Products { get; set; } = [];
-    public ICollection<StandSaleListDto> Sales { get; set; } = [];
+    public AddressDetailsDto? Address { get; set; }
+    public ICollection<StandPhoneDetailsDto> ContactPhones { get; set; } = [];
+    public ICollection<StandProductDetailsDto> Products { get; set; } = [];
+    public ICollection<StandSaleDetailsDto> Sales { get; set; } = [];
 }
