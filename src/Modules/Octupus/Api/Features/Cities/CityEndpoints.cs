@@ -29,8 +29,8 @@ public class CityEndpoints : IEndpointInstaller
                     ));
                 })
                 .Match(
-                    onSuccess: value => Result.Success(value),
-                    onFailure: error => Result.Failure(error)
+                    onSuccess: value => Results.Ok(value),
+                    onFailure: error => Results.BadRequest(error)
                 ));
     }
 }

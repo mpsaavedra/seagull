@@ -11,7 +11,7 @@ public interface IWarehouseService : IService<Warehouse>
 {
 }
 
-public class WarehouseService(ApplicationDbContext dbContext, IMapper mapper, ILogger logger) :
+public class WarehouseService(ApplicationDbContext dbContext, IMapper mapper, ILogger<WarehouseService> logger) :
     Service<Warehouse, ApplicationDbContext>(dbContext, mapper, logger), IWarehouseService, IScopedLifescope
 {
 }

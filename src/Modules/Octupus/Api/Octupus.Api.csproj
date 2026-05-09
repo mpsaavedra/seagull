@@ -38,7 +38,6 @@
     <Folder Include="Features/Phones/" />
     <Folder Include="Features/Products/" />
     <Folder Include="Features/Purchases/" />
-    <Folder Include="Features/Sales/" />
     <Folder Include="Features/Shippings/" />
     <Folder Include="Features/Suppliers/" />
     <Folder Include="Features/Warehouses/" />

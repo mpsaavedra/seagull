@@ -6,7 +6,7 @@ using Seagull.ServiceInstallers;
 
 namespace Octupus.Api.Features.Customers;
 
-public class CustomerEndoint : IEndpointInstaller
+public class CustomerEndoints : IEndpointInstaller
 {
     public void MapEndpoints(WebApplication app)
     {
@@ -29,8 +29,8 @@ public class CustomerEndoint : IEndpointInstaller
                     ));
                 })
                 .Match(
-                    onSuccess: value => Result.Success(value),
-                    onFailure: error => Result.Failure(error)
+                    onSuccess: value => Results.Ok(value),
+                    onFailure: error => Results.BadRequest(error)
                 ));
     }
 }

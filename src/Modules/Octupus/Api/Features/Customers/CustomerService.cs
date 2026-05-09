@@ -12,7 +12,7 @@ public interface ICustomerService : IService<Customer>
 
 }
 
-public class CustomerService(ApplicationDbContext dbContext, IMapper mapper, ILogger logger) :
+public class CustomerService(ApplicationDbContext dbContext, IMapper mapper, ILogger<CustomerService> logger) :
     Service<Customer, ApplicationDbContext>(dbContext, mapper, logger), ICustomerService, IScopedLifescope
 {
 }

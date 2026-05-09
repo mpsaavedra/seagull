@@ -11,7 +11,7 @@ public interface IStandService : IService<Stand>
 {
 }
 
-public class StandService(ApplicationDbContext dbContext, IMapper mapper, ILogger logger) :
+public class StandService(ApplicationDbContext dbContext, IMapper mapper, ILogger<StandService> logger) :
     Service<Stand, ApplicationDbContext>(dbContext, mapper, logger), IStandService, IScopedLifescope
 {
 }

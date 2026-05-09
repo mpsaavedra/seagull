@@ -4,25 +4,25 @@ using Seagull.Abstractions.Responses;
 using Seagull.Messaging;
 using Seagull.ServiceInstallers;
 
-namespace Octupus.Api.Features.Warehouses;
+namespace Octupus.Api.Features.Sales;
 
-public class WarehouseEndpoints : IEndpointInstaller
+public class SaleEndpoints : IEndpointInstaller
 {
     public void MapEndpoints(WebApplication app)
     {
-        app.MapGet("/api/warehouse", (IMessageBus bus, int pageInex = 1, int pageSize = 50, CancellationToken ct = default) =>
+        app.MapGet("/api/sale", (IMessageBus bus, int pageIndex = 1, int pageSize = 50, CancellationToken ct = default) =>
             Result
-                .Create("ListWarehouses", ErrorCodes.ApiErrors.UnProcessableRequest)
-                .Map(_ => new GetWarehouse()
+                .Create("ListSales", ErrorCodes.ApiErrors.UnProcessableRequest)
+                .Map(_ => new GetSale()
                 {
-                    PageIndex = pageInex,
+                    PageIndex = pageIndex,
                     PageSize = pageSize,
                     SoftDeleted = false
                 })
                 .Bind(async qry =>
                 {
-                    var response = await bus.InvokeAsync<(List<Warehouse> Data, bool HasPreviousPage, bool HasNextPage)>(qry!, ct);
-                    return Result.Success(PaginatedResponse<Warehouse>.CreatePaginated(
+                    var response = await bus.InvokeAsync<(List<Sale> Data, bool HasPreviousPage, bool HasNextPage)>(qry!, ct);
+                    return Result.Success(PaginatedResponse<Sale>.CreatePaginated(
                         response.Data, response.HasPreviousPage, response.HasNextPage
                     ));
                 })

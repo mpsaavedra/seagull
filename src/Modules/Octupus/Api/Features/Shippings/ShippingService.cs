@@ -12,7 +12,7 @@ public interface IShippingService : IService<Shipping>
 
 }
 
-public class ShippingService(ApplicationDbContext dbContext, IMapper mapper, ILogger logger) :
+public class ShippingService(ApplicationDbContext dbContext, IMapper mapper, ILogger<ShippingService> logger) :
     Service<Shipping, ApplicationDbContext>(dbContext, mapper, logger), IShippingService, IScopedLifescope
 {
 }

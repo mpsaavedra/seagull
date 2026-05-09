@@ -11,7 +11,7 @@ public interface ICityService : IService<City>
 {
 }
 
-public class CityService(ApplicationDbContext dbContext, IMapper mapper, ILogger logger) :
+public class CityService(ApplicationDbContext dbContext, IMapper mapper, ILogger<CityService> logger) :
     Service<City, ApplicationDbContext>(dbContext, mapper, logger), ICityService, IScopedLifescope
 {
 }

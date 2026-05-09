@@ -10,7 +10,7 @@ public class SupplierEndpoints : IEndpointInstaller
 {
     public void MapEndpoints(WebApplication app)
     {
-        app.MapGet("/api/warehouse", (IMessageBus bus, int pageIndex = 1, int pageSize = 50, CancellationToken ct = default) =>
+        app.MapGet("/api/supplier", (IMessageBus bus, int pageIndex = 1, int pageSize = 50, CancellationToken ct = default) =>
             Result
                 .Create("ListSupplier", ErrorCodes.ApiErrors.UnProcessableRequest)
                 .Map(_ => new GetSupplier()
@@ -25,6 +25,10 @@ public class SupplierEndpoints : IEndpointInstaller
                     return Result.Success(PaginatedResponse<Supplier>.CreatePaginated(
                         response.Data, response.HasPreviousPage, response.HasNextPage
                     ));
-                }));
+                })
+                .Match(
+                    onSuccess: value => Results.Ok(value),
+                    onFailure: error => Results.BadRequest(error)
+                ));
     }
 }

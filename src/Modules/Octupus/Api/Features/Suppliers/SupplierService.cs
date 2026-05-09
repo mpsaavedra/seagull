@@ -11,7 +11,7 @@ public interface ISupplierService : IService<Supplier>
 {
 
 }
-public class SupplierService(ApplicationDbContext dbContext, IMapper mapper, ILogger logger) :
+public class SupplierService(ApplicationDbContext dbContext, IMapper mapper, ILogger<SupplierService> logger) :
     Service<Supplier, ApplicationDbContext>(dbContext, mapper, logger), ISupplierService, IScopedLifescope
 {
 }
