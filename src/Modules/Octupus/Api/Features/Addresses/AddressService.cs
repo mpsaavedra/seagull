@@ -16,12 +16,8 @@ public interface IAddressService : IService<Address>
 {
 }
 
-public class AddressService : Service<Address, ApplicationDbContext>, IAddressService, IScopedLifescope
+public class AddressService(ApplicationDbContext dbCOntext, ILogger<AddressService> logger, AutoMapper.IMapper mapper) :
+    Service<Address, ApplicationDbContext>(dbCOntext, mapper, logger), IAddressService, IScopedLifescope
 {
-    private readonly ILogger<AddressService> _logger;
-
-    public AddressService(ApplicationDbContext dbCOntext, ILogger<AddressService> logger, AutoMapper.IMapper mapper) : base(dbCOntext, mapper, logger)
-    {
-        _logger = logger;
-    }
+    private readonly ILogger<AddressService> _logger = logger;
 }

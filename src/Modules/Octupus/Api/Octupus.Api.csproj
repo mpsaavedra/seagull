@@ -32,7 +32,6 @@
     <Folder Include="Data/Configurations/" />
     <Folder Include="Data/Seeder/" />
     <Folder Include="Features/Cities/" />
-    <Folder Include="Features/Customers/" />
     <Folder Include="Features/Invoices/" />
     <Folder Include="Features/MeasureUnits/" />
     <Folder Include="Features/Moneys/" />
