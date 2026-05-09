@@ -9,3 +9,11 @@ public sealed record StandPhoneDto : DtoBase
     public string Number { get; set; }
     public PhoneType PhoneType { get; set; }
 }
+
+
+public sealed record StandPhoneListDto : DtoBase
+{
+    public StandListDto Stand { get; set; }
+    public string Number { get; set; }
+    public PhoneType PhoneType { get; set; }
+}

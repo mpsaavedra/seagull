@@ -10,3 +10,10 @@ public sealed record MeasureUnitDto : DtoBase
     public ICollection<InvoiceProductDto> InvoiceProducts { get; set; } = [];
     public ICollection<PurchaseInvoiceProductDto> PurchaseInvoiceProducts { get; set; } = [];
 }
+
+
+public sealed record MeasureUnitListDto : DtoBase
+{
+    public string Name { get; set; }
+    public string? Symbol { get; set; }
+}

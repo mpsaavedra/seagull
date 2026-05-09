@@ -14,3 +14,16 @@ public sealed record PurchaseProductDto : DtoBase
     public string? Details { get; set; }
     public SupplierDto? Supplier { get; set; }
 }
+
+public sealed record PurchaseProductListDto : DtoBase
+{
+    public ProductList Dto Product { get; set; }
+    public DateTime? Date { get; set; }
+    public DateTime? DueDate { get; set; }
+    public PurchaseDto Purchase { get; set; }
+    public decimal Quantity { get; set; }
+    public string MoneyId { get; set; }
+    public MoneyDto PurchasePrice { get; set; }
+    public string? Details { get; set; }
+    public SupplierDto? Supplier { get; set; }
+}

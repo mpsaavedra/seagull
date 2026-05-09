@@ -1,5 +1,6 @@
 using System;
 using System.Formats.Tar;
+using Microsoft.EntityFrameworkCore;
 using Octupus.Api.Data;
 using Octupus.Contracts.Dtos;
 using Seagull;
@@ -21,7 +22,7 @@ public class AddressService : Service<Address, ApplicationDbContext>, IAddressSe
 {
     private readonly ILogger<AddressService> _logger;
 
-    public AddressService(IUnitOfWork uow, ILogger<AddressService> logger) : base(uow)
+    public AddressService(ApplicationDbContext dbCOntext, ILogger<AddressService> logger, AutoMapper.IMapper mapper) : base(dbCOntext, mapper, logger)
     {
         _logger = logger;
     }

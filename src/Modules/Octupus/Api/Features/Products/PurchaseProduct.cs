@@ -42,7 +42,7 @@ public partial class PurchaseProduct : AuditableEntity, IMap<PurchaseProductDto>
     /// quantity of acquired products
     /// </summary>
     public decimal Quantity { get; set; }
-    public string MoneyId { get; set; }
+    // public string MoneyId { get; set; }
     public string PurchasePriceId { get; set; }
     /// <summary>
     /// Price of the products at purchase moment
@@ -64,6 +64,6 @@ public partial class PurchaseProduct : AuditableEntity, IMap<PurchaseProductDto>
     /// real cost of the product purchase
     /// </summary>
     [NotMapped]
-    public Money Cost => Money.Create(Quantity * PurchasePrice.Amount, PurchasePrice.Currency.Id).Value;
+    public Money Cost => Money.Create(Quantity * PurchasePrice.Amount, PurchasePrice.Currency.Id);
 }
 

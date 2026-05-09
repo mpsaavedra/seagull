@@ -9,3 +9,11 @@ public sealed record SupplierPhoneDto : DtoBase
     public PhoneType PhoneType { get; set; }
     public SupplierDto Supplier { get; set; }
 }
+
+
+public sealed record SupplierPhoneListDto : DtoBase
+{
+    public string Number { get; set; }
+    public PhoneType PhoneType { get; set; }
+    public SupplierListDto Supplier { get; set; }
+}

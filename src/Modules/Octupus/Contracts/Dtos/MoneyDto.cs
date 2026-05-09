@@ -16,3 +16,9 @@ public sealed record MoneyDto : DtoBase
     public ICollection<StandProductDto> StandProducts { get; set; } = [];
     public ICollection<SaleProductDto> SaleProducts { get; set; } = [];
 }
+
+public sealed record MoneyListDto : DtoBase
+{
+    public decimal Amount { get; set; }
+    public CurrencyDto Currency { get; set; }
+}

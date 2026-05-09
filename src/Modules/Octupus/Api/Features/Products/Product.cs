@@ -24,11 +24,11 @@ public partial class Product : AuditableEntity, IMap<ProductDto>
     /// Expiration date if any
     /// </summary>
     public DateTime? ExpirationDate { get; set; }
-    public string CostId { get; set; }
+    public string? CostId { get; set; }
     /// <summary>
     /// Purchase cost of this product
     /// </summary>
-    public Money Cost { get; set; }
+    public Money? Cost { get; set; }
     public string MeasureUnitId { get; set; }
     public virtual MeasureUnit MeasureUnit { get; set; }
 

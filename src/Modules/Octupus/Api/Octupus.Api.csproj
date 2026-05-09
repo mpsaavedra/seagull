@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -30,7 +31,6 @@
     <Folder Include="Data/" />
     <Folder Include="Data/Configurations/" />
     <Folder Include="Data/Seeder/" />
-    <Folder Include="Features/Categories/" />
     <Folder Include="Features/Cities/" />
     <Folder Include="Features/Customers/" />
     <Folder Include="Features/Invoices/" />

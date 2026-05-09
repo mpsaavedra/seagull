@@ -1,5 +1,7 @@
 using System;
+using Octupus.Api.Features.Products;
 using Octupus.Api.Features.Warehouses;
+using Seagull;
 
 namespace Octupus.Api.Features.Purchases;
 
@@ -21,4 +23,9 @@ public partial class Purchase
             ShippingCost = shippingCost,
             ShippingId = shippingId
         };
+
+    public Result AddProduct(params PurchaseProduct[] products)
+    {
+        return Result.Success();
+    }
 }

@@ -12,3 +12,15 @@ public sealed record SaleProductDto : DtoBase
     public MoneyDto SaleCost { get; set; }
     public string? Details { get; set; }
 }
+
+
+public sealed record SaleProductListDto : DtoBase
+{
+    public ProductListDto Product { get; set; }
+    public SaleDto Sale { get; set; }
+    public WarehouseLIstDto Warehouse { get; set; }
+    public decimal Quantity { get; set; } = 0.0m;
+    public decimal SalePrice { get; set; } = 0.0m;
+    public MoneyListDto SaleCost { get; set; }
+    public string? Details { get; set; }
+}

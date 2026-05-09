@@ -10,3 +10,13 @@ public sealed record PurchaseInvoiceDto : DtoBase
     public DateTime Date { get; set; } = DateTime.UtcNow;
     public ICollection<PurchaseInvoiceProductDto> Products { get; set; } = [];
 }
+
+
+public sealed record PurchaseInvoiceLIstDto : DtoBase
+{
+    public PurchaseListDto Purchase { get; set; }
+
+    public string Number { get; set; }
+    public DateTime Date { get; set; } = DateTime.UtcNow;
+    public ICollection<PurchaseInvoiceProductListDto> Products { get; set; } = [];
+}

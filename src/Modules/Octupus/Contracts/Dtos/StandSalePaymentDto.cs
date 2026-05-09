@@ -15,3 +15,17 @@ public sealed record StandSalePaymentDto : DtoBase
     public DateTime? DueDate { get; set; }
     public PaymentType PaymentType { get; set; }
 }
+
+
+public sealed record StandSalePaymentLIstDto : DtoBase
+{
+    public StandSaleListDto StandSale { get; set; }
+    public decimal? Tax { get; set; } = 0.0m;
+    public decimal? Discount { get; set; } = 0.0m;
+    public decimal TotalPrice { get; set; } = 0.0m;
+    public decimal SubTotal { get; set; } = 0.0m;
+    public MoneyListDto Price { get; set; }
+    public DateTime Date { get; set; }
+    public DateTime? DueDate { get; set; }
+    public PaymentType PaymentType { get; set; }
+}

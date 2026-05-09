@@ -8,14 +8,13 @@ using Microsoft.Extensions.Logging;
 namespace Seagull.Data.EntityFrameworkCore;
 
 public class Service<TEntity, TDbContext>
-    (TDbContext dbContext, IDbContextFactory<TDbContext> dbContextFactory, IMapper mapper, ILogger logger) :
+    (TDbContext dbContext, IMapper mapper, ILogger logger) :
     IService<TEntity>
     where TEntity : class, IEntity
     where TDbContext : DbContext
 {
     protected readonly TDbContext DbContext = dbContext;
     protected readonly IMapper Mapper = mapper;
-    protected readonly IDbContextFactory<TDbContext> DbContextFactory = dbContextFactory;
     protected readonly ILogger Logger = logger;
 
     public async Task<Maybe<TEntity>> FindByIdAsync(string id, bool softDeleted = false,

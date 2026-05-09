@@ -11,7 +11,8 @@ var postgres = builder
     .WithLifetime(ContainerLifetime.Persistent)
     .WithVolume("seagull-postgres-data", "/var/lib/postgresql/data")
     .WithPgAdmin()
-    .WithPgWeb();
+    .WithPgWeb()
+    .WithHostPort(5434);
 
 // required databases
 var posDb = postgres.AddDatabase("pos");
@@ -48,7 +49,7 @@ var keycloack = builder
 
 // 4 - RabbitMq
 var rabbitMq = builder
-    .AddContainer("seagull-rabbitmq", "rabbitmq","management-alpine")
+    .AddContainer("seagull-rabbitmq", "rabbitmq", "management-alpine")
     .WithHttpEndpoint(15672, 15672, "management");
 
 // 5 - Stand Api
@@ -63,6 +64,6 @@ var octupus = builder.AddProject<Projects.Octupus_Api>("octupus-api")
     .WithReference(postgres)
     .WaitFor(postgres)
     .WaitFor(keycloack)
-    .WithExternalHttpEndpoints();    
+    .WithExternalHttpEndpoints();
 
 builder.Build().Run();

@@ -29,7 +29,7 @@ public class OctupusSeederEndpoint : IEndpointInstaller
             // 1 - nomenclatures
             City btno;
             City surg;
-            if (ctx.Cities.Any())
+            if (!ctx.Cities.Any())
             {
                 btno = City.Create("Batabano", "Batabano", "Mayabeque", "33400");
                 surg = City.Create("Surgidero de Batabano", "Batabno", "Mayabeque", "33400");
@@ -53,6 +53,7 @@ public class OctupusSeederEndpoint : IEndpointInstaller
                 unit = MeasureUnit.Create("Unit", "u");
                 box = MeasureUnit.Create("Box", "box");
                 package = MeasureUnit.Create("Package", "pkg");
+                await ctx.MeasureUnits.AddRangeAsync(meter, centimeter, milimeter, unit, box, package);
                 await ctx.SaveChangesAsync();
             }
             meter = ctx.MeasureUnits.First(x => x.Name == "Meter");
@@ -114,26 +115,27 @@ public class OctupusSeederEndpoint : IEndpointInstaller
             Product product20;
             if (!ctx.Products.Any())
             {
-                product1 = Product.Create("Drink Product 1", "PRD-DRNK-00001", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", beer.Id, DateTime.UtcNow.AddMonths(10));
-                product2 = Product.Create("Drink Product 2", "PRD-DRNK-00002", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", beer.Id, DateTime.UtcNow.AddMonths(10));
-                product3 = Product.Create("Drink Product 3", "PRD-DRNK-00003", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", beer.Id, DateTime.UtcNow.AddMonths(10));
-                product4 = Product.Create("Drink Product 4", "PRD-DRNK-00004", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", beer.Id, DateTime.UtcNow.AddMonths(10));
-                product5 = Product.Create("Drink Product 5", "PRD-DRNK-00005", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", beer.Id, DateTime.UtcNow.AddMonths(10));
-                product6 = Product.Create("Drink Product 6", "PRD-DRNK-00006", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", beer.Id, DateTime.UtcNow.AddMonths(10));
-                product7 = Product.Create("Drink Product 7", "PRD-DRNK-00007", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", beer.Id, DateTime.UtcNow.AddMonths(10));
-                product8 = Product.Create("Drink Product 8", "PRD-DRNK-00008", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", beer.Id, DateTime.UtcNow.AddMonths(10));
-                product9 = Product.Create("Drink Product 9", "PRD-DRNK-00009", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", beer.Id, DateTime.UtcNow.AddMonths(10));
-                product10 = Product.Create("Drink Product 10", "PRD-DRNK-000010", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", beer.Id, DateTime.UtcNow.AddMonths(10));
-                product11 = Product.Create("Drink Product 11", "PRD-DRNK-000011", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", beer.Id, DateTime.UtcNow.AddMonths(10));
-                product12 = Product.Create("Drink Product 12", "PRD-DRNK-000012", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", beer.Id, DateTime.UtcNow.AddMonths(10));
-                product13 = Product.Create("Drink Product 13", "PRD-DRNK-000013", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", beer.Id, DateTime.UtcNow.AddMonths(10));
-                product14 = Product.Create("Drink Product 14", "PRD-DRNK-000014", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", beer.Id, DateTime.UtcNow.AddMonths(10));
-                product15 = Product.Create("Drink Product 15", "PRD-DRNK-000015", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", beer.Id, DateTime.UtcNow.AddMonths(10));
-                product16 = Product.Create("Drink Product 16", "PRD-DRNK-000016", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", beer.Id, DateTime.UtcNow.AddMonths(10));
-                product17 = Product.Create("Drink Product 17", "PRD-DRNK-000017", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", beer.Id, DateTime.UtcNow.AddMonths(10));
-                product18 = Product.Create("Drink Product 18", "PRD-DRNK-000018", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", beer.Id, DateTime.UtcNow.AddMonths(10));
-                product19 = Product.Create("Drink Product 19", "PRD-DRNK-000019", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", beer.Id, DateTime.UtcNow.AddMonths(10));
-                product20 = Product.Create("Drink Product 20", "PRD-DRNK-000020", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", beer.Id, DateTime.UtcNow.AddMonths(10));
+                // TODO: Fix error at creating for Cost and MeasureUnit
+                product1 = Product.Create("Drink Product 1", "PRD-DRNK-00001", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", category1.Id, DateTime.UtcNow.AddMonths(10));
+                product2 = Product.Create("Drink Product 2", "PRD-DRNK-00002", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", category1.Id, DateTime.UtcNow.AddMonths(10));
+                product3 = Product.Create("Drink Product 3", "PRD-DRNK-00003", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", category1.Id, DateTime.UtcNow.AddMonths(10));
+                product4 = Product.Create("Drink Product 4", "PRD-DRNK-00004", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", category1.Id, DateTime.UtcNow.AddMonths(10));
+                product5 = Product.Create("Drink Product 5", "PRD-DRNK-00005", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", category1.Id, DateTime.UtcNow.AddMonths(10));
+                product6 = Product.Create("Drink Product 6", "PRD-DRNK-00006", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", category2.Id, DateTime.UtcNow.AddMonths(10));
+                product7 = Product.Create("Drink Product 7", "PRD-DRNK-00007", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", category2.Id, DateTime.UtcNow.AddMonths(10));
+                product8 = Product.Create("Drink Product 8", "PRD-DRNK-00008", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", category2.Id, DateTime.UtcNow.AddMonths(10));
+                product9 = Product.Create("Drink Product 9", "PRD-DRNK-00009", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", category2.Id, DateTime.UtcNow.AddMonths(10));
+                product10 = Product.Create("Drink Product 10", "PRD-DRNK-000010", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", category2.Id, DateTime.UtcNow.AddMonths(10));
+                product11 = Product.Create("Drink Product 11", "PRD-DRNK-000011", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", category2.Id, DateTime.UtcNow.AddMonths(10));
+                product12 = Product.Create("Drink Product 12", "PRD-DRNK-000012", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", category3.Id, DateTime.UtcNow.AddMonths(10));
+                product13 = Product.Create("Drink Product 13", "PRD-DRNK-000013", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", category3.Id, DateTime.UtcNow.AddMonths(10));
+                product14 = Product.Create("Drink Product 14", "PRD-DRNK-000014", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", category3.Id, DateTime.UtcNow.AddMonths(10));
+                product15 = Product.Create("Drink Product 15", "PRD-DRNK-000015", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", category3.Id, DateTime.UtcNow.AddMonths(10));
+                product16 = Product.Create("Drink Product 16", "PRD-DRNK-000016", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", category3.Id, DateTime.UtcNow.AddMonths(10));
+                product17 = Product.Create("Drink Product 17", "PRD-DRNK-000017", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", category3.Id, DateTime.UtcNow.AddMonths(10));
+                product18 = Product.Create("Drink Product 18", "PRD-DRNK-000018", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", category3.Id, DateTime.UtcNow.AddMonths(10));
+                product19 = Product.Create("Drink Product 19", "PRD-DRNK-000019", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", category3.Id, DateTime.UtcNow.AddMonths(10));
+                product20 = Product.Create("Drink Product 20", "PRD-DRNK-000020", "Drinks & Beverages, the best choice to reduce heat and enjoy Cuban weather", category3.Id, DateTime.UtcNow.AddMonths(10));
                 await ctx.AddRangeAsync(
                     product1, product2, product3, product4, product5, product6, product7, product8, product9, product10,
                     product11, product12, product13, product14, product15, product16, product17, product18, product19, product20
@@ -282,8 +284,26 @@ public class OctupusSeederEndpoint : IEndpointInstaller
             if (!ctx.Purchases.Any())
             {
                 purchase1 = Purchase.Create("PURCH-NMBR-0001", DateTime.UtcNow, warehouse.Id, shippingId: shipping1.Id);
+                purchase1.AddProduct(
+                    PurchaseProduct.Create(product1, purchase1, 10, Money.Create(20.0m, cup), supplier1),
+                    PurchaseProduct.Create(product2, purchase1, 100, Money.Create(10.0m, cup), supplier1),
+                    PurchaseProduct.Create(product3, purchase1, 5, Money.Create(10.0m, cup), supplier1),
+                    PurchaseProduct.Create(product4, purchase1, 200, Money.Create(10.0m, cup), supplier1),
+                    PurchaseProduct.Create(product5, purchase1, 10, Money.Create(100.0m, cup), supplier1),
+                    PurchaseProduct.Create(product6, purchase1, 150, Money.Create(10.0m, cup), supplier1)
+                );
                 purchase2 = Purchase.Create("PURCH-NMBR-0001", DateTime.UtcNow, warehouse.Id, shippingId: shipping1.Id);
+                purchase2.AddProduct(
+                    PurchaseProduct.Create(product1, purchase1, 1000, Money.Create(25.0m, cup), supplier1),
+                    PurchaseProduct.Create(product7, purchase1, 10, Money.Create(15.0m, mlc), supplier2),
+                    PurchaseProduct.Create(product8, purchase1, 10, Money.Create(10.0m, mlc), supplier2),
+                    PurchaseProduct.Create(product9, purchase1, 10, Money.Create(1000.0m, cup), supplier1)
+                );
                 purchase3 = Purchase.Create("PURCH-NMBR-0001", DateTime.UtcNow, warehouse.Id, shippingId: shipping1.Id);
+                purchase3.AddProduct(
+                    PurchaseProduct.Create(product10, purchase1, 10, Money.Create(7.50m, usd), supplier2),
+                    PurchaseProduct.Create(product15, purchase1, 50, Money.Create(5.0m, usd), supplier2)
+                );
                 await ctx.Purchases.AddRangeAsync(purchase1, purchase2, purchase3);
                 await ctx.SaveChangesAsync();
             }

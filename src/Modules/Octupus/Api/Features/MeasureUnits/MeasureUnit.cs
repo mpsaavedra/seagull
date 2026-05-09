@@ -18,7 +18,7 @@ public partial class MeasureUnit : AuditableEntity, IMap<MeasureUnitDto>
         get => _symbol;
         set => _symbol = value.IsNullEmptyOrWhiteSpace()
             ? value!
-            : value!.RemoveVocals()[..5];
+            : value!.RemoveVocals().GetStringUpto(5);
     }
     public ICollection<Product> Products { get; set; } = [];
     public ICollection<InvoiceProduct> InvoiceProducts { get; set; } = [];

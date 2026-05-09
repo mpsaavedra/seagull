@@ -13,3 +13,11 @@ public sealed record AddressDto : DtoBase
     public ICollection<SupplierDto> Suppliers { get; set; } = [];
     public ICollection<WarehouseDto> Warehouses { get; set; } = [];
 }
+
+public sealed record AddressListDto : DtoBase
+{
+    public string Street { get; set; }
+    public string InnerAddress { get; set; }
+    public string CityId { get; set; }
+    public CityDto City { get; set; }
+}

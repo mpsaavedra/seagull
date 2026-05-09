@@ -10,3 +10,11 @@ public sealed record CustomerPhoneDto : DtoBase
     public PhoneType PhoneType { get; set; }
     public CustomerDto Customer { get; set; }
 }
+
+
+public sealed record CustomerPhoneListDto : DtoBase
+{
+    public string Number { get; set; }
+    public PhoneType PhoneType { get; set; }
+    public CustomerListDto Customer { get; set; }
+}

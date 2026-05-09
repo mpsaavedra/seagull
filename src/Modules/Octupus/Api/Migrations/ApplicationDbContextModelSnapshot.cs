@@ -81,7 +81,7 @@ namespace Octupus.Api.Migrations
                     b.HasIndex(new[] { "Id" }, "IX_T_Id")
                         .IsUnique();
 
-                    b.ToTable("addresses");
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("Octupus.Api.Features.Categories.Category", b =>
@@ -697,6 +697,228 @@ namespace Octupus.Api.Migrations
                     b.ToTable("Moneys");
                 });
 
+            modelBuilder.Entity("Octupus.Api.Features.Payments.PurchasePayment", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("numeric");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DueDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsEnable")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<int>("PaymentType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PurchaseId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("RowVersion")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PurchaseId");
+
+                    b.ToTable("PurchasePayments");
+                });
+
+            modelBuilder.Entity("Octupus.Api.Features.Payments.SalePayment", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DeletedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<decimal?>("Discount")
+                        .HasColumnType("numeric");
+
+                    b.Property<DateTime?>("DueDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsEnable")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<int>("PaymentType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PriceId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("SaleId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("SubTotal")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("Tax")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PriceId");
+
+                    b.HasIndex("RowVersion")
+                        .IsUnique();
+
+                    b.HasIndex("SaleId");
+
+                    b.HasIndex(new[] { "Id" }, "IX_T_Id")
+                        .IsUnique()
+                        .HasDatabaseName("IX_T_Id9");
+
+                    b.ToTable("SalePayments");
+                });
+
+            modelBuilder.Entity("Octupus.Api.Features.Payments.StandSalePayment", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DeletedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<decimal?>("Discount")
+                        .HasColumnType("numeric");
+
+                    b.Property<DateTime?>("DueDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsEnable")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<int>("PaymentType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("PriceId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("StandSaleId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("SubTotal")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("Tax")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PriceId");
+
+                    b.HasIndex("RowVersion")
+                        .IsUnique();
+
+                    b.HasIndex("StandSaleId");
+
+                    b.HasIndex(new[] { "Id" }, "IX_T_Id")
+                        .IsUnique()
+                        .HasDatabaseName("IX_T_Id10");
+
+                    b.ToTable("StandSalePayments");
+                });
+
             modelBuilder.Entity("Octupus.Api.Features.Phones.CustomerPhone", b =>
                 {
                     b.Property<string>("Id")
@@ -758,7 +980,7 @@ namespace Octupus.Api.Migrations
 
                     b.HasIndex(new[] { "Id" }, "IX_T_Id")
                         .IsUnique()
-                        .HasDatabaseName("IX_T_Id9");
+                        .HasDatabaseName("IX_T_Id11");
 
                     b.ToTable("CustomerPhones");
                 });
@@ -824,7 +1046,7 @@ namespace Octupus.Api.Migrations
 
                     b.HasIndex(new[] { "Id" }, "IX_T_Id")
                         .IsUnique()
-                        .HasDatabaseName("IX_T_Id10");
+                        .HasDatabaseName("IX_T_Id12");
 
                     b.ToTable("StandPhones");
                 });
@@ -890,7 +1112,7 @@ namespace Octupus.Api.Migrations
 
                     b.HasIndex(new[] { "Id" }, "IX_T_Id")
                         .IsUnique()
-                        .HasDatabaseName("IX_T_Id11");
+                        .HasDatabaseName("IX_T_Id13");
 
                     b.ToTable("SupplierPhones");
                 });
@@ -956,7 +1178,7 @@ namespace Octupus.Api.Migrations
 
                     b.HasIndex(new[] { "Id" }, "IX_T_Id")
                         .IsUnique()
-                        .HasDatabaseName("IX_T_Id12");
+                        .HasDatabaseName("IX_T_Id14");
 
                     b.ToTable("WarehousePhones");
                 });
@@ -971,7 +1193,6 @@ namespace Octupus.Api.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("CostId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
@@ -1039,7 +1260,7 @@ namespace Octupus.Api.Migrations
 
                     b.HasIndex(new[] { "Id" }, "IX_T_Id")
                         .IsUnique()
-                        .HasDatabaseName("IX_T_Id13");
+                        .HasDatabaseName("IX_T_Id15");
 
                     b.ToTable("Products");
                 });
@@ -1106,7 +1327,7 @@ namespace Octupus.Api.Migrations
 
                     b.HasIndex(new[] { "Id" }, "IX_T_Id")
                         .IsUnique()
-                        .HasDatabaseName("IX_T_Id14");
+                        .HasDatabaseName("IX_T_Id16");
 
                     b.ToTable("ProductImages");
                 });
@@ -1192,7 +1413,7 @@ namespace Octupus.Api.Migrations
 
                     b.HasIndex(new[] { "Id" }, "IX_T_Id")
                         .IsUnique()
-                        .HasDatabaseName("IX_T_Id15");
+                        .HasDatabaseName("IX_T_Id17");
 
                     b.ToTable("PurchaseInvoiceProducts");
                 });
@@ -1239,10 +1460,6 @@ namespace Octupus.Api.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
-                    b.Property<string>("MoneyId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("ProductId")
                         .IsRequired()
                         .HasColumnType("text");
@@ -1281,7 +1498,7 @@ namespace Octupus.Api.Migrations
 
                     b.HasIndex(new[] { "Id" }, "IX_T_Id")
                         .IsUnique()
-                        .HasDatabaseName("IX_T_Id16");
+                        .HasDatabaseName("IX_T_Id18");
 
                     b.ToTable("PurchaseProducts");
                 });
@@ -1364,7 +1581,7 @@ namespace Octupus.Api.Migrations
 
                     b.HasIndex(new[] { "Id" }, "IX_T_Id")
                         .IsUnique()
-                        .HasDatabaseName("IX_T_Id17");
+                        .HasDatabaseName("IX_T_Id19");
 
                     b.ToTable("SaleProducts");
                 });
@@ -1447,7 +1664,7 @@ namespace Octupus.Api.Migrations
 
                     b.HasIndex(new[] { "Id" }, "IX_T_Id")
                         .IsUnique()
-                        .HasDatabaseName("IX_T_Id18");
+                        .HasDatabaseName("IX_T_Id20");
 
                     b.ToTable("StandProducts");
                 });
@@ -1521,7 +1738,7 @@ namespace Octupus.Api.Migrations
 
                     b.HasIndex(new[] { "Id" }, "IX_T_Id")
                         .IsUnique()
-                        .HasDatabaseName("IX_T_Id19");
+                        .HasDatabaseName("IX_T_Id21");
 
                     b.ToTable("StandSaleProducts");
                 });
@@ -1589,7 +1806,7 @@ namespace Octupus.Api.Migrations
 
                     b.HasIndex(new[] { "Id" }, "IX_T_Id")
                         .IsUnique()
-                        .HasDatabaseName("IX_T_Id20");
+                        .HasDatabaseName("IX_T_Id22");
 
                     b.ToTable("WarehouseProducts");
                 });
@@ -1667,228 +1884,6 @@ namespace Octupus.Api.Migrations
                     b.HasIndex("WarehouseId");
 
                     b.ToTable("Purchases");
-                });
-
-            modelBuilder.Entity("Octupus.Api.Features.Purchases.PurchasePayment", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("numeric");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("DueDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsEnable")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime?>("ModifiedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("text");
-
-                    b.Property<int>("PaymentType")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("PurchaseId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("RowVersion")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PurchaseId");
-
-                    b.ToTable("PurchasePayments");
-                });
-
-            modelBuilder.Entity("Octupus.Api.Features.Purchases.SalePayment", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("DeletedBy")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
-
-                    b.Property<decimal?>("Discount")
-                        .HasColumnType("numeric");
-
-                    b.Property<DateTime?>("DueDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsEnable")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime?>("ModifiedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
-
-                    b.Property<int>("PaymentType")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("PriceId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("SaleId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("SubTotal")
-                        .HasColumnType("numeric");
-
-                    b.Property<decimal?>("Tax")
-                        .HasColumnType("numeric");
-
-                    b.Property<decimal>("TotalPrice")
-                        .HasColumnType("numeric");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PriceId");
-
-                    b.HasIndex("RowVersion")
-                        .IsUnique();
-
-                    b.HasIndex("SaleId");
-
-                    b.HasIndex(new[] { "Id" }, "IX_T_Id")
-                        .IsUnique()
-                        .HasDatabaseName("IX_T_Id21");
-
-                    b.ToTable("SalePayments");
-                });
-
-            modelBuilder.Entity("Octupus.Api.Features.Purchases.StandSalePayment", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("CreatedBy")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("DeletedBy")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
-
-                    b.Property<decimal?>("Discount")
-                        .HasColumnType("numeric");
-
-                    b.Property<DateTime?>("DueDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsEnable")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime?>("ModifiedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
-
-                    b.Property<int>("PaymentType")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("PriceId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("StandSaleId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("SubTotal")
-                        .HasColumnType("numeric");
-
-                    b.Property<decimal?>("Tax")
-                        .HasColumnType("numeric");
-
-                    b.Property<decimal>("TotalPrice")
-                        .HasColumnType("numeric");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PriceId");
-
-                    b.HasIndex("RowVersion")
-                        .IsUnique();
-
-                    b.HasIndex("StandSaleId");
-
-                    b.HasIndex(new[] { "Id" }, "IX_T_Id")
-                        .IsUnique()
-                        .HasDatabaseName("IX_T_Id22");
-
-                    b.ToTable("StandSalePayments");
                 });
 
             modelBuilder.Entity("Octupus.Api.Features.Sales.Sale", b =>
@@ -2393,6 +2388,55 @@ namespace Octupus.Api.Migrations
                     b.Navigation("Currency");
                 });
 
+            modelBuilder.Entity("Octupus.Api.Features.Payments.PurchasePayment", b =>
+                {
+                    b.HasOne("Octupus.Api.Features.Purchases.Purchase", "Purchase")
+                        .WithMany("PurchasePayments")
+                        .HasForeignKey("PurchaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Purchase");
+                });
+
+            modelBuilder.Entity("Octupus.Api.Features.Payments.SalePayment", b =>
+                {
+                    b.HasOne("Octupus.Api.Features.Moneys.Money", "Price")
+                        .WithMany("SalePayments")
+                        .HasForeignKey("PriceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Octupus.Api.Features.Sales.Sale", "Sale")
+                        .WithMany("SalePayments")
+                        .HasForeignKey("SaleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Price");
+
+                    b.Navigation("Sale");
+                });
+
+            modelBuilder.Entity("Octupus.Api.Features.Payments.StandSalePayment", b =>
+                {
+                    b.HasOne("Octupus.Api.Features.Moneys.Money", "Price")
+                        .WithMany("StandSalePayments")
+                        .HasForeignKey("PriceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Octupus.Api.Features.Sales.StandSale", "StandSale")
+                        .WithMany("SalePayments")
+                        .HasForeignKey("StandSaleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Price");
+
+                    b.Navigation("StandSale");
+                });
+
             modelBuilder.Entity("Octupus.Api.Features.Phones.CustomerPhone", b =>
                 {
                     b.HasOne("Octupus.Api.Features.Customers.Customer", "Customer")
@@ -2445,9 +2489,7 @@ namespace Octupus.Api.Migrations
 
                     b.HasOne("Octupus.Api.Features.Moneys.Money", "Cost")
                         .WithMany("Products")
-                        .HasForeignKey("CostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CostId");
 
                     b.HasOne("Octupus.Api.Features.MeasureUnits.MeasureUnit", "MeasureUnit")
                         .WithMany("Products")
@@ -2670,55 +2712,6 @@ namespace Octupus.Api.Migrations
                     b.Navigation("Shipping");
 
                     b.Navigation("Warehouse");
-                });
-
-            modelBuilder.Entity("Octupus.Api.Features.Purchases.PurchasePayment", b =>
-                {
-                    b.HasOne("Octupus.Api.Features.Purchases.Purchase", "Purchase")
-                        .WithMany("PurchasePayments")
-                        .HasForeignKey("PurchaseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Purchase");
-                });
-
-            modelBuilder.Entity("Octupus.Api.Features.Purchases.SalePayment", b =>
-                {
-                    b.HasOne("Octupus.Api.Features.Moneys.Money", "Price")
-                        .WithMany("SalePayments")
-                        .HasForeignKey("PriceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Octupus.Api.Features.Sales.Sale", "Sale")
-                        .WithMany("SalePayments")
-                        .HasForeignKey("SaleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Price");
-
-                    b.Navigation("Sale");
-                });
-
-            modelBuilder.Entity("Octupus.Api.Features.Purchases.StandSalePayment", b =>
-                {
-                    b.HasOne("Octupus.Api.Features.Moneys.Money", "Price")
-                        .WithMany("StandSalePayments")
-                        .HasForeignKey("PriceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Octupus.Api.Features.Sales.StandSale", "StandSale")
-                        .WithMany("SalePayments")
-                        .HasForeignKey("StandSaleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Price");
-
-                    b.Navigation("StandSale");
                 });
 
             modelBuilder.Entity("Octupus.Api.Features.Sales.Sale", b =>

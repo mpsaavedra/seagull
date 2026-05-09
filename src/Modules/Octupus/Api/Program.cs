@@ -10,11 +10,14 @@ using Seagull.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // install all general services required by API
+// connection string from Aspire
+var con = builder.Configuration.GetConnectionString("postgres-server");
+var constring = $"{con};Database=octupus;";
 builder.InstallOctupusServices<ApplicationDbContext>(opts =>
     opts
         .EnableDetailedErrors(builder.Environment.IsDevelopment())
         .EnableSensitiveDataLogging(builder.Environment.IsDevelopment())
-        .UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"), cfg =>
+        .UseNpgsql(constring, cfg =>
             cfg
                 .MigrationsAssembly("Octupus.Api")
                 .EnableRetryOnFailure(10, TimeSpan.FromSeconds(10), null)));
