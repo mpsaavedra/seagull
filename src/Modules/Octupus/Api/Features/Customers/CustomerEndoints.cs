@@ -21,7 +21,7 @@ public class CustomerEndoints : IEndpointInstaller
                 })
                 .Bind<GetCustomer?, PaginatedResponse<Customer>>(async qry =>
                 {
-                    var response = await bus.InvokeAsync<(List<Customer> Data, bool HasPreviousPage, bool HasNextPage)>(qry, ct);
+                    var response = await bus.InvokeAsync<(List<Customer> Data, bool HasPreviousPage, bool HasNextPage)>(qry!, ct);
                     return Result.Success(PaginatedResponse<Customer>.CreatePaginated(
                         response.Data,
                         response.HasPreviousPage,

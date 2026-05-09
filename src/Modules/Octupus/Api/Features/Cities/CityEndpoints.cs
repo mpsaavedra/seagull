@@ -21,7 +21,7 @@ public class CityEndpoints : IEndpointInstaller
                 })
                 .Bind<GetCity?, PaginatedResponse<City>>(async qry =>
                 {
-                    var response = await bus.InvokeAsync<(List<City> Data, bool HasPreviousPage, bool HasNextPage)>(qry, ct);
+                    var response = await bus.InvokeAsync<(List<City> Data, bool HasPreviousPage, bool HasNextPage)>(qry!, ct);
                     return Result.Success(PaginatedResponse<City>.CreatePaginated(
                         response.Data,
                         response.HasPreviousPage,

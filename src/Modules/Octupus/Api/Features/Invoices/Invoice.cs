@@ -40,7 +40,7 @@ public partial class Invoice : AuditableEntity, IMap<InvoiceDto>
                     continue;
                 }
                 var idx = result.IndexOf(rEntry);
-                result[idx] = Money.Create(rEntry.Amount + entry.Cost.Amount, rEntry.CurrentyId);
+                result[idx] = Money.Create(rEntry.Amount + entry.Cost.Amount, rEntry.CurrencyId);
 
             }
             return result;

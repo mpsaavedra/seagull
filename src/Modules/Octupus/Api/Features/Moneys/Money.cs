@@ -12,7 +12,7 @@ namespace Octupus.Api.Features.Moneys;
 public partial class Money : AuditableEntity, IMap<MoneyDto>
 {
     public decimal Amount { get; set; }
-    public string CurrentyId { get; set; }
+    public string CurrencyId { get; set; }
     public Currency Currency { get; set; }
     public ICollection<InvoiceProduct> InvoiceProducts { get; set; } = [];
     public ICollection<PurchaseInvoiceProduct> PurchaseInvoiceProducts { get; set; } = [];

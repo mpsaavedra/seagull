@@ -11,7 +11,7 @@ public class MoneyConfiguration : IEntityTypeConfiguration<Money>
     {
         builder.ConfigureAuditableEntity();
         builder.Property(x => x.Amount).IsRequired();
-        builder.HasOne(x => x.Currency).WithMany(x => x.Moneys).HasForeignKey(x => x.CurrentyId);
+        builder.HasOne(x => x.Currency).WithMany(x => x.Moneys).HasForeignKey(x => x.CurrencyId);
         builder.HasMany(x => x.InvoiceProducts).WithOne(x => x.Cost).HasForeignKey(x => x.CostId);
         builder.HasMany(x => x.PurchaseInvoiceProducts).WithOne(x => x.SaleCost).HasForeignKey(x => x.SaleCostId);
         builder.HasMany(x => x.Products).WithOne(x => x.Cost).HasForeignKey(x => x.CostId);

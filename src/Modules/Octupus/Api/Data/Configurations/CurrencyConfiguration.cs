@@ -11,6 +11,6 @@ public class CurrencyConfiguration : IEntityTypeConfiguration<Currency>
     {
         builder.ConfigureAuditableEntity();
         builder.Property(x => x.Name).HasMaxLength(120).IsRequired();
-        builder.HasMany(x => x.Moneys).WithOne(x => x.Currency).HasForeignKey(x => x.CurrentyId);
+        builder.HasMany(x => x.Moneys).WithOne(x => x.Currency).HasForeignKey(x => x.CurrencyId);
     }
 }
