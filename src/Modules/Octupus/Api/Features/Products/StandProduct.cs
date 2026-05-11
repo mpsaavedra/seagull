@@ -3,12 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Octupus.Api.Features.Moneys;
 using Octupus.Api.Features.Stands;
 using Octupus.Api.Features.Warehouses;
+using Octupus.Contracts.Dtos;
 using Seagull.Data;
 using Seagull.Data.AutoMapping;
 
 namespace Octupus.Api.Features.Products;
 
-public partial class StandProduct : AuditableEntity, IMap<StandProduct>
+public partial class StandProduct : AuditableEntity, IMap<StandProductDto>
 {
     public string StandId { get; set; }
     public virtual Stand Stand { get; set; }
