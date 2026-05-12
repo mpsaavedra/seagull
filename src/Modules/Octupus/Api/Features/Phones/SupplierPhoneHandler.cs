@@ -13,13 +13,18 @@ public class SupplierPhoneHandler(ILogger<SupplierPhoneHandler> logger)
         [FromServices] IMapper mapper,
         CancellationToken cancellationToken = default)
     {
-        logger.LogInformation($"Fetching SupplierPhonees, PageIndex: {command.PageIndex}, PageSize: {command.PageSize}");
+        logger.LogInformation($"Fetching SupplierPhone, PageIndex: {command.PageIndex}, PageSize: {command.PageSize}");
 
         var response = await service.GetAllAsync(
             pageIndex: command.PageIndex, pageSize: command.PageSize,
             includeSoftDeleted: false, cancellationToken: cancellationToken);
+
+        var count = response.Value.Data.Count;
+        var mapped = (from entry in response.Value.Data select mapper.Map<SupplierPhoneDto>(entry)).ToList();
+        logger.LogDebug($"Retrieving {count} SupplierPhone entries");
+
         return (
-            mapper.Map<List<SupplierPhoneDto>>(response.Value.Data),
+            mapped,
             response.Value.HasPreviousPage,
             response.Value.HasNextPage
         );
@@ -33,10 +38,14 @@ public class SupplierPhoneHandler(ILogger<SupplierPhoneHandler> logger)
     {
         logger.LogInformation($"Fetching SupplierPhone with Id: '{command.Id}'");
 
-        var entity = await service.FirstOrDefaultAsync(x => x.Id == command.Id, false, cancellationToken);
+        var entity = await service.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken: cancellationToken);
+
         if (entity is null)
             return null;
         var entityDto = mapper.Map<SupplierPhoneDetailsDto>(entity);
+
+        logger.LogDebug($"Retrieving SupplierPhone: {entityDto}");
+
         return entityDto;
     }
 }

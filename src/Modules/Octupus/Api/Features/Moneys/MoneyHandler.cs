@@ -8,36 +8,45 @@ namespace Octupus.Api.Features.Moneys;
 
 public class MoneyHandler(ILogger<MoneyHandler> logger)
 {
-    public async Task<(List<CategoryDto> Data, bool HasPreviousPage, bool HasNextPage)?> Handle(
-        GetCategory command,
-        [FromServices] ICategoryService service,
+    public async Task<(List<MoneyDto> Data, bool HasPreviousPage, bool HasNextPage)?> Handle(
+        GetMoney command,
+        [FromServices] IMoneyService service,
         [FromServices] IMapper mapper,
         CancellationToken cancellationToken = default)
     {
-        logger.LogInformation($"Fetching Categoryes, PageIndex: {command.PageIndex}, PageSize: {command.PageSize}");
+        logger.LogInformation($"Fetching Money, PageIndex: {command.PageIndex}, PageSize: {command.PageSize}");
 
         var response = await service.GetAllAsync(
             pageIndex: command.PageIndex, pageSize: command.PageSize,
             includeSoftDeleted: false, cancellationToken: cancellationToken);
+
+        var count = response.Value.Data.Count;
+        var mapped = (from entry in response.Value.Data select mapper.Map<MoneyDto>(entry)).ToList();
+        logger.LogDebug($"Retrieving {count} Money entries");
+
         return (
-            mapper.Map<List<CategoryDto>>(response.Value.Data),
+            mapped,
             response.Value.HasPreviousPage,
             response.Value.HasNextPage
         );
     }
 
-    public async Task<CategoryDetailsDto?> Handle(
-        GetByIdCategory command,
-        [FromServices] ICategoryService service,
+    public async Task<MoneyDetailsDto?> Handle(
+        GetByIdMoney command,
+        [FromServices] IMoneyService service,
         [FromServices] IMapper mapper,
         CancellationToken cancellationToken = default)
     {
-        logger.LogInformation($"Fetching Category with Id: '{command.Id}'");
+        logger.LogInformation($"Fetching Money with Id: '{command.Id}'");
 
-        var entity = await service.FirstOrDefaultAsync(x => x.Id == command.Id, false, cancellationToken);
+        var entity = await service.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken: cancellationToken);
+
         if (entity is null)
             return null;
-        var entityDto = mapper.Map<CategoryDetailsDto>(entity);
+        var entityDto = mapper.Map<MoneyDetailsDto>(entity);
+
+        logger.LogDebug($"Retrieving Money: {entityDto}");
+
         return entityDto;
     }
 }

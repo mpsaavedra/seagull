@@ -13,9 +13,23 @@ public class CurrencyEndpoints : IEndpointInstaller
     public static string ApiEndpoint = "/api/currencies/";
     public void MapEndpoints(WebApplication app)
     {
+        app.MapGet(ApiEndpoint + "{id}", (IMessageBus bus, string id, CancellationToken ct = default) =>
+            Result
+                .Create("GetById")
+                .Map(_ => new GetByIdCurrency(id))
+                .TryCatch(async qry =>
+                {
+                    var response = await bus.InvokeAsync<CurrencyDetailsDto>(qry!, ct);
+                    return Result.Success(response);
+                })
+                .Match(
+                    onSuccess: value => Results.Ok(value),
+                    onFailure: error => Results.BadRequest(error)
+                ));
+
         app.MapGet(ApiEndpoint, (IMessageBus bus, int pageIndex = 1, int pageSize = 50, CancellationToken ct = default) =>
             Result
-                .Create("ListCurrency", ErrorCodes.ApiErrors.UnProcessableRequest)
+                .Create("List")
                 .Map(_ => new GetCurrency()
                 {
                     PageIndex = pageIndex,
@@ -30,20 +44,6 @@ public class CurrencyEndpoints : IEndpointInstaller
                         response.HasPreviousPage,
                         response.HasNextPage
                     ));
-                })
-                .Match(
-                    onSuccess: value => Results.Ok(value),
-                    onFailure: error => Results.BadRequest(error)
-                ));
-
-        app.MapGet(ApiEndpoint + "{id}", (IMessageBus bus, string id, CancellationToken ct = default) =>
-            Result
-                .Create("GetBydIdCustomer")
-                .Map(_ => new GetByIdCurrency(id))
-                .TryCatch(async qry =>
-                {
-                    var response = await bus.InvokeAsync<CurrencyDetailsDto>(qry!, ct);
-                    return Result.Success(response);
                 })
                 .Match(
                     onSuccess: value => Results.Ok(value),

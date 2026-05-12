@@ -13,13 +13,18 @@ public class MeasureUnitHandler(ILogger<MeasureUnitHandler> logger)
         [FromServices] IMapper mapper,
         CancellationToken cancellationToken = default)
     {
-        logger.LogInformation($"Fetching MeasureUnites, PageIndex: {command.PageIndex}, PageSize: {command.PageSize}");
+        logger.LogInformation($"Fetching MeasureUnit, PageIndex: {command.PageIndex}, PageSize: {command.PageSize}");
 
         var response = await service.GetAllAsync(
             pageIndex: command.PageIndex, pageSize: command.PageSize,
             includeSoftDeleted: false, cancellationToken: cancellationToken);
+
+        var count = response.Value.Data.Count;
+        var mapped = (from entry in response.Value.Data select mapper.Map<MeasureUnitDto>(entry)).ToList();
+        logger.LogDebug($"Retrieving {count} MeasureUnit entries");
+
         return (
-            mapper.Map<List<MeasureUnitDto>>(response.Value.Data),
+            mapped,
             response.Value.HasPreviousPage,
             response.Value.HasNextPage
         );
@@ -33,10 +38,14 @@ public class MeasureUnitHandler(ILogger<MeasureUnitHandler> logger)
     {
         logger.LogInformation($"Fetching MeasureUnit with Id: '{command.Id}'");
 
-        var entity = await service.FirstOrDefaultAsync(x => x.Id == command.Id, false, cancellationToken);
+        var entity = await service.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken: cancellationToken);
+
         if (entity is null)
             return null;
         var entityDto = mapper.Map<MeasureUnitDetailsDto>(entity);
+
+        logger.LogDebug($"Retrieving MeasureUnit: {entityDto}");
+
         return entityDto;
     }
 }

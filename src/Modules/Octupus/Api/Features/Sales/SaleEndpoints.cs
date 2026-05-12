@@ -13,9 +13,23 @@ public class SaleEndpoints : IEndpointInstaller
     public static string ApiEndpoint = "/api/sales/";
     public void MapEndpoints(WebApplication app)
     {
+        app.MapGet(ApiEndpoint + "{id}", (IMessageBus bus, string id, CancellationToken ct = default) =>
+            Result
+                .Create("GetById")
+                .Map(_ => new GetByIdSale(id))
+                .TryCatch(async qry =>
+                {
+                    var response = await bus.InvokeAsync<SaleDetailsDto>(qry!, ct);
+                    return Result.Success(response);
+                })
+                .Match(
+                    onSuccess: value => Results.Ok(value),
+                    onFailure: error => Results.BadRequest(error)
+                ));
+
         app.MapGet(ApiEndpoint, (IMessageBus bus, int pageIndex = 1, int pageSize = 50, CancellationToken ct = default) =>
             Result
-                .Create("List", ErrorCodes.ApiErrors.UnProcessableRequest)
+                .Create("List")
                 .Map(_ => new GetSale()
                 {
                     PageIndex = pageIndex,
@@ -30,20 +44,6 @@ public class SaleEndpoints : IEndpointInstaller
                         response.HasPreviousPage,
                         response.HasNextPage
                     ));
-                })
-                .Match(
-                    onSuccess: value => Results.Ok(value),
-                    onFailure: error => Results.BadRequest(error)
-                ));
-
-        app.MapGet(ApiEndpoint + "{id}", (IMessageBus bus, string id, CancellationToken ct = default) =>
-            Result
-                .Create("GetBydId")
-                .Map(_ => new GetByIdSale(id))
-                .TryCatch(async qry =>
-                {
-                    var response = await bus.InvokeAsync<SaleDetailsDto>(qry!, ct);
-                    return Result.Success(response);
                 })
                 .Match(
                     onSuccess: value => Results.Ok(value),

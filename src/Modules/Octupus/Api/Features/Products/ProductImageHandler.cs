@@ -13,13 +13,18 @@ public class ProductImageHandler(ILogger<ProductImageHandler> logger)
         [FromServices] IMapper mapper,
         CancellationToken cancellationToken = default)
     {
-        logger.LogInformation($"Fetching ProductImagees, PageIndex: {command.PageIndex}, PageSize: {command.PageSize}");
+        logger.LogInformation($"Fetching ProductImage, PageIndex: {command.PageIndex}, PageSize: {command.PageSize}");
 
         var response = await service.GetAllAsync(
             pageIndex: command.PageIndex, pageSize: command.PageSize,
             includeSoftDeleted: false, cancellationToken: cancellationToken);
+
+        var count = response.Value.Data.Count;
+        var mapped = (from entry in response.Value.Data select mapper.Map<ProductImageDto>(entry)).ToList();
+        logger.LogDebug($"Retrieving {count} ProductImage entries");
+
         return (
-            mapper.Map<List<ProductImageDto>>(response.Value.Data),
+            mapped,
             response.Value.HasPreviousPage,
             response.Value.HasNextPage
         );
@@ -33,10 +38,14 @@ public class ProductImageHandler(ILogger<ProductImageHandler> logger)
     {
         logger.LogInformation($"Fetching ProductImage with Id: '{command.Id}'");
 
-        var entity = await service.FirstOrDefaultAsync(x => x.Id == command.Id, false, cancellationToken);
+        var entity = await service.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken: cancellationToken);
+
         if (entity is null)
             return null;
         var entityDto = mapper.Map<ProductImageDetailsDto>(entity);
+
+        logger.LogDebug($"Retrieving ProductImage: {entityDto}");
+
         return entityDto;
     }
 }

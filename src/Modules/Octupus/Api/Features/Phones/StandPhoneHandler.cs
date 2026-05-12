@@ -13,13 +13,18 @@ public class StandPhoneHandler(ILogger<StandPhoneHandler> logger)
         [FromServices] IMapper mapper,
         CancellationToken cancellationToken = default)
     {
-        logger.LogInformation($"Fetching StandPhonees, PageIndex: {command.PageIndex}, PageSize: {command.PageSize}");
+        logger.LogInformation($"Fetching StandPhone, PageIndex: {command.PageIndex}, PageSize: {command.PageSize}");
 
         var response = await service.GetAllAsync(
             pageIndex: command.PageIndex, pageSize: command.PageSize,
             includeSoftDeleted: false, cancellationToken: cancellationToken);
+
+        var count = response.Value.Data.Count;
+        var mapped = (from entry in response.Value.Data select mapper.Map<StandPhoneDto>(entry)).ToList();
+        logger.LogDebug($"Retrieving {count} StandPhone entries");
+
         return (
-            mapper.Map<List<StandPhoneDto>>(response.Value.Data),
+            mapped,
             response.Value.HasPreviousPage,
             response.Value.HasNextPage
         );
@@ -33,10 +38,14 @@ public class StandPhoneHandler(ILogger<StandPhoneHandler> logger)
     {
         logger.LogInformation($"Fetching StandPhone with Id: '{command.Id}'");
 
-        var entity = await service.FirstOrDefaultAsync(x => x.Id == command.Id, false, cancellationToken);
+        var entity = await service.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken: cancellationToken);
+
         if (entity is null)
             return null;
         var entityDto = mapper.Map<StandPhoneDetailsDto>(entity);
+
+        logger.LogDebug($"Retrieving StandPhone: {entityDto}");
+
         return entityDto;
     }
 }

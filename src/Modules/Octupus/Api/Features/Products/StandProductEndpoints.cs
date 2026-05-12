@@ -13,9 +13,23 @@ public class StandProductEndpoints : IEndpointInstaller
     public static string ApiEndpoint = "/api/stand-products/";
     public void MapEndpoints(WebApplication app)
     {
+        app.MapGet(ApiEndpoint + "{id}", (IMessageBus bus, string id, CancellationToken ct = default) =>
+            Result
+                .Create("GetById")
+                .Map(_ => new GetByIdStandProduct(id))
+                .TryCatch(async qry =>
+                {
+                    var response = await bus.InvokeAsync<StandProductDetailsDto>(qry!, ct);
+                    return Result.Success(response);
+                })
+                .Match(
+                    onSuccess: value => Results.Ok(value),
+                    onFailure: error => Results.BadRequest(error)
+                ));
+
         app.MapGet(ApiEndpoint, (IMessageBus bus, int pageIndex = 1, int pageSize = 50, CancellationToken ct = default) =>
             Result
-                .Create("ListStandProduct", ErrorCodes.ApiErrors.UnProcessableRequest)
+                .Create("List")
                 .Map(_ => new GetStandProduct()
                 {
                     PageIndex = pageIndex,
@@ -30,20 +44,6 @@ public class StandProductEndpoints : IEndpointInstaller
                         response.HasPreviousPage,
                         response.HasNextPage
                     ));
-                })
-                .Match(
-                    onSuccess: value => Results.Ok(value),
-                    onFailure: error => Results.BadRequest(error)
-                ));
-
-        app.MapGet(ApiEndpoint + "{id}", (IMessageBus bus, string id, CancellationToken ct = default) =>
-            Result
-                .Create("GetBydIdCustomer")
-                .Map(_ => new GetByIdStandProduct(id))
-                .TryCatch(async qry =>
-                {
-                    var response = await bus.InvokeAsync<StandProductDetailsDto>(qry!, ct);
-                    return Result.Success(response);
                 })
                 .Match(
                     onSuccess: value => Results.Ok(value),

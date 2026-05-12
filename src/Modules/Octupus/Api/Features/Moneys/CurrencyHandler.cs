@@ -13,13 +13,18 @@ public class CurrencyHandler(ILogger<CurrencyHandler> logger)
         [FromServices] IMapper mapper,
         CancellationToken cancellationToken = default)
     {
-        logger.LogInformation($"Fetching Currencyes, PageIndex: {command.PageIndex}, PageSize: {command.PageSize}");
+        logger.LogInformation($"Fetching Currency, PageIndex: {command.PageIndex}, PageSize: {command.PageSize}");
 
         var response = await service.GetAllAsync(
             pageIndex: command.PageIndex, pageSize: command.PageSize,
             includeSoftDeleted: false, cancellationToken: cancellationToken);
+
+        var count = response.Value.Data.Count;
+        var mapped = (from entry in response.Value.Data select mapper.Map<CurrencyDto>(entry)).ToList();
+        logger.LogDebug($"Retrieving {count} Currency entries");
+
         return (
-            mapper.Map<List<CurrencyDto>>(response.Value.Data),
+            mapped,
             response.Value.HasPreviousPage,
             response.Value.HasNextPage
         );
@@ -33,10 +38,14 @@ public class CurrencyHandler(ILogger<CurrencyHandler> logger)
     {
         logger.LogInformation($"Fetching Currency with Id: '{command.Id}'");
 
-        var entity = await service.FirstOrDefaultAsync(x => x.Id == command.Id, false, cancellationToken);
+        var entity = await service.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken: cancellationToken);
+
         if (entity is null)
             return null;
         var entityDto = mapper.Map<CurrencyDetailsDto>(entity);
+
+        logger.LogDebug($"Retrieving Currency: {entityDto}");
+
         return entityDto;
     }
 }

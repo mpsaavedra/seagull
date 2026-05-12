@@ -40,7 +40,7 @@ public class CategoryHandler(ILogger<CategoryHandler> logger)
     {
         logger.LogInformation($"Fetching Category with Id: '{command.Id}'");
 
-        var entity = await service.FirstOrDefaultAsync(x => x.Id == command.Id, false, cancellationToken);
+        var entity = await service.FirstOrDefaultAsync(x => x.Id == command.Id, cancellationToken: cancellationToken);
 
         if (entity is null)
             return null;
