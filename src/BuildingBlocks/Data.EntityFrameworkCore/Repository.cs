@@ -13,26 +13,52 @@ public class Repository<TEntity, TDbContext>(TDbContext dbContext) : IRepository
     protected readonly TDbContext DbContext = dbContext;
     protected readonly DbSet<TEntity> DbSet = dbContext.Set<TEntity>();
 
-    public virtual async Task<Maybe<TEntity>> FindByIdAsync(string id, CancellationToken cancellationToken = default)
+    public virtual async Task<Maybe<TEntity>> FindByIdAsync(string id,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
+        bool includeSoftDeleted = false, CancellationToken cancellationToken = default)
     {
-        var entity = await DbSet.FindAsync(new object[] { id! }, cancellationToken);
+
+        var query = DbContext.Set<TEntity>().AsNoTracking();
+
+        if (!includeSoftDeleted)
+        {
+            query = query.Where(x => !x.IsDeleted);
+        }
+        if (include is not null)
+        {
+            query = include(query);
+        }
+
+        var entity = await query.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+
         return entity != null ? Maybe<TEntity>.From(entity) : Maybe<TEntity>.None!;
     }
 
     public virtual async Task<Maybe<TEntity>> FirstOrDefaultAsync(Expression<Func<TEntity, bool>>? expression = null,
-        CancellationToken cancellationToken = default)
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
+        bool includeSoftDeleted = false, CancellationToken cancellationToken = default)
     {
-        var query = DbSet.AsQueryable();
+        var query = DbContext.Set<TEntity>().AsNoTracking();
+
+        if (!includeSoftDeleted)
+        {
+            query = query.Where(x => !x.IsDeleted);
+        }
+
         if (expression != null)
         {
             query = query.Where(expression);
+        }
+        if (include is not null)
+        {
+            query = include(query);
         }
 
         var entity = await query.FirstOrDefaultAsync(cancellationToken);
         return entity != null ? Maybe<TEntity>.From(entity) : Maybe<TEntity>.None!;
     }
 
-    public virtual async Task<Maybe<(IQueryable<TEntity> data, bool hasPreviousPage, bool hasNextPage)>> GetAllAsync(
+    public virtual async Task<Maybe<(List<TEntity> data, bool hasPreviousPage, bool hasNextPage)>> GetAllAsync(
         Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
@@ -40,12 +66,13 @@ public class Repository<TEntity, TDbContext>(TDbContext dbContext) : IRepository
         bool includeSoftDeleted = false,
         CancellationToken cancellationToken = default)
     {
-        var hasPreviousPage = false;
-        var hasNextPage = false;
-        var query = DbSet.AsQueryable();
-        if (predicate != null)
+        bool hasPreviousPage = false;
+        bool hasNextPage = false;
+        var query = DbContext.Set<TEntity>().AsNoTracking();
+
+        if (!includeSoftDeleted)
         {
-            query = query.Where(predicate);
+            query = query.Where(x => !x.IsDeleted);
         }
 
         if (include is not null)
@@ -68,16 +95,23 @@ public class Repository<TEntity, TDbContext>(TDbContext dbContext) : IRepository
             query = orderBy(query);
         }
 
+        var count = query.Count();
 
         if (pageIndex > 0)
         {
+            pageIndex = pageIndex > 0 ? pageIndex : 1;
             pageSize = pageSize > 0 ? pageSize : 50;
             pageIndex = (pageIndex - 1) * pageSize;
             query = query.Skip(pageIndex).Take(pageSize);
         }
+        hasPreviousPage = pageIndex > pageSize;
+        hasNextPage = pageIndex + pageSize < count;
 
-        return await Task.FromResult(Maybe<(IQueryable<TEntity>, bool hasPreviousPage, bool hasNExtPage)>.From(
-            (query, hasPreviousPage, hasNextPage)));
+        var list = query.ToList();
+
+        return await Task.FromResult(
+            Maybe<(List<TEntity> Data, bool HasPreviousPage, bool HasNextPage)>
+                .From((list, hasPreviousPage, hasNextPage)));
     }
 
     public virtual async Task<Maybe<string>> AddAsync(TEntity entity, CancellationToken cancellationToken = default)

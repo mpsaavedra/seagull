@@ -5,10 +5,13 @@ namespace Seagull.Data;
 
 public interface IRepository<TEntity> where TEntity : IEntity
 {
-    Task<Maybe<TEntity>> FindByIdAsync(string id, CancellationToken cancellationToken = default);
+    Task<Maybe<TEntity>> FindByIdAsync(string id,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
+        bool includeSoftDeleted = false, CancellationToken cancellationToken = default);
     Task<Maybe<TEntity>> FirstOrDefaultAsync(Expression<Func<TEntity, bool>>? expression = null,
-        CancellationToken cancellationToken = default);
-    Task<Maybe<(IQueryable<TEntity> data, bool hasPreviousPage, bool hasNextPage)>> GetAllAsync(
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
+        bool includeSoftDeleted = false, CancellationToken cancellationToken = default);
+    Task<Maybe<(List<TEntity> data, bool hasPreviousPage, bool hasNextPage)>> GetAllAsync(
         Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,

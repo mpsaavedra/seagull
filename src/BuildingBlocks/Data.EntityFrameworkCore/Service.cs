@@ -19,7 +19,8 @@ public class Service<TEntity, TDbContext>
     protected readonly IMapper Mapper = mapper;
     protected readonly ILogger Logger = logger;
 
-    public async Task<Maybe<TEntity>> FindByIdAsync(string id, bool softDeleted = false,
+    public async Task<Maybe<TEntity>> FindByIdAsync(string id,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null, bool softDeleted = false,
         CancellationToken cancellationToken = default)
     {
         Logger.LogInformation($"Searching for '{nameof(TEntity)}' with Id: {id}");
@@ -30,6 +31,10 @@ public class Service<TEntity, TDbContext>
         {
             query = query.Where(x => !x.IsDeleted);
         }
+        if (include is not null)
+        {
+            query = include(query);
+        }
 
         var entity = await query.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
@@ -37,6 +42,7 @@ public class Service<TEntity, TDbContext>
         return entity != null ? Maybe<TEntity>.From(entity) : Maybe<TEntity>.None!;
     }
     public async Task<Maybe<TEntity>> FirstOrDefaultAsync(Expression<Func<TEntity, bool>>? expression = null,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         bool softDeleted = false, CancellationToken cancellationToken = default)
 
     {
@@ -50,6 +56,10 @@ public class Service<TEntity, TDbContext>
         if (expression != null)
         {
             query = query.Where(expression);
+        }
+        if (include is not null)
+        {
+            query = include(query);
         }
 
         var entity = await query.FirstOrDefaultAsync(cancellationToken);
@@ -93,12 +103,18 @@ public class Service<TEntity, TDbContext>
             query = orderBy(query);
         }
 
+        var count = query.Count();
+
         if (pageIndex > 0)
         {
+            pageIndex = pageIndex > 0 ? pageIndex : 1;
             pageSize = pageSize > 0 ? pageSize : 50;
             pageIndex = (pageIndex - 1) * pageSize;
             query = query.Skip(pageIndex).Take(pageSize);
         }
+        hasPreviousPage = pageIndex > pageSize;
+        hasNextPage = pageIndex + pageSize < count;
+
         var list = query.ToList();
 
         return await Task.FromResult(

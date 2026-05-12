@@ -6,8 +6,10 @@ namespace Seagull.Data;
 
 public interface IService<TEntity> where TEntity : class, IEntity
 {
-    Task<Maybe<TEntity>> FindByIdAsync(string id, bool softDeleted = false, CancellationToken cancellationToken = default);
+    Task<Maybe<TEntity>> FindByIdAsync(string id,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null, bool softDeleted = false, CancellationToken cancellationToken = default);
     Task<Maybe<TEntity>> FirstOrDefaultAsync(Expression<Func<TEntity, bool>>? expression = null,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         bool softDeleted = false, CancellationToken cancellationToken = default);
     Task<Maybe<(List<TEntity> Data, bool HasPreviousPage, bool HasNextPage)>> GetAllAsync(
         Expression<Func<TEntity, bool>>? predicate = null,
