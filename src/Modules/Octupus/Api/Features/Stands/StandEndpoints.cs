@@ -1,4 +1,6 @@
 using System;
+using AutoMapper;
+using Octupus.Contracts.Dtos;
 using Seagull;
 using Seagull.Abstractions.Responses;
 using Seagull.Messaging;
@@ -8,25 +10,40 @@ namespace Octupus.Api.Features.Stands;
 
 public class StandEndpoints : IEndpointInstaller
 {
+    public static string ApiEndpoint = "/api/stands/";
     public void MapEndpoints(WebApplication app)
     {
-        app.MapGet("/api/stand", (IMessageBus bus, int pageIndex = 1, int pageSize = 50, CancellationToken ct = default) =>
+        app.MapGet(ApiEndpoint, (IMessageBus bus, int pageIndex = 1, int pageSize = 50, CancellationToken ct = default) =>
             Result
-                .Create("ListStands", ErrorCodes.ApiErrors.UnProcessableRequest)
+                .Create("List", ErrorCodes.ApiErrors.UnProcessableRequest)
                 .Map(_ => new GetStand()
                 {
                     PageIndex = pageIndex,
                     PageSize = pageSize,
                     SoftDeleted = false
                 })
-                .Bind(async qry =>
+                .TryCatch(async qry =>
                 {
-                    var response = await bus.InvokeAsync<(List<Stand> Data, bool HasPreviousPage, bool HasNextPage)>(qry!, ct);
-                    return Result.Success(PaginatedResponse<Stand>.CreatePaginated(
+                    var response = await bus.InvokeAsync<(List<StandDto> Data, bool HasPreviousPage, bool HasNextPage)>(qry!, ct);
+                    return Result.Success(PaginatedResponse<StandDto>.CreatePaginated(
                         response.Data,
                         response.HasPreviousPage,
                         response.HasNextPage
                     ));
+                })
+                .Match(
+                    onSuccess: value => Results.Ok(value),
+                    onFailure: error => Results.BadRequest(error)
+                ));
+
+        app.MapGet(ApiEndpoint + "{id}", (IMessageBus bus, string id, CancellationToken ct = default) =>
+            Result
+                .Create("GetBydId")
+                .Map(_ => new GetByIdStand(id))
+                .TryCatch(async qry =>
+                {
+                    var response = await bus.InvokeAsync<StandDetailsDto>(qry!, ct);
+                    return Result.Success(response);
                 })
                 .Match(
                     onSuccess: value => Results.Ok(value),

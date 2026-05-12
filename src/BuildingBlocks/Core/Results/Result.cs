@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Logging;
+
 namespace Seagull;
 
 /// <summary>
@@ -6,11 +8,16 @@ namespace Seagull;
 public class Result
 {
     /// <summary>
+    /// Logger for structurated logging in the results use
+    /// </summary>
+    public ILogger? Logger { get; set; } = null;
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="Result"/> class with the specified parameters.
     /// </summary>
     /// <param name="isSuccess">The flag indicating if the result is successful.</param>
     /// <param name="error">The error.</param>
-    protected Result(bool isSuccess, Error error)
+    protected Result(bool isSuccess, Error error, ILogger? logger = null)
     {
         if (isSuccess && error != Error.None)
         {
@@ -20,6 +27,10 @@ public class Result
         if (!isSuccess && error == Error.None)
         {
             throw new InvalidOperationException();
+        }
+        if (logger is not null)
+        {
+            Logger = logger;
         }
 
         IsSuccess = isSuccess;
@@ -45,7 +56,7 @@ public class Result
     /// Returns a success <see cref="Result"/>.
     /// </summary>
     /// <returns>A new instance of <see cref="Result"/> with the success flag set.</returns>
-    public static Result Success() => new(true, Error.None);
+    public static Result Success(ILogger? logger = null) => new(true, Error.None, logger);
 
     /// <summary>
     /// Returns a success <see cref="Result{TValue}"/> with the specified value.
@@ -53,7 +64,7 @@ public class Result
     /// <typeparam name="TValue">The result type.</typeparam>
     /// <param name="value">The result value.</param>
     /// <returns>A new instance of <see cref="Result{TValue}"/> with the success flag set.</returns>
-    public static Result<TValue> Success<TValue>(TValue value) => new(value, true, Error.None);
+    public static Result<TValue> Success<TValue>(TValue value, ILogger? logger = null) => new(value, true, Error.None, logger);
 
     /// <summary>
     /// Creates a new <see cref="Result{TValue}"/> with the specified nullable value and the specified error.
@@ -62,9 +73,9 @@ public class Result
     /// <param name="value">The result value.</param>
     /// <param name="error">The error in case the value is null.</param>
     /// <returns>A new instance of <see cref="Result{TValue}"/> with the specified value or an error.</returns>
-    public static Result<TValue> Create<TValue>(TValue? value, Error? error = null)
+    public static Result<TValue> Create<TValue>(TValue? value, Error? error = null, ILogger? logger = null)
         where TValue : class
-        => value is null ? Failure<TValue>(error)! : Success(value);
+        => value is null ? Failure<TValue>(error, logger)! : Success(value, logger);
 
     /// <summary>
     /// executes some kind of action over provider TValue
@@ -74,9 +85,9 @@ public class Result
     /// <param name="predicate"></param>
     /// <param name="error"></param>
     /// <returns></returns>
-    public static Result Check<TValue>(TValue? value, Func<TValue, bool> predicate, Error? error = null)
-        where TValue: class
-        => value is null && !predicate(value) ? Failure(error) : Success(value); 
+    public static Result Check<TValue>(TValue? value, Func<TValue, bool> predicate, Error? error = null, ILogger? logger = null)
+        where TValue : class
+        => value is null && !predicate(value) ? Failure(error, logger) : Success(value, logger);
 
 
     // public static Result Ensure<TValue>(TValue? value, bool check, Action<TValue> operation, Error? error = null)
@@ -89,23 +100,23 @@ public class Result
     // }
 
 
-    public static Result Assign<TValue>(TValue? value, bool check, Action<TValue> operation, Error? error = null)
-        where TValue: class
+    public static Result Assign<TValue>(TValue? value, bool check, Action<TValue> operation, Error? error = null, ILogger? logger = null)
+        where TValue : class
     {
-        if(value is null || check)
-            operation(value);        
-        return Result.Success(value);
+        if (value is null || check)
+            operation(value);
+        return Result.Success(value, logger);
     }
 
-    public static Result Create(Error error) =>
-        Failure(error);
+    public static Result Create(Error error, ILogger? logger = null) =>
+        Failure(error, logger);
 
     /// <summary>
     /// Returns a failure <see cref="Result"/> with the specified error.
     /// </summary>
     /// <param name="error">The error.</param>
     /// <returns>A new instance of <see cref="Result"/> with the specified error and failure flag set.</returns>
-    public static Result Failure(Error error) => new(false, error);
+    public static Result Failure(Error error, ILogger? logger = null) => new(false, error, logger);
 
     /// <summary>
     /// Returns a failure <see cref="Result{TValue}"/> with the specified error.
@@ -117,7 +128,7 @@ public class Result
     /// We're purposefully ignoring the nullable assignment here because the API will never allow it to be accessed.
     /// The value is accessed through a method that will throw an exception if the result is a failure result.
     /// </remarks>
-    public static Result<TValue?> Failure<TValue>(Error error) => new(default, false, error);
+    public static Result<TValue?> Failure<TValue>(Error error, ILogger? logger = null) => new(default, false, error, logger);
 
     /// <summary>
     /// Returns the first failure from the specified <paramref name="results"/>.

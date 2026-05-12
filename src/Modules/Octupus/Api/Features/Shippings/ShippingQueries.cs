@@ -3,5 +3,5 @@ using Seagull.Abstractions.Requests;
 
 namespace Octupus.Api.Features.Shippings;
 
-public sealed record GetByIdShipping(string ShippingId) : QueryBase;
-public sealed record GetShiping : PaginatedQueryBase;
+public sealed record GetByIdShipping(string Id) : QueryBase;
+public sealed record GetShipping : PaginatedQueryBase;

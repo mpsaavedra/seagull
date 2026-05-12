@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Seagull.Data;
 
@@ -9,14 +10,16 @@ public interface IRepository<TEntity> where TEntity : IEntity
         CancellationToken cancellationToken = default);
     Task<Maybe<(IQueryable<TEntity> data, bool hasPreviousPage, bool hasNextPage)>> GetAllAsync(
         Expression<Func<TEntity, bool>>? predicate = null,
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         int pageIndex = 1, int pageSize = 50,
         bool includeSoftDeleted = false,
         CancellationToken cancellationToken = default);
     Task<Maybe<string>> AddAsync(TEntity entity, CancellationToken cancellationToken = default);
     Task<Maybe<bool>> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default);
     Task<Maybe<bool>> DeleteAsync(TEntity entity, bool softdelete = true, CancellationToken cancellationToken = default);
-    Task<Maybe<long>> LongCountAsync(Expression<Func<TEntity, bool>>? expression = null,  bool softdelete = true, 
+    Task<Maybe<long>> LongCountAsync(Expression<Func<TEntity, bool>>? expression = null, bool softdelete = true,
         CancellationToken cancellationToken = default);
-    Task<Maybe<bool>> AnyAsync(Expression<Func<TEntity, bool>>? expression = null,  bool softdelete = true, 
+    Task<Maybe<bool>> AnyAsync(Expression<Func<TEntity, bool>>? expression = null, bool softdelete = true,
         CancellationToken cancellationToken = default);
 }

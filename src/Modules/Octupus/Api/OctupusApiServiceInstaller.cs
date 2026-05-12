@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using System.Text.Json.Serialization;
 using Seagull.Data.AutoMapping;
 using Seagull.Extensions;
 using Seagull.ServiceInstallers;
@@ -15,6 +16,7 @@ public class OctupusApiServiceInstaller : IServiceInstaller
         builder.Services.AddScopedAsMatchingInterface(OctupusApiAssembly.Assembly);
         builder.Services.AddTransientAsMatchingInterface(OctupusApiAssembly.Assembly);
         builder.Services.AddAutoMapper(GetType().Assembly);
+
     }
 
     public void UseServices(WebApplication app)

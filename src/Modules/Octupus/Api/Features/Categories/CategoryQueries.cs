@@ -5,4 +5,4 @@ namespace Octupus.Api.Features.Categories;
 
 public sealed record GetCategory : PaginatedQueryBase;
 
-public sealed record GetByIdCategory(string CategoryId) : QueryBase();
+public sealed record GetByIdCategory(string Id) : QueryBase();

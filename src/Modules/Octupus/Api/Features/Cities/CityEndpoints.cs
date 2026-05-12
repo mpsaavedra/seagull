@@ -1,4 +1,6 @@
 using System;
+using AutoMapper;
+using Octupus.Contracts.Dtos;
 using Seagull;
 using Seagull.Abstractions.Responses;
 using Seagull.Messaging;
@@ -8,9 +10,11 @@ namespace Octupus.Api.Features.Cities;
 
 public class CityEndpoints : IEndpointInstaller
 {
+    public static string ApiEndpoint = "/api/citites/";
+
     public void MapEndpoints(WebApplication app)
     {
-        app.MapGet("/api/city", (IMessageBus bus, int pageIndex = 1, int pageSize = 50, CancellationToken ct = default) =>
+        app.MapGet(ApiEndpoint, (IMessageBus bus, int pageIndex = 1, int pageSize = 50, CancellationToken ct = default) =>
             Result
                 .Create("ListCities", ErrorCodes.ApiErrors.UnProcessableRequest)
                 .Map(_ => new GetCity()
@@ -19,14 +23,28 @@ public class CityEndpoints : IEndpointInstaller
                     PageSize = pageSize,
                     SoftDeleted = false
                 })
-                .Bind<GetCity?, PaginatedResponse<City>>(async qry =>
+                .TryCatch(async qry =>
                 {
-                    var response = await bus.InvokeAsync<(List<City> Data, bool HasPreviousPage, bool HasNextPage)>(qry!, ct);
-                    return Result.Success(PaginatedResponse<City>.CreatePaginated(
+                    var response = await bus.InvokeAsync<(List<CityDto> Data, bool HasPreviousPage, bool HasNextPage)>(qry!, ct);
+                    return Result.Success(PaginatedResponse<CityDto>.CreatePaginated(
                         response.Data,
                         response.HasPreviousPage,
                         response.HasNextPage
                     ));
+                })
+                .Match(
+                    onSuccess: value => Results.Ok(value),
+                    onFailure: error => Results.BadRequest(error)
+                ));
+
+        app.MapGet(ApiEndpoint + "{id}", (IMessageBus bus, string id, CancellationToken ct = default) =>
+            Result
+                .Create("GetBydIdCity")
+                .Map(_ => new GetByIdCity(id))
+                .TryCatch(async qry =>
+                {
+                    var response = await bus.InvokeAsync<CityDetailsDto>(qry!, ct);
+                    return Result.Success(response);
                 })
                 .Match(
                     onSuccess: value => Results.Ok(value),

@@ -1,4 +1,5 @@
 using System;
+using Microsoft.Extensions.Logging;
 
 namespace Seagull;
 
@@ -16,8 +17,8 @@ public class Result<TValue> : Result
     /// <param name="value">The result value.</param>
     /// <param name="isSuccess">The flag indicating if the result is successful.</param>
     /// <param name="error">The error.</param>
-    protected internal Result(TValue value, bool isSuccess, Error error)
-        : base(isSuccess, error)
+    protected internal Result(TValue value, bool isSuccess, Error error, ILogger? logger = null)
+        : base(isSuccess, error, logger)
         => _value = value;
 
     /// <summary>

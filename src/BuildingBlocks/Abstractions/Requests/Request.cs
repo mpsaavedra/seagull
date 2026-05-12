@@ -12,3 +12,8 @@ public record QueryBase
     /// </summary>
     public bool SoftDeleted { get; set; } = false;
 }
+
+public record GetById : QueryBase
+{
+    public string Id { get; set; }
+}

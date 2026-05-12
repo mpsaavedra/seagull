@@ -1,4 +1,5 @@
 using System.Security.Cryptography.Xml;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -33,13 +34,17 @@ public static class ServiceCollectionExtensions
                 opts.MetadataAddress = config["Authorization:MetadataAddress"]!;
                 opts.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidIssuer =  config["Authorization:ValidIssuer"],
+                    ValidIssuer = config["Authorization:ValidIssuer"],
                     ClockSkew = TimeSpan.Zero
                 };
             });
         // builder.Services.AddCors();
 
         builder.Services.AddSwaggerGen();
+        builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =>
+        {
+            options.SerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+        });
 
         return builder;
     }
@@ -48,10 +53,10 @@ public static class ServiceCollectionExtensions
     {
         app.UseSwagger();
         app.UseSwaggerUI();
-        
-        if(!app.Environment.IsDevelopment())
+
+        if (!app.Environment.IsDevelopment())
         {
-            app.UseHttpsRedirection();       
+            app.UseHttpsRedirection();
         }
 
         // app.UseCors(cfg =>

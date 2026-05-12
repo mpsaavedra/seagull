@@ -8,7 +8,7 @@ public sealed record CategoryDto : DtoBase
     public string Code { get; set; }
     public string? Type { get; set; }
     public string? Description { get; set; }
-    public CategoryDto? ParentCategory { get; set; }
+    public CategoryDto? ParentCategory { get; set; } = null;
 }
 
 public sealed record CategoryDetailsDto : DtoBase

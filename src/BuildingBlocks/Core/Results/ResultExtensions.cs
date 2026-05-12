@@ -2,6 +2,7 @@ using System;
 using System.Globalization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.Extensions.Logging;
 
 namespace Seagull;
 
@@ -31,14 +32,14 @@ public static class ResultExtensions
     }
 
     public static Result Ensure<TValue>(this Result result, TValue? value, Func<TValue, bool> operation, Error? error = null)
-        where TValue: class
+        where TValue : class
         =>
-        value is null || operation(value) ? Result.Failure(error): Result.Success(value);
+        value is null || operation(value) ? Result.Failure(error) : Result.Success(value);
 
     public static Result Ensure<TValue>(this Result result, TValue? value, bool check, Action<TValue> operation, Error? error = null)
-        where TValue: class
+        where TValue : class
     {
-        if(value is null || !check)
+        if (value is null || !check)
             return Result.Failure(error);
         operation(value);
         return Result.Success(value);
@@ -46,12 +47,12 @@ public static class ResultExtensions
 
 
     public static Result Assign<TValue>(this Result result, TValue? value, bool check, Action<TValue> operation, Error? error = null)
-        where TValue: class
+        where TValue : class
     {
-        if(value is null || check)
-            operation(value);        
+        if (value is null || check)
+            operation(value);
         return Result.Success(value);
-    }    
+    }
 
     /// <summary>
     /// Maps the result value to a new value based on the specified mapping function.
@@ -91,7 +92,7 @@ public static class ResultExtensions
     public static async Task<Result<TOut>> Bind<TIn, TOut>(this Result<TIn> result, Func<TIn, Task<Result<TOut>>> func) =>
         result.IsSuccess ? await func(result.Value) : Result.Failure<TOut>(result.Error);
 
-        
+
     /// <summary>
     /// executes some kind of action over provider TValue
     /// </summary>
@@ -101,13 +102,13 @@ public static class ResultExtensions
     /// <param name="error"></param>
     /// <returns></returns>
     public static Result Bind<TValue>(this Result result, TValue? value, Action<TValue> operation, Error? error = null)
-        where TValue: class
+        where TValue : class
     {
-        if(value is null)
+        if (value is null)
             return Result.Failure(error);
         operation(value);
         return Result.Success(value);
-    } 
+    }
 
     /// <summary>
     /// Matches the success status of the result to the corresponding functions.
@@ -152,12 +153,12 @@ public static class ResultExtensions
     //     Func<TIn, IResult> onSuccess,
     //     Func<)
     // {
-        
+
     // } 
 
     public static async Task<Result<T>> Ensure<T>(
-        this Result<T> result, 
-        Func<T, Task<bool>> predicate, 
+        this Result<T> result,
+        Func<T, Task<bool>> predicate,
         Error error)
     {
         if (result.IsFailure) return result;
@@ -174,20 +175,33 @@ public static class ResultExtensions
     /// <param name="func"></param>
     /// <param name="error"></param>
     /// <returns></returns>
-    public static Result<TOut> TryCatch<TIn, TOut>(this Result<TIn> result, Func<TIn, TOut> func, Error? error = null)
+    public static async Task<Result<TOut>> TryCatch<TIn, TOut>(this Result<TIn> result, Func<TIn, Task<Result<TOut>>> func, Error? error = null)
     {
         try
         {
             return result.IsSuccess ?
-                Result.Success(func(result.Value)) :
+                await func(result.Value) :
                 Result.Failure<TOut>(result.Error);
-        }   
+        }
         catch
         {
             return Result.Failure<TOut>(error);
         }
     }
-
+    public static async Task<Result<TOut>> TryCatch<TIn, TOut>
+        (this Result<TIn> result, Func<TIn, ILogger?, Task<Result<TOut>>> func, Error? error = null)
+    {
+        try
+        {
+            return result.IsSuccess ?
+                await func(result.Value, result.Logger) :
+                Result.Failure<TOut>(result.Error);
+        }
+        catch
+        {
+            return Result.Failure<TOut>(error);
+        }
+    }
     /// <summary>
     /// execute some action without modify the current pipeline
     /// </summary>
@@ -197,7 +211,7 @@ public static class ResultExtensions
     /// <returns></returns>
     public static async Task<Result<TIn>> Tap<TIn>(this Result<TIn> result, Action<TIn> action)
     {
-        if(result.IsSuccess)
+        if (result.IsSuccess)
         {
             action(result.Value);
         }

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using Seagull.Data;
 using System.Linq.Expressions;
 
@@ -33,19 +34,42 @@ public class Repository<TEntity, TDbContext>(TDbContext dbContext) : IRepository
 
     public virtual async Task<Maybe<(IQueryable<TEntity> data, bool hasPreviousPage, bool hasNextPage)>> GetAllAsync(
         Expression<Func<TEntity, bool>>? predicate = null,
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         int pageIndex = 1, int pageSize = 50,
         bool includeSoftDeleted = false,
         CancellationToken cancellationToken = default)
     {
-        bool hasPreviousPage = false;
-        bool hasNextPage = false;
+        var hasPreviousPage = false;
+        var hasNextPage = false;
         var query = DbSet.AsQueryable();
         if (predicate != null)
         {
             query = query.Where(predicate);
         }
 
-        if(pageIndex > 0)
+        if (include is not null)
+        {
+            query = include(query);
+        }
+
+        if (predicate is not null)
+        {
+            query = query.Where(predicate);
+        }
+
+        // if (ignoreQueryFilters)
+        // {
+        //     query = query.IgnoreQueryFilters();
+        // }
+
+        if (orderBy is not null)
+        {
+            query = orderBy(query);
+        }
+
+
+        if (pageIndex > 0)
         {
             pageSize = pageSize > 0 ? pageSize : 50;
             pageIndex = (pageIndex - 1) * pageSize;
@@ -77,49 +101,49 @@ public class Repository<TEntity, TDbContext>(TDbContext dbContext) : IRepository
         return await Task.FromResult(true);
     }
 
-    public virtual async Task<Maybe<bool>> DeleteAsync(TEntity entity, bool softdelete = true, 
+    public virtual async Task<Maybe<bool>> DeleteAsync(TEntity entity, bool softdelete = true,
         CancellationToken cancellationToken = default)
     {
-        if(softdelete)
+        if (softdelete)
         {
             entity.MarkAsDeleted();
             DbSet.Update(entity);
         }
         else
         {
-            DbSet.Remove(entity);    
+            DbSet.Remove(entity);
         }
-        
+
         return await Task.FromResult(true);
     }
 
-    public async Task<Maybe<long>> LongCountAsync(Expression<Func<TEntity, bool>>? expression = null,  bool includeSoftDeleted = false, 
+    public async Task<Maybe<long>> LongCountAsync(Expression<Func<TEntity, bool>>? expression = null, bool includeSoftDeleted = false,
         CancellationToken cancellationToken = default)
     {
         var query = DbSet.AsQueryable();
-        if(expression != null)
+        if (expression != null)
             query = query.Where(expression);
-        
-        if(!includeSoftDeleted) 
+
+        if (!includeSoftDeleted)
             query = query.Where(x => !x.IsDeleted);
 
         var count = await query.LongCountAsync(cancellationToken);
-        
+
         return await Task.FromResult(Maybe<long>.From(count));
     }
 
-    public async Task<Maybe<bool>> AnyAsync(Expression<Func<TEntity, bool>>? expression = null,  bool includeSoftDeleted = false, 
+    public async Task<Maybe<bool>> AnyAsync(Expression<Func<TEntity, bool>>? expression = null, bool includeSoftDeleted = false,
         CancellationToken cancellationToken = default)
     {
         var query = DbSet.AsQueryable();
-        if(expression != null)
+        if (expression != null)
             query = query.Where(expression);
-        
-        if(!includeSoftDeleted) 
+
+        if (!includeSoftDeleted)
             query = query.Where(x => !x.IsDeleted);
 
         var count = await query.AnyAsync(cancellationToken);
-        
+
         return await Task.FromResult(Maybe<bool>.From(count));
     }
 }

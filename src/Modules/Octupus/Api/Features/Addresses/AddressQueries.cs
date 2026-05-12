@@ -4,4 +4,4 @@ namespace Octupus.Api.Features.Addresses;
 
 public sealed record GetAddress : PaginatedQueryBase;
 
-public sealed record GetByIdAddress(string AddressId) : QueryBase();
+public sealed record GetByIdAddress(string Id) : QueryBase();

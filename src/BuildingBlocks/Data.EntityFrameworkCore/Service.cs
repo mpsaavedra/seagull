@@ -4,6 +4,7 @@ using AutoMapper;
 using ImTools;
 using JasperFx.Core.IoC;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.Extensions.Logging;
 
 namespace Seagull.Data.EntityFrameworkCore;
@@ -57,6 +58,8 @@ public class Service<TEntity, TDbContext>
 
     public async Task<Maybe<(List<TEntity> Data, bool HasPreviousPage, bool HasNextPage)>> GetAllAsync(
         Expression<Func<TEntity, bool>>? predicate = null,
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         int pageIndex = 1, int pageSize = 50,
         bool includeSoftDeleted = false, CancellationToken cancellationToken = default)
 
@@ -70,9 +73,24 @@ public class Service<TEntity, TDbContext>
             query = query.Where(x => !x.IsDeleted);
         }
 
-        if (predicate != null)
+        if (include is not null)
+        {
+            query = include(query);
+        }
+
+        if (predicate is not null)
         {
             query = query.Where(predicate);
+        }
+
+        // if (ignoreQueryFilters)
+        // {
+        //     query = query.IgnoreQueryFilters();
+        // }
+
+        if (orderBy is not null)
+        {
+            query = orderBy(query);
         }
 
         if (pageIndex > 0)

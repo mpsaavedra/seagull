@@ -1,4 +1,6 @@
 using System;
+using AutoMapper;
+using Octupus.Contracts.Dtos;
 using Seagull;
 using Seagull.Abstractions.Responses;
 using Seagull.Messaging;
@@ -8,25 +10,41 @@ namespace Octupus.Api.Features.Customers;
 
 public class CustomerEndoints : IEndpointInstaller
 {
+    public static string ApiEndpoint = "/api/customers/";
+
     public void MapEndpoints(WebApplication app)
     {
-        app.MapGet("/api/customer", (IMessageBus bus, int pageIndex = 1, int pageSize = 50, CancellationToken ct = default) =>
+        app.MapGet(ApiEndpoint, (IMessageBus bus, int pageIndex = 1, int pageSize = 50, CancellationToken ct = default) =>
             Result
-                .Create("ListCustomers", ErrorCodes.ApiErrors.UnProcessableRequest)
+                .Create("ListCustomer", ErrorCodes.ApiErrors.UnProcessableRequest)
                 .Map(_ => new GetCustomer()
                 {
                     PageIndex = pageIndex,
                     PageSize = pageSize,
                     SoftDeleted = false
                 })
-                .Bind<GetCustomer?, PaginatedResponse<Customer>>(async qry =>
+                .TryCatch(async qry =>
                 {
-                    var response = await bus.InvokeAsync<(List<Customer> Data, bool HasPreviousPage, bool HasNextPage)>(qry!, ct);
-                    return Result.Success(PaginatedResponse<Customer>.CreatePaginated(
+                    var response = await bus.InvokeAsync<(List<CustomerDto> Data, bool HasPreviousPage, bool HasNextPage)>(qry!, ct);
+                    return Result.Success(PaginatedResponse<CustomerDto>.CreatePaginated(
                         response.Data,
                         response.HasPreviousPage,
                         response.HasNextPage
                     ));
+                })
+                .Match(
+                    onSuccess: value => Results.Ok(value),
+                    onFailure: error => Results.BadRequest(error)
+                ));
+
+        app.MapGet(ApiEndpoint + "{id}", (IMessageBus bus, string id, CancellationToken ct = default) =>
+            Result
+                .Create("GetBydIdCustomer")
+                .Map(_ => new GetByIdCustomer(id))
+                .TryCatch(async qry =>
+                {
+                    var response = await bus.InvokeAsync<CustomerDetailsDto>(qry!, ct);
+                    return Result.Success(response);
                 })
                 .Match(
                     onSuccess: value => Results.Ok(value),

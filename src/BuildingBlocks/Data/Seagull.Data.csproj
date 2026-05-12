@@ -9,6 +9,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Core\Seagull.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.2" />
+  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="ShadowProperties/" />

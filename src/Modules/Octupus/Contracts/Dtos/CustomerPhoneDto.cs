@@ -12,7 +12,7 @@ public sealed record CustomerPhoneDto : DtoBase
 }
 
 
-public sealed record CustomerPhoneDetailsDtoDto : DtoBase
+public sealed record CustomerPhoneDetailsDto : DtoBase
 {
     public string Number { get; set; }
     public PhoneType PhoneType { get; set; }
