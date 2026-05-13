@@ -17,11 +17,11 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.HasOne(x => x.Category).WithMany(x => x.Products).HasForeignKey(x => x.CategoryId);
         // builder.HasMany(x => x.InvoiceProducts).WithOne(x => x.Invoice)
         builder.Property(x => x.ExpirationDate).IsRequired(false);
-        builder.HasOne(x => x.Cost).WithMany(x => x.Products).HasForeignKey(x => x.CostId);
+        builder.HasOne(x => x.Cost).WithMany(x => x.Products).HasForeignKey(x => x.CostId).IsRequired(false);
         builder.HasMany(x => x.PurchaseProducts).WithOne(x => x.Product).HasForeignKey(x => x.ProductId);
         builder.HasMany(x => x.WarehouseProducts).WithOne(x => x.Product).HasForeignKey(x => x.ProductId);
         builder.HasMany(x => x.StandProducts).WithOne(x => x.Product).HasForeignKey(x => x.ProductId);
         builder.HasMany(x => x.SaleProducts).WithOne(x => x.Product).HasForeignKey(x => x.ProductId);
-        builder.HasOne(x => x.MeasureUnit).WithMany(x => x.Products).HasForeignKey(x => x.MeasureUnitId);
+        builder.HasOne(x => x.MeasureUnit).WithMany(x => x.Products).HasForeignKey(x => x.MeasureUnitId).IsRequired(false);
     }
 }

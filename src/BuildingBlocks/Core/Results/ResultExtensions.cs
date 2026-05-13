@@ -217,10 +217,5 @@ public static class ResultExtensions
         }
         return result;
     }
-
-    // public static async Task<Result<T>> Ensure<T>(
-    //     this Result<T> result, 
-    //     Func<T, Task<bool>> predicate, 
-    //     Error error)
 }
 

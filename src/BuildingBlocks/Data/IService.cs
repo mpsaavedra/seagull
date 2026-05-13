@@ -18,7 +18,7 @@ public interface IService<TEntity> where TEntity : class, IEntity
         int pageIndex = 1, int pageSize = 50,
         bool includeSoftDeleted = false, CancellationToken cancellationToken = default);
     Task<Maybe<string>> AddAsync(TEntity entity, CancellationToken cancellationToken = default);
-    Task<Maybe<bool>> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default);
+    Task<Maybe<TEntity>> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default);
     Task<Maybe<bool>> DeleteAsync(TEntity entity, bool softDelete = true, CancellationToken cancellationToken = default);
     Task<Maybe<long>> LongCountAsync(Expression<Func<TEntity, bool>>? expression = null, bool softDeleted = false,
         CancellationToken cancellationToken = default);

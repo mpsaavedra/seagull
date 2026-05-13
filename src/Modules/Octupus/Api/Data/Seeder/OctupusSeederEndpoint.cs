@@ -175,18 +175,18 @@ public class OctupusSeederEndpoint : IEndpointInstaller
             Address cusstomer5Address;
             if (!ctx.Addresses.Any())
             {
-                warehouseAddress = Address.Create("Street1", "Inner Address 1", btno.Id);
+                warehouseAddress = Address.Create("Street 1", "Inner Address 1", btno.Id);
                 supplier1Address = Address.Create("Street 2", "Inner Address 2", surg.Id);
                 supplier2Address = Address.Create("Street 3", "Inner Address 3", surg.Id);
                 cusstomer1Address = Address.Create("Street 4", "Inner Address 4", btno.Id);
-                cusstomer2Address = Address.Create("Street 4", "Inner Address 5", surg.Id);
-                cusstomer3Address = Address.Create("Street 4", "Inner Address 6", btno.Id);
-                cusstomer4Address = Address.Create("Street 4", "Inner Address 7", surg.Id);
-                cusstomer5Address = Address.Create("Street 4", "Inner Address 8", btno.Id);
-                barAddress = Address.Create("Street 4", "Inner Address 9", surg.Id);
-                bar24Address = Address.Create("Street 5", "Inner Address 10", surg.Id);
-                await ctx.AddRangeAsync(
-                    warehouseAddress, supplier1Address, supplier1Address,
+                cusstomer2Address = Address.Create("Street 5", "Inner Address 5", surg.Id);
+                cusstomer3Address = Address.Create("Street 6", "Inner Address 6", btno.Id);
+                cusstomer4Address = Address.Create("Street 7", "Inner Address 7", surg.Id);
+                cusstomer5Address = Address.Create("Street 8", "Inner Address 8", btno.Id);
+                barAddress = Address.Create("Street 9", "Inner Address 9", surg.Id);
+                bar24Address = Address.Create("Street 10", "Inner Address 10", surg.Id);
+                await ctx.Addresses.AddRangeAsync(
+                    warehouseAddress, supplier1Address, supplier2Address,
                     cusstomer1Address, cusstomer2Address, cusstomer3Address, cusstomer4Address, cusstomer5Address,
                     barAddress, bar24Address);
                 await ctx.SaveChangesAsync();
@@ -212,7 +212,7 @@ public class OctupusSeederEndpoint : IEndpointInstaller
                 bar24 = Stand.Create("24 Horas", true, "The most popular bar in town", 150);
                 bar24.Address = bar24Address;
 
-                await ctx.AddRangeAsync(bar, bar24);
+                await ctx.Stands.AddRangeAsync(bar, bar24);
                 await ctx.SaveChangesAsync();
             }
             bar = ctx.Stands.First(x => x.Name == "Nightfall Bar");
@@ -292,14 +292,14 @@ public class OctupusSeederEndpoint : IEndpointInstaller
                     PurchaseProduct.Create(product5, purchase1, 10, Money.Create(100.0m, cup), supplier1),
                     PurchaseProduct.Create(product6, purchase1, 150, Money.Create(10.0m, cup), supplier1)
                 );
-                purchase2 = Purchase.Create("PURCH-NMBR-0001", DateTime.UtcNow, warehouse.Id, shippingId: shipping1.Id);
+                purchase2 = Purchase.Create("PURCH-NMBR-0002", DateTime.UtcNow, warehouse.Id, shippingId: shipping1.Id);
                 purchase2.AddProduct(
                     PurchaseProduct.Create(product1, purchase1, 1000, Money.Create(25.0m, cup), supplier1),
                     PurchaseProduct.Create(product7, purchase1, 10, Money.Create(15.0m, mlc), supplier2),
                     PurchaseProduct.Create(product8, purchase1, 10, Money.Create(10.0m, mlc), supplier2),
                     PurchaseProduct.Create(product9, purchase1, 10, Money.Create(1000.0m, cup), supplier1)
                 );
-                purchase3 = Purchase.Create("PURCH-NMBR-0001", DateTime.UtcNow, warehouse.Id, shippingId: shipping1.Id);
+                purchase3 = Purchase.Create("PURCH-NMBR-0003", DateTime.UtcNow, warehouse.Id, shippingId: shipping1.Id);
                 purchase3.AddProduct(
                     PurchaseProduct.Create(product10, purchase1, 10, Money.Create(7.50m, usd), supplier2),
                     PurchaseProduct.Create(product15, purchase1, 50, Money.Create(5.0m, usd), supplier2)
@@ -307,9 +307,9 @@ public class OctupusSeederEndpoint : IEndpointInstaller
                 await ctx.Purchases.AddRangeAsync(purchase1, purchase2, purchase3);
                 await ctx.SaveChangesAsync();
             }
-            purchase1 = ctx.Purchases.First(x => x.Number == "");
-            purchase2 = ctx.Purchases.First(x => x.Number == "");
-            purchase3 = ctx.Purchases.First(x => x.Number == "");
+            purchase1 = ctx.Purchases.First(x => x.Number == "PURCH-NMBR-0001");
+            purchase2 = ctx.Purchases.First(x => x.Number == "PURCH-NMBR-0002");
+            purchase3 = ctx.Purchases.First(x => x.Number == "PURCH-NMBR-0003");
         });
     }
 }

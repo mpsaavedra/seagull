@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Reflection.Metadata;
 using AutoMapper;
+using ImTools;
 using Marten;
 using Marten.Linq.SoftDeletes;
 using Microsoft.AspNetCore.Mvc;
@@ -56,5 +57,37 @@ public class AddressHandler(ILogger<AddressHandler> logger)
         logger.LogDebug($"Retrieving Address: {entityDto}");
 
         return entityDto;
+    }
+
+    public async Task<string?> Handle(
+        CreateAddress command,
+        [FromServices] IAddressService service,
+        [FromServices] IMapper mapper,
+        [FromServices] IMessageBus bus,
+        CancellationToken ct = default
+    )
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<(AddressDto Data, bool Success)> Handle(
+        UpdateAddress command,
+        [FromServices] IAddressService service,
+        [FromServices] IMapper mapper,
+        [FromServices] IMessageBus bus,
+        CancellationToken ct = default
+    )
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<bool> Handle(
+        DeleteAddress command,
+        [FromServices] IAddressService service,
+        [FromServices] IMessageBus bus,
+        CancellationToken ct = default
+    )
+    {
+        throw new NotImplementedException();
     }
 }

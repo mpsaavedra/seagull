@@ -103,7 +103,8 @@ public class Service<TEntity, TDbContext>
             query = orderBy(query);
         }
 
-        var count = query.Count();
+
+        var totalCount = query.Count();
 
         if (pageIndex > 0)
         {
@@ -112,8 +113,13 @@ public class Service<TEntity, TDbContext>
             pageIndex = (pageIndex - 1) * pageSize;
             query = query.Skip(pageIndex).Take(pageSize);
         }
-        hasPreviousPage = pageIndex > pageSize;
-        hasNextPage = pageIndex + pageSize < count;
+
+        hasPreviousPage = pageIndex > 1;
+        hasNextPage = (pageIndex * pageSize) < totalCount;
+
+        var pagedQuery = query
+            .Skip((pageIndex - 1) * pageSize)
+            .Take(pageSize);
 
         var list = query.ToList();
 
@@ -139,7 +145,7 @@ public class Service<TEntity, TDbContext>
         }
     }
 
-    public async Task<Maybe<bool>> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
+    public async Task<Maybe<TEntity>> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }

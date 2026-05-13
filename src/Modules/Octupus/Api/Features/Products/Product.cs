@@ -29,8 +29,8 @@ public partial class Product : AuditableEntity, IMap<ProductDto>
     /// Purchase cost of this product
     /// </summary>
     public Money? Cost { get; set; }
-    public string MeasureUnitId { get; set; }
-    public virtual MeasureUnit MeasureUnit { get; set; }
+    public string? MeasureUnitId { get; set; }
+    public virtual MeasureUnit? MeasureUnit { get; set; }
 
     #region Fields related with the status of the product
 
